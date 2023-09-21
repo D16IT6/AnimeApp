@@ -8,6 +8,7 @@
 import React from 'react';
 import {
   SafeAreaView,
+  StyleSheet,
   Text,
   View,
 } from 'react-native';
@@ -15,12 +16,22 @@ import {
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <Text style={{fontSize:30,fontWeight:'bold'}}>
-        Hello world
+    <View>
+      <Text style= {styles.text}>
+        Hello World
       </Text>
-    </SafeAreaView>
+    </View>
   )
 }
+//  const App = appNavigation
 
-export default App;
+export { App };
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    backgroundColor: 'red',
+    color:'white'
+  }
+}
+);
