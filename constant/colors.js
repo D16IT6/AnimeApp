@@ -1,0 +1,1 @@
+var PrimaryColors = "#06C149"
