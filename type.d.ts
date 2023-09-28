@@ -3,11 +3,13 @@ export type HomeStackNavigatorPararamList={
     Welcome:undefined;
     SignUp:undefined;
     Login:undefined;
+    LoginMethodScreen:undefined
 };
 
 export type HomeScreenNavigationProp=NativeStackScreenProps<
 HomeStackNavigatorPararamList,
 Welcome,
 SignUp,
-Login
+Login,
+LoginMethodScreen
 >

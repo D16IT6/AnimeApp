@@ -1,9 +1,9 @@
 import React from "react";
-import { Text, View, TouchableOpacity, ImageBackground, SafeAreaView } from "react-native";
+import { Text, View, TouchableOpacity, ImageBackground, SafeAreaView, StyleSheet } from "react-native";
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Login } from "./index";
-import { HomeScreenNavigationProp } from "../type";
+import { HomeScreenNavigationProp } from "../../type";
 
 const Welcome = () => {
     const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -13,7 +13,7 @@ const Welcome = () => {
             
            flex:1
         }}>
-            <ImageBackground source={require('../assets/image/backgroudwelcome1png.png')}
+            <ImageBackground source={require('../../assets/image/backgroudwelcome1png.png')}
             style={{
             
                 flex:1
@@ -42,5 +42,9 @@ const Welcome = () => {
         
     )
 }
-
+const style =StyleSheet.create({
+    container:{
+        flex:1
+    }
+})
 export default Welcome
