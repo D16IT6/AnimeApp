@@ -11,16 +11,10 @@ import {
   Text,
   View,
 } from 'react-native';
+import appNavigation from './navigation/appNavigation';
 
 
-const App = () => {
-  return (
-    <SafeAreaView>
-      <Text style={{fontSize:30,fontWeight:'bold'}}>
-        Hello world
-      </Text>
-    </SafeAreaView>
-  )
-}
+
+const App =  appNavigation
 
 export default App;
