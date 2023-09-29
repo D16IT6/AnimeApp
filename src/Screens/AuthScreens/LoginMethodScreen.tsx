@@ -1,10 +1,9 @@
 import { View, Text,TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, Image } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { HomeScreenNavigationProp } from '../../type';
-
+import { HomeScreenNavigationProp } from '../../navigations/AuthNavigator.Type';
+import { facebookIcon } from '../../constants/icons';
 export default function LoginMethodScreen() {
-    // const facebookIcon = require('../../assets/icons/facebook.ico')
   const navigation = useNavigation<HomeScreenNavigationProp>();
   return (
     <SafeAreaView>
@@ -13,7 +12,7 @@ export default function LoginMethodScreen() {
             Đăng Nhập
         </Text>
         <TouchableOpacity style={styles.buttonLogin}>
-            <Image source={require('../../assets/icons/facebook.png')} />
+          <Image source={facebookIcon} />
             <Text>Tiếp tục với Facebook</Text>
         </TouchableOpacity>
         <TouchableOpacity>

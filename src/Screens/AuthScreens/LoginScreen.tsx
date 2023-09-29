@@ -1,8 +1,8 @@
 import { View, Text,TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { HomeScreenNavigationProp } from '../../type';
-export default function Login() {
+import { HomeScreenNavigationProp } from '../../navigations/AuthNavigator.Type';
+export default function LoginScreen() {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   return (
     <SafeAreaView>
@@ -28,6 +28,5 @@ const style =StyleSheet.create({
   container:{
     flex:1
   }
-  
 })
 

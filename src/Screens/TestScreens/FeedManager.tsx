@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Text, View } from "react-native"
-import { Header } from "./helpers";
+import { Header } from '../helpers';
 
 
 type catProps = {

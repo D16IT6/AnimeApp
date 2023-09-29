@@ -2,18 +2,19 @@ import React from "react";
 import { Text, View, TouchableOpacity, ImageBackground, SafeAreaView, StyleSheet } from "react-native";
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Login } from "./index";
-import { HomeScreenNavigationProp } from "../../type";
-
-const Welcome = () => {
+import { LoginScreen } from "./index";
+import { HomeScreenNavigationProp } from '../../navigations/AuthNavigator.Type';
+import { backgroundImage } from "../../constants/images";
+const WelcomeScreen = () => {
     const navigation = useNavigation<HomeScreenNavigationProp>();
+    
     return(
         
         <View style={{
             
            flex:1
         }}>
-            <ImageBackground source={require('../../assets/image/backgroudwelcome1png.png')}
+            <ImageBackground source={backgroundImage}
             style={{
             
                 flex:1
@@ -27,11 +28,9 @@ const Welcome = () => {
                     style={{
                         backgroundColor:'red',
                         marginHorizontal:80,
-                        
-                    
                     }}
                     onPress={
-                        () => navigation.navigate("Login")}
+                        () => navigation.navigate("LoginScreen")}
                 >
                     <Text>
                         Get Started
@@ -47,4 +46,4 @@ const style =StyleSheet.create({
         flex:1
     }
 })
-export default Welcome
+export default WelcomeScreen

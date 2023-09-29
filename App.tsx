@@ -11,7 +11,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import appNavigation from './src/navigation/appNavigation';
+import appNavigation from './src/navigations/AuthNavigator';
 
 
 
