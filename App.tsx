@@ -11,10 +11,20 @@ import {
   Text,
   View,
 } from 'react-native';
-import appNavigation from './src/navigations/AuthNavigator';
+import { CounterApp } from './src/screens/testScreens/CounterApp';
+import {AuthNavigator} from './src/navigations/AuthNavigator';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 
-const App =  appNavigation
+const App = () =>
+{
+  return (
+  
+    <NavigationContainer>
+      <AuthNavigator/>
+    </NavigationContainer>
+)
+}
 
-export default App;
+export { App };
