@@ -8,30 +8,13 @@
 import React from 'react';
 import {
   SafeAreaView,
-  StyleSheet,
   Text,
   View,
 } from 'react-native';
+import appNavigation from './src/navigations/AuthNavigator';
 
 
-const App = () => {
-  return (
-    <View>
-      <Text style= {styles.text}>
-        Hello World
-      </Text>
-    </View>
-  )
-}
-//  const App = appNavigation
 
-export { App };
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    backgroundColor: 'red',
-    color:'white'
-  }
-}
-);
+const App =  appNavigation
+
+export default App;
