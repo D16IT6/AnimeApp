@@ -1,6 +1,7 @@
 import { Button, Text, View } from "react-native";
 import { Header, Separator } from '../helpers';
 import { useState } from "react";
+import React from "react";
 
 
 const CounterApp = () => {
