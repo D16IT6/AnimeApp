@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import  {NavigationContainer}  from '@react-navigation/native'
 import  {createNativeStackNavigator}  from '@react-navigation/native-stack'
- import { WelcomeScreen, LoginScreen, SignUpScreen, LoginMethodScreen } from '../Screens/AuthScreens'
+ import { WelcomeScreen, LoginScreen, SignUpScreen, LoginMethodScreen } from '../screens/authScreens'
 import { HomeStackNavigatorPararamList } from './AuthNavigator.type'
 const Stack = createNativeStackNavigator<HomeStackNavigatorPararamList>();
 export default function appNavigation() {
