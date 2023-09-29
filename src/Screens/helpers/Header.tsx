@@ -1,12 +1,13 @@
+import React from "react";
 import { Text } from "react-native";
 
-type HeaderProperty = {
+type HeaderProps = {
     title?: string,
     fontSize?: number,
     color?: string,
 }
 
-const Header = (property: HeaderProperty) => {
+const Header = (property: HeaderProps) => {
     const { title = "Default header", fontSize = 20, color = 'red' } = property;
     return (
         <Text style={

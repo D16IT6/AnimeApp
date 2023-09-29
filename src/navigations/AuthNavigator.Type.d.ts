@@ -1,16 +1,16 @@
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-
-export type HomeStackNavigatorPararamList = {
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+export type AuthStackParamList = {
     Welcome: undefined;
     SignUp: undefined;
     Login: undefined;
     LoginMethod: undefined
 };
-
-export type HomeScreenNavigationProp = NativeStackScreenProps<
-    HomeStackNavigatorPararamList,
+type AuthScreenNavigationProps = NativeStackScreenProps<
+    AuthStackParamList,
     WelcomeScreen,
     SignUpScreen,
     LoginScreen,
-    LoginMethodScreen
+    LoginMethodScreen,
 >
+
+ export { AuthScreenNavigationProps, AuthStackParamList };

@@ -1,12 +1,11 @@
 import React from "react";
 import { Text, View, TouchableOpacity, ImageBackground, SafeAreaView, StyleSheet } from "react-native";
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { LoginScreen } from "./index";
-import { HomeScreenNavigationProp } from '../../navigations/AuthNavigator.Type';
-import { backgroundImage } from "../../constants/images";
+import { AuthScreenNavigationProps } from "../../navigations/AuthNavigator.Type";
+import { backgroundImage } from "../../constants/Images";
+import { AuthRoutes } from "../../navigations/AuthNavigator.Routes";
 const WelcomeScreen = () => {
-    const navigation = useNavigation<HomeScreenNavigationProp>();
+    const navigation = useNavigation<AuthScreenNavigationProps>();
     
     return(
         
@@ -30,7 +29,7 @@ const WelcomeScreen = () => {
                         marginHorizontal:80,
                     }}
                     onPress={
-                        () => navigation.navigate("LoginScreen")}
+                        () => navigation.navigate(AuthRoutes.Login)}
                 >
                     <Text>
                         Get Started
