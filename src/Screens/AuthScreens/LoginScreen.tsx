@@ -1,8 +1,8 @@
 import { View, Text,TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { AuthScreenNavigationProps } from '../../navigations/AuthNavigator.Type';
-import { AuthRoutes } from '../../navigations/AuthNavigator.Routes';
+import { AuthScreenNavigationProps } from '../../navigations/AuthNavigator/Type';
+import { AuthRoutes } from '../../navigations/AuthNavigator/Routes';
 export default function LoginScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
   return (
@@ -14,7 +14,7 @@ export default function LoginScreen() {
             marginHorizontal: 80,
           }}
           onPress={
-            () => navigation.navigate(AuthRoutes.Welcome)}
+            () => navigation.navigate(AuthRoutes.LoginMethod)}
         >
           <Text>
             Login
