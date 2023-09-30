@@ -11,7 +11,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import { CounterApp } from './src/screens/testScreens/CounterApp';
 import {AuthNavigator} from './src/navigations/AuthNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 

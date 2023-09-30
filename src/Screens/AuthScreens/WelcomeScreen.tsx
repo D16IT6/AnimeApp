@@ -1,9 +1,9 @@
 import React from "react";
 import { Text, View, TouchableOpacity, ImageBackground, SafeAreaView, StyleSheet } from "react-native";
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { AuthScreenNavigationProps } from "../../navigations/AuthNavigator.Type";
-import { backgroundImage } from "../../constants/Images";
-import { AuthRoutes } from "../../navigations/AuthNavigator.Routes";
+import { AuthScreenNavigationProps } from "../../navigations/AuthNavigator/Type";
+import { backgroundImage } from "../../common/Images";
+import { AuthRoutes } from "../../navigations/AuthNavigator/Routes";
 const WelcomeScreen = () => {
     const navigation = useNavigation<AuthScreenNavigationProps>();
     

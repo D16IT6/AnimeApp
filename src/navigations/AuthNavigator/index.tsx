@@ -1,8 +1,8 @@
 import React from 'react'
 import  {NavigationContainer}  from '@react-navigation/native'
 import  {createNativeStackNavigator}  from '@react-navigation/native-stack'
-import { WelcomeScreen, LoginScreen, SignUpScreen, LoginMethodScreen } from '../screens/authScreens'
-import { AuthScreenNavigationProps } from "./AuthNavigator.Type"
+import { WelcomeScreen, LoginScreen, SignUpScreen, LoginMethodScreen } from '../../screens/authScreens'
+import { AuthScreenNavigationProps } from "./Type"
 const Stack = createNativeStackNavigator<AuthScreenNavigationProps>();
 const AuthNavigator= () => {
   return (
@@ -14,4 +14,6 @@ const AuthNavigator= () => {
       </Stack.Navigator>
   )
 }
-export {AuthNavigator}
+
+
+export { AuthNavigator }
