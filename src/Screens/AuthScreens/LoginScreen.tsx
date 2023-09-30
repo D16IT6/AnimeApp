@@ -1,8 +1,7 @@
 import { View, Text,TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { AuthScreenNavigationProps } from '../../navigations/AuthNavigator/Type';
-import { AuthRoutes } from '../../navigations/AuthNavigator/Routes';
+import { AuthScreenNavigationProps, AuthRoutes } from '../../navigations/AuthNavigator';
 export default function LoginScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
   return (

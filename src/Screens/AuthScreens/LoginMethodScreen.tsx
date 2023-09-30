@@ -1,9 +1,8 @@
 import { View, Text,TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, Image } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { AuthScreenNavigationProps } from "../../navigations/AuthNavigator/Type";
+import { AuthScreenNavigationProps, AuthRoutes } from "../../navigations/AuthNavigator";
 import { facebookIcon } from '../../common/Icons';
-import { AuthRoutes } from '../../navigations/AuthNavigator/Routes';
 export default function LoginMethodScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
   return (
