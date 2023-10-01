@@ -11,7 +11,7 @@ type AccountSetupScreenNavigationProps =
         AccountSetupStackParamList,
         ChooseInterestScreen,
         ProfileScreen,
-        FakeParameter
+        FakeScreen
     >
 
 export { AccountSetupScreenNavigationProps, AccountSetupStackParamList };

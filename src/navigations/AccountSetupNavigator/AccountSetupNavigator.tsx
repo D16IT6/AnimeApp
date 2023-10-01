@@ -7,10 +7,10 @@ const AccountSetupNavigator = () => {
 
     const AccountSetupStack = createNativeStackNavigator<AccountSetupScreenNavigationProps>();
     return (
-        
-        <AccountSetupStack.Navigator  screenOptions={
+
+        <AccountSetupStack.Navigator screenOptions={
             {
-                headerShown:false
+                headerShown: false
             }
         }>
             <AccountSetupStack.Screen
