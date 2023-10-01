@@ -3,5 +3,6 @@ enum AuthRoutes {
     SignUp = "SignUp",
     Login = "Login",
     LoginMethod = "LoginMethod",
+    ResetWelcome ="ResetWelcome"
 };
 export { AuthRoutes }
