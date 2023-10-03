@@ -1,2 +1,3 @@
 const backgroundImage = require('../assets/images/backgroud.jpg')
-export {backgroundImage}
+const logo =require('../assets/images/logo.png')
+export {backgroundImage,logo}

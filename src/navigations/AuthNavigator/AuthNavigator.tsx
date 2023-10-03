@@ -10,13 +10,13 @@ const Stack = createNativeStackNavigator<AuthScreenNavigationProps>();
 
 const AuthNavigator = () => {
 
-  const [showWelcome, setWelcome] = useState(null);
+  const [showWelcome, setWelcome] = useState<boolean|null>(null);
   useEffect(() => {
     checkIfAlreadyWelcomed()
   }, [])
   const checkIfAlreadyWelcomed = async () => {
     let welcomed = await getItem('welcomed');
-    if (welcomed == 1) {
+    if (welcomed === '1') {
       setWelcome(false);
     }
     else {
@@ -42,6 +42,9 @@ const AuthNavigator = () => {
     return (
       <Stack.Navigator initialRouteName={AuthRoutes.ResetWelcome}>  
         <Stack.Screen name={AuthRoutes.ResetWelcome} component={ResetWelcome}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.SignUp} component={SignUpScreen} options={{ headerShown: false }}></Stack.Screen>
       </Stack.Navigator>
     )
   }
