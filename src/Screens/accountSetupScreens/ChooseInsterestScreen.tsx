@@ -1,14 +1,17 @@
 import { useNavigation } from "@react-navigation/native"
 import React, { useState } from "react"
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Image, ScrollView, ScrollViewBase, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { AccountSetupRoutes, AccountSetupScreenNavigationProps } from "../../navigations/AccountSetupNavigator"
-import { Header } from '../../common/helpers'
-import { arrowLeftIcon } from "../../common/Icons"
+import { CategoryViewModel } from "../../common/ViewModels"
 import { PrimaryColor } from "../../common/Colors"
+import { NavigationBar } from "../../common/components/NavigationBar"
+import { facebookIcon } from "../../common/Icons"
+
 const ChooseInterestScreen = () => {
+
+
     const navigation = useNavigation<AccountSetupScreenNavigationProps>();
 
-    const [isSelectCategoies, setSelectCategories] = useState<{ [key: string]: boolean }>({});
     const categoryItems = ["Action",
         "Adventure",
         "Cartoon",
@@ -54,30 +57,56 @@ const ChooseInterestScreen = () => {
         "Yaoi",
         "Yuri"];
 
-    const event = {
-        toggleCategory: (category: string) => {
-            setSelectCategories((prevSelectedCategories) => ({
-                ...prevSelectedCategories,
-                [category]: !prevSelectedCategories[category],
-            }));
-        },
-        renderCategoryItem: (value: string, index: number) => {
-            const isSelected = isSelectCategoies[value];
+    const categoryViewModelList = categoryItems.map(
+        (value, index) => new CategoryViewModel(index + 1, value)
+    )
+    const [selectCategories, setSelectCategories] =
+        useState<CategoryViewModel[]>(categoryViewModelList)
 
+    const event = {
+        toggleCategory: (index: number) => {
+            setSelectCategories((prevSelectedCategories) => {
+                const updateSelectedCategories = { ...prevSelectedCategories }
+                updateSelectedCategories[index].selected = !updateSelectedCategories[index].selected;
+                return updateSelectedCategories;
+            }
+            )
+        },
+        renderCategoryItem: (categoryName: string, index: number) => {
+            const currentCategory = selectCategories[index];
             return (
                 <TouchableOpacity
-                    key={index}
+                    key={currentCategory.id}
                     style={[
                         styles.contentCategoryItem,
-                        { backgroundColor: isSelected ? PrimaryColor : 'white' },
+                        { backgroundColor: currentCategory.selected ? PrimaryColor : 'white' },
                     ]}
                     onPress={() => {
-                        event.toggleCategory(value);
+                        event.toggleCategory(index);
                     }}>
-                    <Text style={[styles.contentCategoryText, { color: isSelected ? 'white' : PrimaryColor }]}>{value}</Text>
+                    <Text
+                        style={
+                            [
+                                styles.contentCategoryText,
+                                { color: currentCategory.selected ? 'white' : PrimaryColor }
+                            ]
+                        }
+                    >
+                        {categoryName}
+                    </Text>
                 </TouchableOpacity>
             );
-        }
+        },
+        getSelectedCategories: (selectCategories: CategoryViewModel[]): CategoryViewModel[] | null => {
+            const selectedCategories =
+                Object.values(selectCategories)
+                    .filter(x => x.selected)
+            return selectedCategories;
+        },
+        handleNavigation: (screen: string, selectedCategories: CategoryViewModel[] | null) => {
+            const selectedCategoryIds = selectedCategories !== null ? selectedCategories.map(x => x.id) : null;
+            navigation.navigate(screen, selectedCategoryIds);
+        },
     }
 
     const styles = StyleSheet.create({
@@ -87,19 +116,7 @@ const ChooseInterestScreen = () => {
             flex: 1,
             backgroundColor: 'white'
         },
-        header:
-        {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            // paddingHorizontal: 20
-        },
-        headerIcon:
-        {
-            marginRight: 10,
-            width: 24,
-            height: 24,
-        },
+
         content:
         {
             flex: 12,
@@ -136,14 +153,14 @@ const ChooseInterestScreen = () => {
             // backgroundColor: 'green',
             flex: 1,
             flexDirection: 'row',
-            justifyContent:'space-evenly'
+            justifyContent: 'space-evenly'
         },
         footerSkip:
         {
             // padding: 18,
             backgroundColor: '#e6f9ed',
             borderRadius: 50,
-            width:'45%',
+            width: '45%',
             alignItems: 'center',
             justifyContent: 'center'
         },
@@ -157,7 +174,7 @@ const ChooseInterestScreen = () => {
         {
             backgroundColor: PrimaryColor,
             borderRadius: 50,
-            width:'45%',
+            width: '45%',
             alignItems: 'center',
             justifyContent: 'center'
         },
@@ -170,21 +187,25 @@ const ChooseInterestScreen = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity>
-                    <Image source={arrowLeftIcon} style={styles.headerIcon} />
-                </TouchableOpacity>
-                <Header title="Choose Your Interest" fontSize={24} color="black" textAlign="left" />
-            </View>
+            <NavigationBar
+                title="Test"
+                icon={facebookIcon}
+            />
 
             <View style={styles.content}>
                 <Text style={styles.contentText}>
                     Choose your interests and get the rbest anime recommendations. Don't worry, you can always change it later.
                 </Text>
 
-                <View style={styles.contentCategories}>
-                    {categoryItems.map((value, index) => event.renderCategoryItem(value, index))}
-                </View>
+                <ScrollView>
+                    <View style={styles.contentCategories}>
+                        {
+                            categoryItems.map(
+                                (categoryName, index) => event.renderCategoryItem(categoryName, index)
+                            )
+                        }
+                    </View>
+                </ScrollView>
             </View>
 
             <View style={styles.footer}>
@@ -192,7 +213,7 @@ const ChooseInterestScreen = () => {
                     style={styles.footerSkip}
                     onPress={
                         () => {
-                             navigation.navigate(AccountSetupRoutes.Profile)
+                            event.handleNavigation(AccountSetupRoutes.Profile, null)
                         }
                     }>
                     <Text style={styles.footerSkipText}>Skip</Text>
@@ -202,7 +223,12 @@ const ChooseInterestScreen = () => {
                     style={styles.footerContinue}
                     onPress={
                         () => {
-                             navigation.navigate(AccountSetupRoutes.Profile)
+                            const selectedCategories = event.getSelectedCategories(selectCategories);
+                            event.handleNavigation
+                                (
+                                    AccountSetupRoutes.Profile,
+                                    selectedCategories
+                                )
                         }
                     }>
                     <Text style={styles.footerContinueText}>Continue</Text>
@@ -211,5 +237,4 @@ const ChooseInterestScreen = () => {
         </View >
     )
 }
-
 export { ChooseInterestScreen }

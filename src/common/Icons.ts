@@ -1,6 +1,8 @@
-const facebookIcon = require('../assets/icons/facebook.png')
-const googleIcon = require('../assets/icons/google.png')
-const arrowLeftIcon = require(`../assets/icons/ArrowLeft.png`)
+import { ImageSourcePropType } from "react-native"
+
+const facebookIcon: ImageSourcePropType = require('../assets/icons/facebook.png')
+const googleIcon: ImageSourcePropType = require('../assets/icons/google.png')
+const arrowLeftIcon: ImageSourcePropType = require(`../assets/icons/ArrowLeft.png`)
 export {
     facebookIcon,
     googleIcon,

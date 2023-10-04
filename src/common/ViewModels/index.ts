@@ -1,0 +1,1 @@
+export { CategoryViewModel } from './CategoryViewModel'
