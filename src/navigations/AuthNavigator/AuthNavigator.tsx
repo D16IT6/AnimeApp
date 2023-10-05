@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { WelcomeScreen, LoginScreen, SignUpScreen, LoginMethodScreen, ResetWelcome } from '../../Screens/AuthScreens'
+import { WelcomeScreen, LoginScreen, SignUpScreen, LoginMethodScreen, ResetWelcome} from '../../Screens/AuthScreens'
 import { AuthScreenNavigationProps } from "./Type"
 import { AuthRoutes } from './Routes'
 import { getItem } from '../../utils/asyncStorage'
@@ -29,7 +29,7 @@ const AuthNavigator = () => {
   }
   if (showWelcome) {
     return (
-          <Stack.Navigator initialRouteName="WelcomeScreen">
+          <Stack.Navigator initialRouteName={AuthRoutes.Welcome}>
             <Stack.Screen name={AuthRoutes.Welcome} component={WelcomeScreen} options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>
@@ -40,7 +40,7 @@ const AuthNavigator = () => {
   }
   else {
     return (
-      <Stack.Navigator initialRouteName={AuthRoutes.ResetWelcome}>  
+      <Stack.Navigator initialRouteName={AuthRoutes.SignUp}>  
         <Stack.Screen name={AuthRoutes.ResetWelcome} component={ResetWelcome}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>
