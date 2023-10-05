@@ -1,3 +1,3 @@
-var PrimaryColor = "#06c149"
+const PrimaryColor = "#06c149"
 
 export {PrimaryColor}

@@ -1,14 +1,14 @@
 import { useNavigation } from "@react-navigation/native"
 import React, { useState } from "react"
-import { Alert, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Alert, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { AccountSetupRoutes, AccountSetupScreenNavigationProps } from "../../navigations/AccountSetupNavigator"
 import { CategoryViewModel } from "../../common/viewModels"
 import { PrimaryColor } from "../../common/Colors"
-import { NavigationBar } from "../../common/components/NavigationBar"
-import { CategoryViewItem } from "../../common/components"
-
-
+import { NavigationBar } from "../../common/components/navigationBar"
+import { CategoryViewItem, FooterNavigation } from "../../common/components"
+import { arrowLeftIcon } from "../../common/Icons"
 const ChooseInterestScreen = () => {
+
 
     const navigation = useNavigation<AccountSetupScreenNavigationProps>();
 
@@ -65,7 +65,8 @@ const ChooseInterestScreen = () => {
     const styles = StyleSheet.create({
         container:
         {
-            padding: 24,
+            paddingHorizontal: 20,
+            paddingVertical: 10,
             flex: 1,
             backgroundColor: 'white'
         },
@@ -83,39 +84,6 @@ const ChooseInterestScreen = () => {
             marginVertical: 10,
             flexDirection: 'row',
             flexWrap: 'wrap'
-        },
-        footer:
-        {
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-evenly'
-        },
-        footerSkip:
-        {
-            backgroundColor: '#e6f9ed',
-            borderRadius: 50,
-            width: '45%',
-            alignItems: 'center',
-            justifyContent: 'center'
-        },
-        footerSkipText:
-        {
-            color: PrimaryColor,
-            fontSize: 18
-
-        },
-        footerContinue:
-        {
-            backgroundColor: PrimaryColor,
-            borderRadius: 50,
-            width: '45%',
-            alignItems: 'center',
-            justifyContent: 'center'
-        },
-        footerContinueText:
-        {
-            color: 'white',
-            fontSize: 18
         }
     })
     const [selectedCategories, setSelectCategories] =
@@ -149,7 +117,9 @@ const ChooseInterestScreen = () => {
                                     model={category}
                                     onPress=
                                     {
-                                        () => { event.updateState(id) }
+                                        () => {
+                                            event.updateState(id)
+                                        }
                                     }
                                 />
                             )
@@ -161,45 +131,37 @@ const ChooseInterestScreen = () => {
     }
     return (
         <View style={styles.container}>
+
             <NavigationBar
-                title="Test"
+                flex={1}
+                title="Choose you interest"
+                icon={arrowLeftIcon}
             />
 
             <View style={styles.content}>
                 <Text style={styles.contentText}>
                     Choose your interests and get the rbest anime recommendations. Don't worry, you can always change it later.
                 </Text>
-
                 <ScrollView>
                     {event.renderCategoriesList()}
                 </ScrollView>
             </View>
 
-            <View style={styles.footer}>
-                <TouchableOpacity
-                    style={styles.footerSkip}
-                    onPress={
-                        () => { navigation.navigate(AccountSetupRoutes.Profile) }
+            <FooterNavigation
+                flex={1}
+                leftTitle="Skip"
+                rightTitle="Continue"
+                leftEvent={
+                    () => {
+                        navigation.navigate(AccountSetupRoutes.Profile)
+                    }}
+                rightEvent={() => {
+                    navigation.navigate(AccountSetupRoutes.Profile)
 
-                    }>
-                    <Text style={styles.footerSkipText}>Skip</Text>
-                </TouchableOpacity>
+                }}
 
-                <TouchableOpacity
-                    style={styles.footerContinue}
-                    onPress={
-                        () => {
-                            navigation.navigate(AccountSetupRoutes.Profile, 
-                                {
-                                    selectedCategories: selectedCategories
-                                 }
-                            )
-                        }
+            />
 
-                    }>
-                    <Text style={styles.footerContinueText}>Continue</Text>
-                </TouchableOpacity>
-            </View>
         </View >
     )
 }

@@ -1,4 +1,4 @@
-import {  StyleSheet, Text, TextProps, TouchableOpacity, TouchableOpacityProps } from "react-native";
+import { StyleSheet, Text, TextProps, TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { CategoryViewModel } from "../viewModels";
 import React, { useState } from "react";
 import { PrimaryColor } from "../Colors";
@@ -9,7 +9,8 @@ type CategoryViewItemProps = {
     textColor?: string,
     swapColor?: string,
     onPress?: Function,
-    textStyle?: TextProps['style']}
+    textStyle?: TextProps['style']
+}
 
 const CategoryViewItem = (props: CategoryViewItemProps) => {
     const [isSelect, setIsSelect] = useState(false);

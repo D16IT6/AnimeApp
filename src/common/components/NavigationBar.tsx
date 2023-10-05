@@ -12,6 +12,7 @@ type NavigationBarProps = {
     viewStyle?: ViewProps['style']
     iconStyle?: ImageProps['style'];
     headerStyle?: TextProps['style'];
+    flex?: number;
 
 }
 const NavigationBar = (props: NavigationBarProps) => {
@@ -22,7 +23,8 @@ const NavigationBar = (props: NavigationBarProps) => {
             title,
             headerStyle,
             iconStyle,
-            viewStyle
+            viewStyle,
+            flex = 1
         } = props;
     const combinedHeaderStyle: TextProps['style'] = [
         headerStyle,
@@ -36,6 +38,9 @@ const NavigationBar = (props: NavigationBarProps) => {
     ]
     const combinedViewStyle: ViewProps['style'] = [
         styles.header,
+        {
+            flex:flex
+        },
         viewStyle
     ]
     return (
@@ -52,7 +57,6 @@ const NavigationBar = (props: NavigationBarProps) => {
 const styles = StyleSheet.create({
     header:
     {
-        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
     },

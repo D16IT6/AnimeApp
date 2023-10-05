@@ -8,11 +8,15 @@ const AccountSetupNavigator = () => {
     const AccountSetupStack = createNativeStackNavigator<AccountSetupScreenNavigationProps>();
     return (
 
-        <AccountSetupStack.Navigator screenOptions={
+        <AccountSetupStack.Navigator
+            screenOptions=
             {
-                headerShown: false
+                {
+                    headerShown: false
+                }
             }
-        }>
+            initialRouteName={AccountSetupRoutes.Profile}
+        >
             <AccountSetupStack.Screen
                 name={AccountSetupRoutes.ChooseInterest}
                 component={ChooseInterestScreen}

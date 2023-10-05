@@ -12,8 +12,6 @@ type AccountSetupStackParamList = {
 };
 type ProfileScreenRouteProps = RouteProp<AccountSetupStackParamList, AccountSetupRoutes.Profile>
 
-
-
 type AccountSetupScreenNavigationProps =
     NativeStackScreenProps<
         AccountSetupStackParamList,

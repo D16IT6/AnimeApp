@@ -7,7 +7,6 @@ import { AccountSetupNavigator } from './src/navigations/AccountSetupNavigator';
 
 const App = () => {
   return (
-
     <NavigationContainer>
       {/* <AuthNavigator /> */}
       <AccountSetupNavigator/>
