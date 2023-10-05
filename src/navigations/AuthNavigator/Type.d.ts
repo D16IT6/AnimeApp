@@ -5,6 +5,7 @@ export type AuthStackParamList = {
     Login: undefined;
     LoginMethod: undefined;
     ResetWelcome:undefined;
+  
 };
 type AuthScreenNavigationProps = NativeStackScreenProps<
     AuthStackParamList,
@@ -13,6 +14,6 @@ type AuthScreenNavigationProps = NativeStackScreenProps<
     LoginScreen,
     LoginMethodScreen,
     ResetWelcome,
+    
 >
-
  export { AuthScreenNavigationProps, AuthStackParamList };

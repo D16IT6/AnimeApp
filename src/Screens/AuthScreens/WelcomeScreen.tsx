@@ -51,7 +51,7 @@ const WelcomeScreen = () => {
                 width: width*0.25,
                 backgroundColor: backgroundColor(isLight),
               }}
-                titleStyle={{ color: color(isLight),fontSize:20 }}
+                titleStyle={{ color: color(isLight),fontSize:width*0.025}}
             {...props}
             
             />
@@ -70,7 +70,7 @@ const WelcomeScreen = () => {
                 width: width*0.25,
                 backgroundColor: backgroundColor(isLight),
               }}
-                titleStyle={{ color: color(isLight),fontSize:20 }}
+                titleStyle={{ color: color(isLight),fontSize:width*0.025 }}
             {...props}
             
             />
@@ -89,7 +89,7 @@ const WelcomeScreen = () => {
                 width: width*0.25,
                 backgroundColor: backgroundColor(isLight),
               }}
-                titleStyle={{ color: color(isLight),fontSize:20 }}
+                titleStyle={{ color: color(isLight),fontSize:width*0.025 }}
             {...props}
             
             />

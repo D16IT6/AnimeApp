@@ -10,6 +10,7 @@ const App = () => {
     <NavigationContainer>
       <AuthNavigator />
     </NavigationContainer>
+   
   )
 }
 
