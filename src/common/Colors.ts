@@ -1,4 +1,4 @@
 var PrimaryColor = "#06C149"
 var WhiteCustom ="#FFF"
-
-export {PrimaryColor,WhiteCustom}
+var errorColor ="#FF9494"
+export {PrimaryColor,WhiteCustom,errorColor}

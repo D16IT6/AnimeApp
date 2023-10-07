@@ -1,50 +1,82 @@
-// import { useReducer } from 'react';
-// import { StyleSheet, Pressable } from 'react-native';
-// import { MotiView } from 'moti';
+{/* <View style={[styles.inputContiner,
+    {
+      backgroundColor: focususerName ? '#ebfaf1' : '#FAFAFA',
+      borderColor: focususerName ? PrimaryColor : '#FAFAFA'
+    }
+    ]}>
+      <MaterialCommunityIcons name="email" size={20} color={focususerName ? PrimaryColor : "#9e9e9e"} />
+      <TextInput style={styles.account}
+        autoCorrect={false}
+        placeholder='Tài khoản'
+        value={username}
+        onChangeText={text => setUsername(text)
+        }
+        onFocus={() => {
+          setForcusUserName(!focususerName)
+        }}
+        onBlur={() => {
+          setForcusUserName(!focususerName)
+        }}
+      >
+      </TextInput>
+    </View >
+    <View style={[styles.inputContiner,
+    {
+      backgroundColor: focusPassword ? '#ebfaf1' : '#FAFAFA',
+      borderColor: focusPassword ? PrimaryColor : '#FAFAFA'
+    }
+    ]}>
 
-// function Shape() {
-//   return (
-//     <MotiView
-//       from={{
-//         opacity: 0,
-//         scale: 0.5,
-//       }}
-//       animate={{
-//         opacity: 1,
-//         scale: 1,
-//       }}
-//       transition={{
-//         type: 'timing',
-//       }}
-//       style={styles.shape}
-//     />
-//   );
-// }
+      <MaterialCommunityIcons name="lock" size={20} color={focusPassword ? PrimaryColor : "#9e9e9e"} />
 
-// export default function HelloWorld() {
-//   const [visible, toggle] = useReducer((s) => !s, true);
+      <TextInput style={[styles.password, { backgroundColor: focusPassword ? '#ebfaf1' : '#FAFAFA', }]}
+        autoCorrect={false}
+        placeholder='Mật khẩu'
+        secureTextEntry={hidePassWord}
+        value={password}
+        onChangeText={text => setPassword(text)}
+        onFocus={() => {
+          setForcusPassword(!focusPassword)
+        }}
+        onBlur={() => {
+          setForcusPassword(!focusPassword)
+        }}
+      >
+      </TextInput>
+      <MaterialCommunityIcons name={hidePassWord ? "eye" : "eye-off"}
+        onPress={() => {
+          setHidePassword(!hidePassWord)
+        }}
+        size={20} color={focusPassword ? PrimaryColor : "#9e9e9e"} />
+    </View>
 
-//   return (
-//     <Pressable onPress={toggle} style={styles.container}>
-//       {visible && <Shape />}
-//     </Pressable>
-//   );
-// }
+    <View style={[styles.inputContiner,
+    {
+      backgroundColor: focusConfirmPassword ? '#ebfaf1' : '#FAFAFA',
+      borderColor: focusConfirmPassword ? PrimaryColor : '#FAFAFA'
+    }
+    ]}>
 
-// const styles = StyleSheet.create({
-//   shape: {
-//     justifyContent: 'center',
-//     height: 250,
-//     width: 250,
-//     borderRadius: 25,
-//     marginRight: 10,
-//     backgroundColor: 'white',
-//   },
-//   container: {
-//     flex: 1,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     flexDirection: 'row',
-//     backgroundColor: '#9c1aff',
-//   },
-// });
+      <MaterialCommunityIcons name="lock" size={20} color={focusConfirmPassword ? PrimaryColor : "#9e9e9e"} />
+
+      <TextInput style={[styles.confirmpassword, { backgroundColor: focusConfirmPassword ? '#ebfaf1' : '#FAFAFA', }]}
+        autoCorrect={false}
+        placeholder='Xác nhận mật khẩu'
+        secureTextEntry={hideConfirmPassWord}
+        value={confirmpassword}
+        onChangeText={text => setPassword(text)}
+        onFocus={() => {
+          setForcusConfirmPassword(!focusConfirmPassword)
+        }}
+        onBlur={() => {
+          setForcusConfirmPassword(!focusConfirmPassword)
+        }}
+      >
+      </TextInput>
+
+      <MaterialCommunityIcons name={hideConfirmPassWord ? "eye" : "eye-off"}
+        onPress={() => {
+          setHideConfirmPassword(!hideConfirmPassWord)
+        }}
+        size={20} color={focusConfirmPassword ? PrimaryColor : "#9e9e9e"} />
+    </View> */}
