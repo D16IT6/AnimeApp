@@ -2,14 +2,15 @@ import { View, Text, SafeAreaView, StyleSheet, Image, Dimensions, TouchableOpaci
 import React, { useState } from 'react'
 import { logo } from '../../common/Images'
 import Icon from 'react-native-vector-icons/FontAwesome';
+//icon
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome'
 import { PrimaryColor, WhiteCustom, errorColor } from '../../common/Colors';
 import { useNavigation } from '@react-navigation/native'
 import { AuthScreenNavigationProps, AuthRoutes } from '../../navigations/AuthNavigator';
-import { color } from 'react-native-elements/dist/helpers';
-
-
+import { ButtonAuthScreen, CheckedAuthScreen, InputAuthScreen, LineAuthScreen,LinkAuthScreen,Loader } from '../../common/component';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const { width, height } = Dimensions.get('window')
 export default function SignUpScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
@@ -28,19 +29,44 @@ export default function SignUpScreen() {
     Keyboard.dismiss();
     let isValid = true;
     if (!inputs.username) {
-      handleError("Vui long nhap tai khoan", "username")
+      handleError("Vui lòng nhập tài khoản !", "username")
       isValid = false;
     }
     if (!inputs.password) {
-      handleError("Vui long nhap mat khau", "password")
+      handleError("Vui lòng nhập mật khẩu !", "password")
+      isValid = false;
+    }
+    else if(inputs.password.length<5)
+    {
+      handleError("Mật khẩu phải trên 5 kí tự !", "password")
       isValid = false;
     }
     if(isValid)
     {
-      Alert.alert("dungs het roi",JSON.stringify(Error))
+      regisiter()
     }
   }
+  const regisiter = ()=>{
+    setLoading(true),
+    setTimeout(() => {
+      setLoading(false)
+      try {
+        if(false)
+        {
+          AsyncStorage.setItem("user",JSON.stringify(inputs))
+        }
+        else{
+          Alert.alert("Error","Có lỗi rồi!!!")
+        }
+        
+        navigation.navigate(AuthRoutes.Login)
+      } catch (error) {
+        Alert.alert("Error","Có lỗi rồi!!!")
+      }
+    }, 3000);
 
+  }
+  
   const handleOnChange = (text: any, input: string) => {
     setInputs(prevState => ({ ...prevState, [input]: text }))
   }
@@ -49,6 +75,7 @@ export default function SignUpScreen() {
   }
   return (
     <SafeAreaView style={styles.container}>
+    <Loader visible={loading} />
       <View style={styles.navigation}>
         <Ionicons name='arrow-back'
           onPress={() => {
@@ -62,142 +89,76 @@ export default function SignUpScreen() {
 
         <Text style={styles.title}>Tạo tài khoản của bạn</Text>
       </View>
-      <KeyboardAvoidingView style={styles.contentSignUp}>
-        <View style={styles.contentSignUp}>
-          <InputLogin
+      <KeyboardAvoidingView style={styles.contentSignUp}>     
+          <InputAuthScreen
             placeholder="Nhập tài khoản"
-            IconName="email"
+            iconName="user"
             error={errors.username}
             password={false}
             onFocus={() => {
-              handleError(null, "username")
-              //Alert.alert("tai khoan",JSON.stringify(errors))
+              handleError(null, "username")     
             }}
             onChangeText={(text: string) => handleOnChange(text, 'username')}
           />
-          <InputLogin
+          <InputAuthScreen
             placeholder="Nhập mật khẩu"
-            IconName="lock"
+            iconName="lock"
             error={errors.password}
             password={true}
             onFocus={() => {
               handleError(null, "password")
-              //Alert.alert("mat khau",JSON.stringify(errors))
             }}
-            onChangeText={(text: string) => handleOnChange(text, 'password')}
+            onChangeText={(text: string) => handleOnChange(text, 'password')}//(text: string) => handleOnChange(text, 'password')
           />
-          <ButtonLogin
-            title='Đăng Nhập'
+          <CheckedAuthScreen/>
+          <ButtonAuthScreen
+            title='Đăng Ký'
             onPress={() => { 
               validate()
-              Alert.alert(JSON.stringify(inputs))
             }
-          }//validate
+          }
           />
-          <TouchableOpacity></TouchableOpacity>
-        </View>
+          <LineAuthScreen title="or continue with"/>
+        
       </KeyboardAvoidingView>
       <View style={styles.footer}>
-
+          <View style={styles.containerMethodLogin}>
+            <TouchableOpacity style={styles.methodlogin}>
+              <Image source={require("../../assets/icons/facebook.png")} style={styles.iconMethodLogin}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.methodlogin}>
+              <Image source={require("../../assets/icons/google.png")} style={styles.iconMethodLogin}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.methodlogin}>
+            <Image source={require("../../assets/icons/apple.png")} style={styles.iconMethodLogin}></Image>
+            </TouchableOpacity>
+          </View>
+          <LinkAuthScreen 
+          title="Bạn đã có tài khoản"
+          onPress={()=>{
+            navigation.navigate(AuthRoutes.Login)
+          }}
+          textlink="Đăng Nhập"         
+          ></LinkAuthScreen>
       </View>
     </SafeAreaView>
   )
 
-}
-interface InputLoginProps {
-  placeholder: string;
-  IconName: string;
-  error?: string;
-  password: boolean;
-  onFocus: Function;
-  onChangeText: Function;
-  children?: React.ReactNode;
-}
-const InputLogin: React.FC<InputLoginProps> = ({
-  placeholder,
-  IconName,
-  error,
-  password,
-  onFocus ,
-  onChangeText ,
-  ...props
-}) => {
-  const [isFocus, setIsforcus] = useState(false)
-  const [hidePassWord, setHidePassword] = useState(false)
-  return (
-    <View >
-      <View style={[styles.inputContiner,
-      {
-        backgroundColor: isFocus ? '#ebfaf1' : '#FAFAFA',
-        borderColor: error ? 'red' : isFocus ? PrimaryColor : '#FAFAFA' //neu loi do neu chon mau chinh else trang
-      }
-      ]}>
-        <MaterialCommunityIcons name={IconName} size={20} color={isFocus ? PrimaryColor : "#9e9e9e"} />
-
-        <TextInput style={[styles.password, { backgroundColor: isFocus ? '#ebfaf1' : '#FAFAFA', }]}
-          autoCorrect={false}
-          placeholder={placeholder}
-          secureTextEntry={hidePassWord}
-          // value={value}   
-          // onChangeText={text => setValue(text)}
-          onFocus={() => {
-            setIsforcus(!isFocus)
-            onFocus()
-          }}
-          onBlur={() => {
-            setIsforcus(!isFocus)
-          }}               
-          {...props}
-        >
-        </TextInput>
-        {
-          password && (
-            <MaterialCommunityIcons name={hidePassWord ? "eye" : "eye-off"}
-              onPress={() => {
-                setHidePassword(!hidePassWord)
-              }}
-              size={20} color={isFocus ? PrimaryColor : "#9e9e9e"} />
-          )
-        }
-
-      </View>
-      {
-        error && (
-          <Text style={styles.error}>{error}</Text>
-        )
-      }
-    </View>
-  )
-}
-
-
-interface ButtonLoginProps {
-  title: string;
-  onPress: () => void;
-  children?: React.ReactNode;
-}
-const ButtonLogin: React.FC<ButtonLoginProps> = ({ title, onPress = () => { } }) => {
-  return (
-    <TouchableOpacity style={styles.buttonLogin}
-      onPress={
-        onPress
-      }>
-      <Text>{title}</Text>
-    </TouchableOpacity>
-  )
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1
   },
   navigation: {
-    flex: 0.5,
-    backgroundColor: 'blue'
+    //flex: 0.5,
+    backgroundColor: '#ffffff',
+    paddingLeft:10
   },
   header: {
-    flex: 3.5,
+    flex: 2,
     alignItems: 'center',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    backgroundColor: '#ffffff',
   },
   logo: {
     height: 150,
@@ -211,57 +172,35 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "20%",
   },
-  inputContiner: {
-    flexDirection: 'row',
-    borderRadius: 10,
-    width: width * 0.9,
-    alignItems: 'center',
-    borderWidth: 1.5,
-    borderColor: '#FAFAFA',
-    paddingHorizontal: 15
-  },
-  account: {
-    backgroundColor: '#FAFAFA',
-    flex: 1
-  },
-  password: {
-    backgroundColor: '#FAFAFA',
-    flex: 1
-  },
-  confirmpassword: {
-    backgroundColor: '#FAFAFA',
-    flex: 1
-  },
   contentSignUp: {
     flex: 3,
-    backgroundColor: 'yellow',
+    backgroundColor: '#ffffff',
     justifyContent: 'space-evenly',
     alignItems: 'center'
   },
-  error: {
-    color: errorColor,
-    fontSize: 12,
-  },
-  buttonLogin: {
-    // width:width*0.9,
-    // height:height*0.07,
-    // backgroundColor: PrimaryColor,
-    // justifyContent:'center',
-    // alignItems:'center',
-    marginHorizontal: 24,
-    flexDirection: 'row',
-    backgroundColor: PrimaryColor,
-    height: height * 0.08,
-    justifyContent: 'center',
-    alignItems: 'center',
-    //borderWidth: 2,
-    borderRadius: 30,
-    //borderColor: '#EEE',
-    marginVertical: 10,
-    width: width * 0.9,
-  },
   footer: {
-    flex: 2,
-    backgroundColor: 'blue'
+    flex: 1,
+    justifyContent:'space-around',
+    backgroundColor:'#fff'
+  },
+  containerMethodLogin:{
+    flexDirection:'row',
+    justifyContent:'center',
+    alignContent:'center'
+  },
+  methodlogin:{
+    width:"20%",  
+    height:height*0.07,
+    backgroundColor:'#fff',
+    borderRadius:16,
+    justifyContent:'center',
+    alignItems:'center',
+    borderWidth:1,
+    borderColor:"#EEE",
+    marginHorizontal:20
+  },
+  iconMethodLogin: {
+    maxWidth: "40%",
+    //height: "auto"
   }
 })
