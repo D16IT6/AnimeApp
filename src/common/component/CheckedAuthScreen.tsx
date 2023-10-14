@@ -3,11 +3,19 @@ import { View, Text, TextInput, StyleSheet, Dimensions ,TouchableOpacity} from "
 import { PrimaryColor } from "../Colors";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 
-const CheckedAuthScreen = ()=>{
-    const[isChecked,setisChecked] = useState(false)
+interface CheckedAuthScreenProps {
+    onCheckedChange:Function
+}
+const CheckedAuthScreen:React.FC<CheckedAuthScreenProps> = ( {onCheckedChange  })=>{
+    const[isChecked,setIsChecked] = useState(false)
+    const handleCheckedChange = () => {
+        const newCheckedValue = !isChecked;
+        setIsChecked(newCheckedValue);
+        onCheckedChange(newCheckedValue);
+      };
     return(
         <View style={styles.container}>
-            <TouchableOpacity  onPress={()=>setisChecked(!isChecked)}
+            <TouchableOpacity  onPress={handleCheckedChange}
             style={[styles.checkbox,{backgroundColor:isChecked?PrimaryColor:"#fff"}]}>      
                {
                 isChecked&&(

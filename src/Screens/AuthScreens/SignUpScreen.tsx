@@ -21,7 +21,6 @@ export default function SignUpScreen() {
   interface Errors {
     username?: string;
     password?: string;
-    // Các thuộc tính khác và kiểu tùy ý
   }
   const [errors, setErrors] = useState<Errors>({})
   const [loading,setLoading] =useState(false)
@@ -51,14 +50,7 @@ export default function SignUpScreen() {
     setTimeout(() => {
       setLoading(false)
       try {
-        if(false)
-        {
-          AsyncStorage.setItem("user",JSON.stringify(inputs))
-        }
-        else{
-          Alert.alert("Error","Có lỗi rồi!!!")
-        }
-        
+        AsyncStorage.setItem("userData",JSON.stringify(inputs))    
         navigation.navigate(AuthRoutes.Login)
       } catch (error) {
         Alert.alert("Error","Có lỗi rồi!!!")
