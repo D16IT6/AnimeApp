@@ -7,6 +7,7 @@ enum AuthRoutes {
     HomeScreen ="HomeScreen",
     MainNavigationBar ="MainNavigationBar",
     MyListSreen ="MyListSreen",
-    ProfileScreen ="ProfileScreen"
+    ProfileScreen ="ProfileScreen",
+    HitAnime ="HitAnime"
 };
 export { AuthRoutes }

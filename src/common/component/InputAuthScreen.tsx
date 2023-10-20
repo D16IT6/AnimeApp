@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { View, Text, TextInput, StyleSheet ,Animated, Dimensions } from "react-native";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
@@ -27,27 +27,14 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
     const [isFocus, setIsFocus] = useState(false)
     const [hidePassWord, setHidePassword] = useState(false)
     const [isFocusPlacehoder, setIsFocusPlacehoder] = useState(false)
-    const translateY = new Animated.Value(isFocus ? -20 : 0);
-    const fontSize = new Animated.Value(isFocus  ? 12 : 16);
     const [inputs,setInputs] =useState('')
-    const handleFocus =()=>{ 
-        setIsFocusPlacehoder(true)  
-        Animated.parallel([
-          Animated.timing(translateY, {
-            toValue: isFocusPlacehoder ? -20 : 0,
-            //duration: 3000,
-            useNativeDriver: false,
-          }),
-          Animated.timing(fontSize, {
-            toValue: isFocusPlacehoder ? 12 : 16,
-            //duration: 3000,
-            useNativeDriver: false,
-          }),
-        ]).start();
-    }
-    const placeholderStyle = {
-        transform: [{ translateY }],
-        fontSize,
+ 
+    const textInputRef = useRef<TextInput>(null);
+
+    const handleTextPress = () => {
+        if (textInputRef.current) {
+          textInputRef.current.focus();
+        }
       };
     return (
         <View >
@@ -58,11 +45,19 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
             }
             ]}>
                 <FontAwesomeIcons name={iconName} size={20} color={isFocus ? PrimaryColor : "#9e9e9e"} style={{ marginRight: 5 }} />
-                <Animated.Text style={[styles.placeholder, placeholderStyle]}>
+                <Text style={[styles.placeholder, 
+                    {top:isFocusPlacehoder ? -10 : 11,
+                    fontSize:isFocusPlacehoder  ? 13 : 18,
+                    color:isFocusPlacehoder&&isFocus?PrimaryColor:'#999',
+                    backgroundColor:isFocusPlacehoder?'#fff':'#fafafa'
+                }]
+                }
+                onPress={handleTextPress}
+                >
                     {placeholder}
-                </Animated.Text>
-                <TextInput style={[styles.password, { backgroundColor:'blue' }]}
-                // backgroundColor: isFocus ? '#ebfaf1' : '#FAFAFA' 
+                </Text>
+                <TextInput style={[styles.password, { backgroundColor: isFocus ? '#ebfaf1' : '#FAFAFA' }]}
+                
                     autoCorrect={false}
                     //placeholder={placeholder}
                     secureTextEntry={hidePassWord}
@@ -74,14 +69,14 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
                     onFocus={() => {
                         setIsFocus(!isFocus)
                         onFocus()
-                        handleFocus
+                        setIsFocusPlacehoder(true)
+                        
                     }}
                     onBlur={() => { 
-                        setIsFocus(!isFocus)
-                        inputs!==''?setIsFocusPlacehoder(true):setIsFocusPlacehoder(false)//console.log("dungs"):console.log("sai")           
-                    }
-                   
-                    }
+                        setIsFocus(!isFocus)                    
+                       inputs!==''?setIsFocusPlacehoder(true):setIsFocusPlacehoder(false)                         
+                    }}
+                    ref={textInputRef}
                     {...props}
                 >
                 </TextInput>
@@ -128,10 +123,8 @@ const styles = StyleSheet.create({
     },
     placeholder: {
         position: 'absolute',
-        left: 40,
-        top: 15,
-        color: '#999',
-        zIndex:10,
-        backgroundColor:'red'
+        left: 35,
+        zIndex:1,
+        pointerEvents:'none',
       },
 })

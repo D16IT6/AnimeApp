@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { WelcomeScreen, LoginScreen, SignUpScreen, LoginMethodScreen, ResetWelcome} from '../../Screens/AuthScreens'
-import { HomeScreen, MainNavigationBar } from '../../Screens/homeScreen'
+import { HomeScreen, MainNavigationBar,HitAnime } from '../../Screens/homeScreen'
 import { AuthScreenNavigationProps } from "./Type"
 import { AuthRoutes } from './Routes'
 import { getItem } from '../../utils/asyncStorage'
@@ -42,14 +42,14 @@ const AuthNavigator = () => {
   }
   else {
     return (
-      <Stack.Navigator initialRouteName={AuthRoutes.MainNavigationBar}>  
+      <Stack.Navigator initialRouteName={AuthRoutes.HitAnime}>  
         <Stack.Screen name={AuthRoutes.ResetWelcome} component={ResetWelcome}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.SignUp} component={SignUpScreen} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.MainNavigationBar} component={MainNavigationBar} options={{ headerShown: false }}></Stack.Screen>
-        <Stack.Screen name={AuthRoutes.HomeScreen} component={HomeScreen} options={{ headerShown: false }}></Stack.Screen>
-        
+        {/* <Stack.Screen name={AuthRoutes.HomeScreen} component={HomeScreen} options={{ headerShown: false }}></Stack.Screen> */}
+        <Stack.Screen name={AuthRoutes.HitAnime} component={HitAnime} options={{ headerShown: false }}></Stack.Screen>
       </Stack.Navigator>
     )
   }

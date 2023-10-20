@@ -102,7 +102,7 @@ export default function SignUpScreen() {
             }}
             onChangeText={(text: string) => handleOnChange(text, 'password')}//(text: string) => handleOnChange(text, 'password')
           />
-          <CheckedAuthScreen/>
+          {/* <CheckedAuthScreen/> */}
           <ButtonAuthScreen
             title='Đăng Ký'
             onPress={() => { 
