@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { PrimaryColor } from "../Colors";
 
 const { width, height } = Dimensions.get('window')
-interface InputAuthScreenProps {
+type InputAuthScreenProps = {
     placeholder: string;
     iconName: string;
     error?: string;

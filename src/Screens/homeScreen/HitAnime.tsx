@@ -1,60 +1,14 @@
 import React, { useState } from "react";
-import { Text,View,SafeAreaView, FlatList, StyleSheet, Dimensions,Image, TouchableOpacity } from "react-native";
+import { Text,View,SafeAreaView, FlatList, StyleSheet, Dimensions,Image, TouchableOpacity ,Alert} from "react-native";
 //import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { useNavigation } from '@react-navigation/native'
 import { PrimaryColor } from "../../common/Colors";
 import { Loader } from "../../common/component";
-
+import { NavagitonTop } from "../../common/component/index";
+import { listHotAnimeData } from "../../utils/data";
 const{height,width} =Dimensions.get("window");
-const listHotAnimeData = [
-    {
-      id: '1',
-      name:'Attack on Titan Final Season Part 2',
-      year:2022,
-      contry:'Japan',
-      genre:'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-      url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
-      rating: 9.7
-    },
-    {
-      id: '2',
-      name:'Attack on Titan Final Season Part 2',
-      year:2022,
-      contry:'Japan',
-      genre:'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-      url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/4sutpRK.jpg',
-      rating: 9.6
-    },
-    {
-      id: '3',
-      name:'Attack on Titan Final Season Part 2',
-      year:2022,
-      contry:'Japan',
-      genre:'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-        url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
-      rating: 9.1
-    },
-    {
-        id: '4',
-        name:'Attack on Titan Final Season Part 2',
-      year:2022,
-      contry:'Japan',
-      genre:'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-       url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
-        rating: 9.0
-      },
-      {
-        id: '5',
-        name:'Attack on Titan Final Season Part 2',
-      year:2022,
-      contry:'Japan',
-      genre:'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-       url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
-        rating: 9.8
-      },
-  ];
 interface listAnimeProps {
     id:string,
     name:string,
@@ -64,10 +18,17 @@ interface listAnimeProps {
     url:string,  
     rating:Number,
 }
+const getItem = (item:any) =>{
+  Alert.alert(`Ban dang xem ${item.id} va${item.name}`)
+}
 const ListAnimeHot=({item}:{item:listAnimeProps})=>{
   const [addMyList,setAddMyList]=useState(false);
     return(
-        <View style={styles.containerAnime}>
+        <TouchableOpacity style={styles.containerAnime}
+        onPress={()=>{
+          getItem(item)
+        }}
+        >
             <View style={styles.container_image_raiting}>
                  <Image source={{uri:item.url}}
                     style={styles.image}
@@ -90,7 +51,7 @@ const ListAnimeHot=({item}:{item:listAnimeProps})=>{
                 ]}>My List</Text>
             </TouchableOpacity>
            </View>     
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -98,19 +59,17 @@ const HitAnime =()=>{
     const navigation =useNavigation<AuthScreenNavigationProps>();
     return(
     <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-        <Ionicons name='arrow-back'
-          onPress={() => {
-            navigation.navigate(AuthRoutes.MainNavigationBar);
-          }}
-          size={30} color='#212121' />
-          <Text style={styles.headerTitle}>Top Hits Anime</Text>
-          <Ionicons name='search'
-          onPress={() => {
-            navigation.goBack();
-          }}
-          size={30} color='#212121' />
-        </View>
+      <NavagitonTop
+      title="Top Hits Anime"
+      OnPressArrowBack ={
+        ()=>{
+          navigation.navigate(AuthRoutes.MainNavigationBar);
+        }}
+      OnPressSearch={()=>{
+        Alert.alert("search")
+      }}
+      search={true}
+      />
         <FlatList 
         data={listHotAnimeData}
         keyExtractor={(item:any) => item.id}
@@ -136,20 +95,7 @@ const styles=StyleSheet.create({
         flex:1,
         backgroundColor:'#FFFFFF'
     },
-    header:{
-        flexDirection:'row',
-        height:height*0.06,
-        alignItems:'center',
-        paddingHorizontal:10
-    },
-    headerTitle:{
-        flex:1,
-        color:"#212121",
-        fontFamily:"Urbanist",
-        fontWeight:"bold",
-        fontSize:20,
-        marginHorizontal:20,
-    },
+    
     containerAnime:{
         paddingHorizontal:20,
         height:height*0.2,

@@ -8,6 +8,8 @@ enum AuthRoutes {
     MainNavigationBar ="MainNavigationBar",
     MyListSreen ="MyListSreen",
     ProfileScreen ="ProfileScreen",
-    HitAnime ="HitAnime"
+    HitAnime ="HitAnime",
+    NewEpisodeReleases="NewEpisodeReleases",
+    Notification="Notification"
 };
 export { AuthRoutes }

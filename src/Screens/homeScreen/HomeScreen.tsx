@@ -10,6 +10,7 @@ import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PrimaryColor } from "../../common/Colors";
 import { Double } from "react-native/Libraries/Types/CodegenTypes";
+import { listHotAnimeData,listNewEpisodeReleases } from "../../utils/data";
 const Tab = createBottomTabNavigator();
 const anime = {
     id:1,
@@ -19,64 +20,21 @@ const anime = {
 }
 const {width,height} =Dimensions.get('window')
 
-const listHotAnimeData = [
-    {
-      id: '1',
-      url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
-      rating: 9.7
-    },
-    {
-      id: '2',
-      url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/4sutpRK.jpg',
-      rating: 9.6
-    },
-    {
-      id: '3',
-     url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
-      rating: 9.1
-    },
-    {
-        id: '4',
-       url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
-        rating: 9.0
-      },
-      {
-        id: '5',
-       url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
-        rating: 9.8
-      },
-  ];
-const listNewEpisodeReleases =[
-        {
-          id: '1',
-          url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
-          rating: 9.8
-        },
-        {
-          id: '2',
-          url: 'http://172.234.73.7/Uploads/Images/may01.jpg',
-          rating: 9.8
-        },
-        {
-          id: '3',
-         url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
-          rating: 9.8
-        },
-      ];
+
 
 interface listAnimeProps {
     id:string,
     url:string,
     rating:Double
 }
-const ListAnime= ({item,index}:{item:listAnimeProps,index:Number})=>{
+const ListAnime= ({item,index}:{item:listAnimeProps,index:number})=>{
     return(
     <View style={styles.containerAnime}>
         <Image source={{uri:item.url}}
         style={styles.imageAnime}
         />      
     <Text style={styles.ratingAnime}>{item.rating}</Text>
-    <Text style={styles.topOrderAnime}>{index.toString()}</Text>
+    <Text style={styles.topOrderAnime}>{index+1}</Text>
     </View>
     
     )
@@ -84,15 +42,15 @@ const ListAnime= ({item,index}:{item:listAnimeProps,index:Number})=>{
 const HomeScreen = () =>{
     const navigation = useNavigation<AuthScreenNavigationProps>();
     return(
-        <SafeAreaView style={styles.container}>
-            
-            
+        <SafeAreaView style={styles.container}>  
                 <ImageBackground source={require('../../assets/images/demon_slayder.png')} style={styles.top} >
                     <View style={styles.topheader}>
                         <Image source={require('../../assets/images/logo.png')} style={styles.topLogo} resizeMode="contain"></Image>
                         <View style={styles.topTools}>
                             <Ionicons name="search" color={'#fff'} size={25}></Ionicons>
-                            <FontAwesomeIcons name="bell" color={'#fff'} size={25}></FontAwesomeIcons>
+                            <FontAwesomeIcons name="bell" color={'#fff'} size={25}
+                            onPress={()=>navigation.navigate(AuthRoutes.Notification)}
+                            ></FontAwesomeIcons>
                         </View>
                     </View>
                     
@@ -134,7 +92,7 @@ const HomeScreen = () =>{
             <View style={styles.toplist}>
                     <Text style={styles.titlelist}>New Episode Releases</Text>
                 <Text style={styles.buttonlist}
-                onPress={()=>{}}
+                onPress={()=>{navigation.navigate(AuthRoutes.NewEpisodeReleases)}}
                 >See all</Text>
                  
             </View>
@@ -142,6 +100,7 @@ const HomeScreen = () =>{
                  <FlatList
                  horizontal={true}
                  data={listNewEpisodeReleases}
+                 
                  keyExtractor={(item:any) => item.id}
                  renderItem={({item,index}:{item:listAnimeProps,index:number})=><ListAnime item={item} index={index}/>}
                  />   

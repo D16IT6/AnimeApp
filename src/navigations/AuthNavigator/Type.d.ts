@@ -10,6 +10,8 @@ export type AuthStackParamList = {
     MyListSreen:undefined;
     ProfileScreen:undefined,
     HitAnime:undefined,
+    NewEpisodeReleases:undefined,
+    Notification:undefined
 };
 type AuthScreenNavigationProps = NativeStackScreenProps<
     AuthStackParamList,
@@ -22,6 +24,8 @@ type AuthScreenNavigationProps = NativeStackScreenProps<
     MainNavigationBar,
     MyListSreen,
     ProfileScreen,
-    HitAnime 
+    HitAnime ,
+    NewEpisodeReleases,
+    Notification
 >
  export { AuthScreenNavigationProps, AuthStackParamList };
