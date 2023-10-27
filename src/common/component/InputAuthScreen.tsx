@@ -1,36 +1,37 @@
 import React, { useState,useRef } from "react";
-import { View, Text, TextInput, StyleSheet ,Animated, Dimensions } from "react-native";
+import { View, Text, TextInput, StyleSheet ,Animated, Dimensions, StyleProp, ViewStyle } from "react-native";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import { PrimaryColor } from "../Colors";
+import { Color } from "../Colors";
 
 const { width, height } = Dimensions.get('window')
 type InputAuthScreenProps = {
     placeholder: string;
     iconName: string;
     error?: string;
-    password: boolean;
+    password?: boolean;
     onFocus: Function;
     onChangeText: (text: string) => void;
     children?: React.ReactNode;
+    style?:StyleProp<ViewStyle>
 }
 
 const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
     placeholder,
     iconName,
     error,
-    password,
+    password=false,
     onFocus,
     onChangeText,
+    style,
     ...props
 }) => {
     const [isFocus, setIsFocus] = useState(false)
-    const [hidePassWord, setHidePassword] = useState(false)
+    const [showPassWord, setShowPassword] = useState(false)
     const [isFocusPlacehoder, setIsFocusPlacehoder] = useState(false)
     const [inputs,setInputs] =useState('')
- 
     const textInputRef = useRef<TextInput>(null);
-
+    
     const handleTextPress = () => {
         if (textInputRef.current) {
           textInputRef.current.focus();
@@ -41,27 +42,24 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
             <View style={[styles.inputContiner,
             {
                 backgroundColor: isFocus ? '#ebfaf1' : '#FAFAFA',
-                borderColor: error ? 'red' : isFocus ? PrimaryColor : '#FAFAFA' //neu loi do neu chon mau chinh else trang
-            }
+                borderColor: error ? 'red' : isFocus ? Color.PrimaryColor : '#FAFAFA' //neu loi do neu chon mau chinh else trang
+            },style
             ]}>
-                <FontAwesomeIcons name={iconName} size={20} color={isFocus ? PrimaryColor : "#9e9e9e"} style={{ marginRight: 5 }} />
+                <FontAwesomeIcons name={iconName} size={20} color={isFocus ? Color.PrimaryColor : "#9e9e9e"} style={{ marginRight: 5 }} />
                 <Text style={[styles.placeholder, 
-                    {top:isFocusPlacehoder ? -10 : 11,
+                    {top:isFocusPlacehoder ? 0 : 11,
                     fontSize:isFocusPlacehoder  ? 13 : 18,
-                    color:isFocusPlacehoder&&isFocus?PrimaryColor:'#999',
-                    backgroundColor:isFocusPlacehoder?'#fff':'#fafafa'
+                    color:isFocusPlacehoder&&isFocus?Color.PrimaryColor:'#999',       
                 }]
                 }
-                onPress={handleTextPress}
+                 onPress={handleTextPress}
                 >
                     {placeholder}
                 </Text>
                 <TextInput style={[styles.password, { backgroundColor: isFocus ? '#ebfaf1' : '#FAFAFA' }]}
                 
                     autoCorrect={false}
-                    //placeholder={placeholder}
-                    secureTextEntry={hidePassWord}
-                    // value={value}   
+                    secureTextEntry={!showPassWord&&password}
                     onChangeText={(text) => {
                         onChangeText(text)
                         setInputs(text)
@@ -76,17 +74,17 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
                         setIsFocus(!isFocus)                    
                        inputs!==''?setIsFocusPlacehoder(true):setIsFocusPlacehoder(false)                         
                     }}
-                    ref={textInputRef}
+                     ref={textInputRef}
                     {...props}
                 >
                 </TextInput>
                 {
                     password && (
-                        <MaterialCommunityIcons name={hidePassWord ? "eye" : "eye-off"}
+                        <MaterialCommunityIcons name={showPassWord ? "eye" : "eye-off"}
                             onPress={() => {
-                                setHidePassword(!hidePassWord)
+                                setShowPassword(!showPassWord)
                             }}
-                            size={20} color={isFocus ? PrimaryColor : "#9e9e9e"} />
+                            size={20} color={isFocus ? Color.PrimaryColor : "#9e9e9e"} />
                     )
                 }
 

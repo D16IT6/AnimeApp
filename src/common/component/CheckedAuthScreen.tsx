@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Dimensions ,TouchableOpacity} from "react-native";
-import { PrimaryColor } from "../Colors";
+import { Color } from "../Colors";
+import fontFamily from "../FontFamily";
+import fontSizes from "../FontSizes";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 
 interface CheckedAuthScreenProps {
@@ -16,7 +18,7 @@ const CheckedAuthScreen:React.FC<CheckedAuthScreenProps> = ( {onCheckedChange  }
     return(
         <View style={styles.container}>
             <TouchableOpacity  onPress={handleCheckedChange}
-            style={[styles.checkbox,{backgroundColor:isChecked?PrimaryColor:"#fff"}]}>      
+            style={[styles.checkbox,{backgroundColor:isChecked?Color.PrimaryColor:Color.SecondaryColor}]}>      
                {
                 isChecked&&(
                     <FontAwesomeIcons name="check" color={"#fff"} size={15}></FontAwesomeIcons>
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
         width:25,
         height:25,
         borderWidth:3,
-        borderColor:PrimaryColor,
+        borderColor:Color.PrimaryColor,
         borderRadius:7,
         justifyContent:'center',
         alignItems:'center',

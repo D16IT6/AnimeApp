@@ -2,10 +2,12 @@ import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, Dimensions } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Color } from "../Colors";
+import fontFamily from "../FontFamily";
 const {height,width} = Dimensions.get('window')
 
 type NavagitonTopProps={
-    title:string,
+    title?:string,
     OnPressArrowBack?:() => void,
     OnPressSearch?:() => void,
     search?:boolean,
@@ -14,7 +16,7 @@ type NavagitonTopProps={
 }
 const NavagitonTop=(props: NavagitonTopProps) => {
     const {
-        title,
+        title='',
         OnPressArrowBack=()=>{},
         OnPressSearch=()=>{},
         OnPressGroup=()=>{},
@@ -27,14 +29,14 @@ const NavagitonTop=(props: NavagitonTopProps) => {
                 onPress={() => {
                     OnPressArrowBack()
                 }}
-                size={30} color='#212121' />
+                size={30} color={Color.Black} />
             <Text style={styles.headerTitle}>{title}</Text>
             {search&&(
                 <Ionicons name='search'
                 onPress={() => {
                     OnPressSearch()
                 }}
-                size={30} color='#212121' />
+                size={30} color={Color.Black} />
             )}
             {group&&(
                 <MaterialCommunityIcons 
@@ -42,7 +44,7 @@ const NavagitonTop=(props: NavagitonTopProps) => {
                 onPress={() => {
                     OnPressGroup()
                 }}
-                size={30} color='#212121'>
+                size={30} color={Color.Black}>
 
                 </MaterialCommunityIcons>
             )
@@ -54,13 +56,15 @@ const styles = StyleSheet.create({
     header:{
         flexDirection:'row',
         height:height*0.06,
+        // flex:0.3,
         alignItems:'center',
-        paddingHorizontal:10
+        paddingHorizontal:10,
+        backgroundColor:Color.SecondaryColor
     },
     headerTitle:{
         flex:1,
-        color:"#212121",
-        fontFamily:"Urbanist",
+        color:Color.Black,
+        fontFamily:fontFamily.PrimaryFont,
         fontWeight:"bold",
         fontSize:20,
         marginHorizontal:20,

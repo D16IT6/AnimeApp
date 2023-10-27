@@ -1,21 +1,28 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Dimensions ,TouchableOpacity} from "react-native";
-import { PrimaryColor } from "../Colors";
-
+import { View, Text, TextInput, StyleSheet, Dimensions ,TouchableOpacity, StyleProp, ViewStyle, TextStyle} from "react-native";
+import { Color } from "../Colors";
+import fontFamily from "../FontFamily";
 const { width, height } = Dimensions.get('window')
 
-interface ButtonAuthScreenProps {
+type ButtonAuthScreenProps= {
     title: string;
-    onPress: () => void;
-    children?: React.ReactNode;
+    onPressBtn: () => void;
+    styleBtn?:StyleProp<ViewStyle>
+    styleTitle?:StyleProp<TextStyle>
   }
-  const ButtonAuthScreen: React.FC<ButtonAuthScreenProps> = ({ title, onPress = () => { } }) => {
+  const ButtonAuthScreen = (props:ButtonAuthScreenProps) => {
+    const{
+      title,
+      onPressBtn,
+      styleBtn,
+      styleTitle
+    } =props
     return (
-      <TouchableOpacity style={styles.buttoncontainer}
+      <TouchableOpacity style={[styles.buttoncontainer,styleBtn]}
         onPress={
-          onPress
+          onPressBtn
         }>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={[styles.title,styleTitle]}>{title}</Text>
       </TouchableOpacity>
     )
   }
@@ -24,7 +31,7 @@ const styles = StyleSheet.create({
     buttoncontainer: {  
         marginHorizontal: 24,
         flexDirection: 'row',
-        backgroundColor: PrimaryColor,
+        backgroundColor: Color.PrimaryColor,
         height: height * 0.07,
         justifyContent: 'center',
         alignItems: 'center',
@@ -33,8 +40,8 @@ const styles = StyleSheet.create({
         width: width * 0.9,
       },
     title:{
-        color:'#FFF',
-        fontFamily:'Urbanist',
+        color:Color.SecondaryColor,
+        fontFamily:fontFamily.PrimaryFont,
         fontSize:20
     },
 })

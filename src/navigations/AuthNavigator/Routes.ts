@@ -10,6 +10,8 @@ enum AuthRoutes {
     ProfileScreen ="ProfileScreen",
     HitAnime ="HitAnime",
     NewEpisodeReleases="NewEpisodeReleases",
-    Notification="Notification"
+    Notification="Notification",
+    SearchAnime="SearchAnime",
+    Filter="Filter"
 };
 export { AuthRoutes }

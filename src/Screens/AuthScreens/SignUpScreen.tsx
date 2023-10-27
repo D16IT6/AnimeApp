@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView, TextInputProps, Keyboard } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView, TextInputProps, Keyboard, ScrollView, StatusBar } from 'react-native'
 import React, { useState } from 'react'
 import { logo } from '../../common/Images'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -6,21 +6,24 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome'
-import { PrimaryColor, WhiteCustom, errorColor } from '../../common/Colors';
+import { Color } from '../../common/Colors';
 import { useNavigation } from '@react-navigation/native'
 import { AuthScreenNavigationProps, AuthRoutes } from '../../navigations/AuthNavigator';
-import { ButtonAuthScreen, CheckedAuthScreen, InputAuthScreen, LineAuthScreen,LinkAuthScreen,Loader } from '../../common/component';
+import { ButtonAuthScreen, CheckedAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthScreen,LinkAuthScreen,Loader, NavagitonTop } from '../../common/component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import fontSizes from '../../common/FontSizes';
 const { width, height } = Dimensions.get('window')
 export default function SignUpScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
   const [inputs, setInputs] = useState({
-    username: '',
-    password: ''
+    username:'',
+    password:'',
+    confilmPassword:''
   })
   interface Errors {
     username?: string;
     password?: string;
+    confilmPassword?:string;
   }
   const [errors, setErrors] = useState<Errors>({})
   const [loading,setLoading] =useState(false)
@@ -40,6 +43,11 @@ export default function SignUpScreen() {
       handleError("Mật khẩu phải trên 5 kí tự !", "password")
       isValid = false;
     }
+    if(inputs.password!==inputs.confilmPassword)
+    {
+      handleError("Xác nhận mật khẩu không đúng !", "confilmPassword")
+      isValid =false;
+    }
     if(isValid)
     {
       regisiter()
@@ -56,9 +64,7 @@ export default function SignUpScreen() {
         Alert.alert("Error","Có lỗi rồi!!!")
       }
     }, 3000);
-
   }
-  
   const handleOnChange = (text: any, input: string) => {
     setInputs(prevState => ({ ...prevState, [input]: text }))
   }
@@ -66,24 +72,21 @@ export default function SignUpScreen() {
     setErrors(prevState => ({ ...prevState, [input]: errorMessage }))
   }
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingContainer style={styles.container}>
     <Loader visible={loading} />
-      <View style={styles.navigation}>
-        <Ionicons name='arrow-back'
-          onPress={() => {
-            navigation.navigate(AuthRoutes.LoginMethod)
-
-          }}
-          size={30} color='#212121' />
-      </View>
+      <NavagitonTop
+      OnPressArrowBack={ 
+        ()=>{navigation.navigate(AuthRoutes.LoginMethod)}
+      }
+      />
       <View style={styles.header}>
         <Image source={logo} style={styles.logo}></Image>
 
         <Text style={styles.title}>Tạo tài khoản của bạn</Text>
       </View>
-      <KeyboardAvoidingView style={styles.contentSignUp}>     
+      <View style={styles.contentSignUp}>      
           <InputAuthScreen
-            placeholder="Nhập tài khoản"
+            placeholder="Tài Khoản"
             iconName="user"
             error={errors.username}
             password={false}
@@ -93,7 +96,7 @@ export default function SignUpScreen() {
             onChangeText={(text: string) => handleOnChange(text, 'username')}
           />
           <InputAuthScreen
-            placeholder="Nhập mật khẩu"
+            placeholder="Mật Khẩu"
             iconName="lock"
             error={errors.password}
             password={true}
@@ -101,7 +104,18 @@ export default function SignUpScreen() {
               handleError(null, "password")
             }}
             onChangeText={(text: string) => handleOnChange(text, 'password')}//(text: string) => handleOnChange(text, 'password')
-          />
+          />  
+             <InputAuthScreen
+            placeholder="Xác nhận mật khẩu"
+            iconName="lock"
+            error={errors.confilmPassword}
+            password={true}
+            onFocus={() => {
+              handleError(null, "confilmPassword")
+            }}
+            onChangeText={(text: string) => handleOnChange(text, 'confilmPassword')}//(text: string) => handleOnChange(text, 'password')
+          /> 
+          
           {/* <CheckedAuthScreen/> */}
           <ButtonAuthScreen
             title='Đăng Ký'
@@ -112,7 +126,7 @@ export default function SignUpScreen() {
           />
           <LineAuthScreen title="or continue with"/>
         
-      </KeyboardAvoidingView>
+      </View>
       <View style={styles.footer}>
           <View style={styles.containerMethodLogin}>
             <TouchableOpacity style={styles.methodlogin}>
@@ -133,47 +147,45 @@ export default function SignUpScreen() {
           textlink="Đăng Nhập"         
           ></LinkAuthScreen>
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingContainer>
   )
 
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  navigation: {
-    //flex: 0.5,
-    backgroundColor: '#ffffff',
-    paddingLeft:10
+    //  flex: 1
+    // do dai man hinh - thanh trang thai
+    height:height-(StatusBar.currentHeight?StatusBar.currentHeight:0)
   },
   header: {
     flex: 2,
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: '#ffffff',
+    backgroundColor: Color.SecondaryColor,
   },
   logo: {
     height: 150,
     width: 150
   },
   title: {
-    fontSize: 23,
+    fontSize: fontSizes.h2,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: '#212121',
+    color: Color.Black,
     width: "100%",
     height: "20%",
   },
   contentSignUp: {
     flex: 3,
-    backgroundColor: '#ffffff',
+    backgroundColor: Color.SecondaryColor,
     justifyContent: 'space-evenly',
-    alignItems: 'center'
+    alignItems: 'center',
+    
   },
   footer: {
     flex: 1,
     justifyContent:'space-around',
-    backgroundColor:'#fff'
+    backgroundColor:Color.SecondaryColor
   },
   containerMethodLogin:{
     flexDirection:'row',
@@ -183,7 +195,7 @@ const styles = StyleSheet.create({
   methodlogin:{
     width:"20%",  
     height:height*0.07,
-    backgroundColor:'#fff',
+    backgroundColor:Color.SecondaryColor,
     borderRadius:16,
     justifyContent:'center',
     alignItems:'center',

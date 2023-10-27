@@ -4,10 +4,11 @@ import { Text,View,SafeAreaView, FlatList, StyleSheet, Dimensions,Image, Touchab
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { useNavigation } from '@react-navigation/native'
-import { PrimaryColor } from "../../common/Colors";
+import { Color } from "../../common/Colors";
 import { Loader } from "../../common/component";
 import { NavagitonTop } from "../../common/component/index";
 import { listHotAnimeData } from "../../utils/data";
+import fontFamily from "../../common/FontFamily";
 const{height,width} =Dimensions.get("window");
 interface listAnimeProps {
     id:string,
@@ -42,12 +43,12 @@ const ListAnimeHot=({item}:{item:listAnimeProps})=>{
             <Text style={styles.genreAnime}>Genre: {item.genre}</Text>
             <TouchableOpacity 
             style={[styles.btnAddMylist,
-            {backgroundColor:addMyList?"#fff":PrimaryColor}]}
+            {backgroundColor:addMyList?"#fff":Color.PrimaryColor}]}
             onPress={()=>{setAddMyList(!addMyList)
             }}>
-              <Ionicons name={addMyList?"checkmark":"add"} size={20} color={addMyList?PrimaryColor:"#ffffff"}></Ionicons>
+              <Ionicons name={addMyList?"checkmark":"add"} size={20} color={addMyList?Color.PrimaryColor:"#ffffff"}></Ionicons>
               <Text style={[styles.btnText,
-                {color:addMyList?PrimaryColor:"#ffffff"}
+                {color:addMyList?Color.PrimaryColor:"#ffffff"}
                 ]}>My List</Text>
             </TouchableOpacity>
            </View>     
@@ -93,7 +94,7 @@ export default HitAnime
 const styles=StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'#FFFFFF'
+        backgroundColor:Color.SecondaryColor
     },
     
     containerAnime:{
@@ -115,11 +116,11 @@ const styles=StyleSheet.create({
         position:'absolute',
         top:10,
         left:10,
-        backgroundColor:PrimaryColor,
+        backgroundColor:Color.PrimaryColor,
         textAlign:'center',
         width:30,
         height:20,
-        color:"#fff",
+        color:Color.SecondaryColor,
         borderRadius:5
     },
     contentAnime:{
@@ -129,8 +130,8 @@ const styles=StyleSheet.create({
     nameAnime:{
       fontSize:20,
       fontWeight:"bold",
-      color:"#212121",
-      fontFamily:"Urbanist"
+      color:Color.Black,
+      fontFamily:fontFamily.PrimaryFont
     },
     year_contryAnime:{
       marginVertical:10,
@@ -151,12 +152,12 @@ const styles=StyleSheet.create({
       justifyContent:'space-evenly',
       flexDirection:'row',
       borderRadius:20,
-      borderColor:PrimaryColor,
+      borderColor:Color.PrimaryColor,
       borderWidth:2
     },
     btnText:{
         fontWeight:'600',
         fontSize:16,
-        fontFamily:'Urbanist'
+        fontFamily:fontFamily.PrimaryFont
     }
 })

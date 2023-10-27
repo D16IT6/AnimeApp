@@ -286,4 +286,69 @@ const listNotification = [
     notification_period:"22/10/2023"
   },
 ];
-export { listNewEpisodeReleases, listHotAnimeData ,listNotification} 
+// const loginApi = mainApiUrl + '/Auth'
+// export function getList() {
+//   return fetch('http://localhost:3333/list')
+//     .then(data => data.json())
+// }
+const listSearch:any[] = [
+  {
+    id: '1',
+    name: 'Attack on Titan Final Season Part 2',
+    year: 2022,
+    contry: 'Japan',
+    genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
+    url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
+    rating: 9.7,
+    episode: 10,
+    notification_period:"22/10/2023"
+  },
+  {
+    id: '2',
+    name: 'Attack on Titan Final Season Part 2',
+    year: 2022,
+    contry: 'Japan',
+    genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
+    url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
+    rating: 9.7,
+    episode: 10,
+    notification_period:"22/10/2023"
+  },
+]
+
+const listSort=[
+  {
+    id:1,
+    name:"Popularity"
+  },
+  {
+    id:2,
+    name:"Popularity"
+  },
+  {
+    id:3,
+    name:"Popularity"
+  },
+  {
+    id:4,
+    name:"Popularity"
+  },
+  {
+    id:5,
+    name:"Popularity"
+  },
+  {
+    id:6,
+    name:"Popularity"
+  },
+  {
+    id:7,
+    name:"Popularity Popularity Popularity" 
+  },
+  {
+    id:8,
+    name:"Popularity"
+  },
+  
+]
+export { listNewEpisodeReleases, listHotAnimeData ,listNotification,listSearch,listSort} 

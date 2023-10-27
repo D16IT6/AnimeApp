@@ -1,12 +1,14 @@
 import React from "react";
 import { View,Text ,Dimensions,StyleSheet, ActivityIndicator} from "react-native";
-import { PrimaryColor } from "../Colors";
+import { Color } from "../Colors";
+import fontFamily from "../FontFamily";
+import fontSizes from "../FontSizes";
 const {width,height} =Dimensions.get('window')
 const Loader = ({visible}:{visible:boolean}) =>{
     return(visible&&(
         <View style={styles.container}>
             <View style={styles.loader}>
-             <ActivityIndicator size="large"  color={PrimaryColor} style={{flex:1}}/>   
+             <ActivityIndicator size="large"  color={Color.PrimaryColor} style={{flex:1}}/>   
              <Text style={styles.textLoader}>Loading....</Text>      
             </View>
         </View>
@@ -28,14 +30,14 @@ const styles = StyleSheet.create({
     loader:{
         height:height*0.1,
         width:width*0.8,
-        backgroundColor:'#FFF',
+        backgroundColor:Color.SecondaryColor,
         borderRadius:10,
         flexDirection:'row',         
     },
     textLoader:{
         flex:3,
         paddingVertical:30,
-        color:"#212121",
+        color:Color.Black,
         fontSize:20,       
     }
    

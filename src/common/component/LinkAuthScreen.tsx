@@ -1,6 +1,8 @@
 import React  from "react";
 import { View, Text ,StyleSheet,TouchableOpacity}  from "react-native";   
-import { PrimaryColor } from "../Colors";
+import { Color } from "../Colors";
+import fontFamily from "../FontFamily";
+import fontSizes from "../FontSizes";
 interface LinkAuthScreenProps {
     title:string,
     onPress:Function,
@@ -24,15 +26,15 @@ const styles= StyleSheet.create({
         justifyContent:'center',
       },
       title: {
-        fontSize: 13,
-        fontFamily: 'Urbanist',
+        fontSize: fontSizes.h4,
+        fontFamily: fontFamily.PrimaryFont,
         paddingHorizontal:6,
         color:"#9E9E9E"
       },
       link: {
-        color: PrimaryColor,
-        fontSize: 13,
-        fontFamily: 'Urbanist'
+        color: Color.PrimaryColor,
+        fontSize: fontSizes.h4,
+        fontFamily: fontFamily.PrimaryFont
       },
 })
  

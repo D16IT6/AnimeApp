@@ -3,10 +3,11 @@ import { Text, View, SafeAreaView, FlatList, StyleSheet, Dimensions, Image, Touc
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { useNavigation } from '@react-navigation/native'
-import { PrimaryColor } from "../../common/Colors";
+import { Color } from "../../common/Colors";
 import { Loader } from "../../common/component";
 import { NavagitonTop } from "../../common/component";
 import { listNotification } from "../../utils/data";
+import fontFamily from "../../common/FontFamily";
 
 const { height, width } = Dimensions.get("window");
 
@@ -92,7 +93,7 @@ export default Notification
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: Color.SecondaryColor
   },
 
   containerAnime: {
@@ -117,11 +118,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     left: 10,
-    backgroundColor: PrimaryColor,
+    backgroundColor: Color.PrimaryColor,
     textAlign: 'center',
     width: 30,
     height: 20,
-    color: "#fff",
+    color: Color.SecondaryColor,
     borderRadius: 5
   },
   contentAnime: {
@@ -131,13 +132,13 @@ const styles = StyleSheet.create({
   nameAnime: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#212121",
-    fontFamily: "Urbanist"
+    color:Color.Black,
+    fontFamily: fontFamily.PrimaryFont
   },
   episodes: {
     color: "#424242",
     fontSize: 14,
-    fontFamily: 'Urbanist'
+    fontFamily: fontFamily.PrimaryFont
   },
   btnUpdate: {
     marginTop: 10,
@@ -153,8 +154,8 @@ const styles = StyleSheet.create({
   btnText: {
     fontWeight: '600',
     fontSize: 16,
-    fontFamily: 'Urbanist',
-    color:PrimaryColor
+    fontFamily: fontFamily.PrimaryFont,
+    color:Color.PrimaryColor
   },
   container_notification_period:{
   width:width*0.20,

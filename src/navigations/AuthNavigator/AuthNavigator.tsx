@@ -7,6 +7,8 @@ import { AuthScreenNavigationProps } from "./Type"
 import { AuthRoutes } from './Routes'
 import { getItem } from '../../utils/asyncStorage'
 import NewEpisodeReleases from '../../Screens/homeScreen/NewEpisodeReleases'
+import SearchAnime from '../../Screens/homeScreen/SearchAnime'
+import Filter from '../../Screens/homeScreen/Filter'
 const Stack = createNativeStackNavigator<AuthScreenNavigationProps>();
 
 
@@ -43,7 +45,7 @@ const AuthNavigator = () => {
   }
   else {
     return (
-      <Stack.Navigator initialRouteName={AuthRoutes.Notification}>  
+      <Stack.Navigator initialRouteName={AuthRoutes.Filter}>  
         <Stack.Screen name={AuthRoutes.ResetWelcome} component={ResetWelcome}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>
@@ -53,6 +55,9 @@ const AuthNavigator = () => {
         <Stack.Screen name={AuthRoutes.HitAnime} component={HitAnime} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.NewEpisodeReleases} component={NewEpisodeReleases} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.Notification} component={Notification} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.SearchAnime}component={SearchAnime} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.Filter}component={Filter} options={{ headerShown: false }}></Stack.Screen>
+        
       </Stack.Navigator>
     )
   }

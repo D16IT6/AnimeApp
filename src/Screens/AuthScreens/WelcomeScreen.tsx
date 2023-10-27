@@ -6,7 +6,9 @@ import { backgroundImage } from "../../common/Images";
 import Onboarding from "react-native-onboarding-swiper";
 import LottieView from "lottie-react-native";
 import { Button } from 'react-native-elements';
-import {WhiteCustom,PrimaryColor} from '../../common/Colors';
+import {Color} from '../../common/Colors';
+import fontFamily from "../../common/FontFamily";
+import fontSizes from "../../common/FontSizes";
 import { setItem } from "../../utils/asyncStorage";
 const{width,height} =Dimensions.get('window')
 
@@ -25,10 +27,10 @@ const WelcomeScreen = () => {
         let backgroundColor;
         let width;
         if (isLight) {
-          backgroundColor = selected ? PrimaryColor : '#e0e0e0';
+          backgroundColor = selected ? Color.PrimaryColor : '#e0e0e0';
           width=selected?30:10;
         } else {
-          backgroundColor = selected ? PrimaryColor : '#e0e0e0';
+          backgroundColor = selected ? Color.PrimaryColor : '#e0e0e0';
           width=selected?30:10;
         }
         return (         
@@ -36,7 +38,7 @@ const WelcomeScreen = () => {
             </View>          
         );
       };
-    const backgroundColor = (isLight:boolean) => (isLight ? '#fef3c7' : '#6d7594');
+    const backgroundColor = (isLight:boolean) => (isLight ? Color.SecondaryColor : '#9c30ff');
     const color = (isLight:boolean) => backgroundColor(!isLight);
     const Next =({isLight,...props}:{isLight:boolean})=>{
         return(
@@ -51,7 +53,7 @@ const WelcomeScreen = () => {
                 width: width*0.25,
                 backgroundColor: backgroundColor(isLight),
               }}
-                titleStyle={{ color: color(isLight),fontSize:width*0.025}}
+                titleStyle={{ color: color(isLight),fontSize:width*0.045}}
             {...props}
             
             />
@@ -70,7 +72,7 @@ const WelcomeScreen = () => {
                 width: width*0.25,
                 backgroundColor: backgroundColor(isLight),
               }}
-                titleStyle={{ color: color(isLight),fontSize:width*0.025 }}
+                titleStyle={{ color: color(isLight),fontSize:width*0.045 }}
             {...props}
             
             />
@@ -81,7 +83,7 @@ const WelcomeScreen = () => {
         <Button
             title={'Bắt Đầu'}
             buttonStyle={{
-                backgroundColor: "#a78bfa",
+                backgroundColor: "#3defc9",
               }}
               containerStyle={{
                 marginHorizontal:10,
@@ -89,7 +91,7 @@ const WelcomeScreen = () => {
                 width: width*0.25,
                 backgroundColor: backgroundColor(isLight),
               }}
-                titleStyle={{ color: color(isLight),fontSize:width*0.025 }}
+                titleStyle={{ color: color(isLight),fontSize:width*0.045 }}
             {...props}
             
             />
@@ -110,7 +112,7 @@ const WelcomeScreen = () => {
                     containerStyles={{paddingHorizontal:10}}
                     pages={[
                         {
-                            backgroundColor: '#6d7594',
+                            backgroundColor: Color.SecondaryColor,
                             image:(                        
                               <LottieView source={require("../../assets/animation/animation_anime.json") } style={styles.lottie} autoPlay loop></LottieView>                          
                             ),
@@ -118,7 +120,7 @@ const WelcomeScreen = () => {
                             subtitle: 'Trải nghiệm thế giới anime tuyệt vời trên điện thoại di động của bạn',
                         },
                         {
-                            backgroundColor: '#fef3c7',
+                            backgroundColor: '#9c30ff',
                             image: (
                                 <LottieView source={require("../../assets/animation/animation_listsearch.json")} style={styles.lottie} autoPlay loop />
                           ),
@@ -126,7 +128,7 @@ const WelcomeScreen = () => {
                             subtitle: 'Khám phá và xem hàng ngàn bộ anime yêu thích của bạn',
                         },
                         {
-                            backgroundColor: '#a78bfa',
+                            backgroundColor: '#3defc9',
                             image:(
                                 <LottieView source={require("../../assets/animation/animation_listlike.json")} style={styles.lottie}  autoPlay loop />
                             ),
@@ -152,10 +154,12 @@ const styles = StyleSheet.create({
         backgroundColor:'red'
     },
     title:{
-         fontFamily:'Urbanist',fontSize:width*0.1
+         fontFamily:fontFamily.PrimaryFont,
+         fontSize:width*0.1
     },
     subtitle:{
-         fontFamily:'Urbanist',fontSize:width*0.05
+         fontFamily:fontFamily.PrimaryFont,
+         fontSize:width*0.05
     }
 })
 export default WelcomeScreen

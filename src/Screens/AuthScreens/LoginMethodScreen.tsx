@@ -4,8 +4,10 @@ import { useNavigation } from '@react-navigation/native'
 import { AuthScreenNavigationProps, AuthRoutes, AuthNavigator } from "../../navigations/AuthNavigator";
 import { appleIcon, facebookIcon, googleIcon } from '../../common/Icons';
 import LottieView from 'lottie-react-native';
-import { PrimaryColor } from '../../common/Colors';
+import { Color } from '../../common/Colors';
 import { LineAuthScreen ,ButtonAuthScreen,LinkAuthScreen } from '../../common/component';
+import fontFamily from '../../common/FontFamily';
+import fontSizes from '../../common/FontSizes';
 const { width, height } = Dimensions.get('window')
 export default function LoginMethodScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
@@ -38,7 +40,7 @@ export default function LoginMethodScreen() {
         <ButtonAuthScreen 
         title ="Đăng nhập bằng tài khoản"
         onPress={()=>{
-          navigation.navigate(AuthRoutes.SignUp)
+          navigation.navigate(AuthRoutes.Login)
         }
         }
         >
@@ -58,7 +60,7 @@ export default function LoginMethodScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor:Color.SecondaryColor,
     justifyContent: 'center'
   },
   header: {
@@ -72,10 +74,10 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   title: {
-    fontSize: 30,
+    fontSize: fontSizes.title,
     textAlign:'center',
     fontWeight:'bold',
-    color: '#212121',
+    color: Color.Black,
     width: "100%",
     height: "20%",
   },
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
   buttonMethodLogin: {
     marginHorizontal: 24,
     flexDirection: 'row',
-    backgroundColor: '#FFF',
+    backgroundColor:Color.SecondaryColor,
     height: height * 0.06,
     justifyContent: 'center',
     alignItems: 'center',
@@ -97,9 +99,10 @@ const styles = StyleSheet.create({
   },
   textMethodLogin: {
     marginLeft: 10,
-    color: '#212121',
-    fontSize: 15,
-    fontFamily: 'Urbanist'
+    color: Color.Black,
+    fontSize: 16,
+    fontWeight:'600',
+    fontFamily: fontFamily.PrimaryFont
   },
  
   iconeMethodLogin: {

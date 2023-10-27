@@ -3,10 +3,11 @@ import { Text, View, SafeAreaView, FlatList, StyleSheet, Dimensions, Image, Touc
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { useNavigation } from '@react-navigation/native'
-import { PrimaryColor } from "../../common/Colors";
+import { Color } from "../../common/Colors";
 import { Loader } from "../../common/component";
 import { NavagitonTop } from "../../common/component";
 import { listNewEpisodeReleases } from "../../utils/data";
+import fontFamily from "../../common/FontFamily";
 
 const { height, width } = Dimensions.get("window");
 
@@ -78,7 +79,7 @@ export default NewEpisodeReleases
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF'
+        backgroundColor:Color.SecondaryColor
     },
     columnWrapper:{
         justifyContent: 'space-evenly',
@@ -96,24 +97,24 @@ const styles = StyleSheet.create({
     },
     ratingAnime:{
         position:"absolute",
-        backgroundColor:PrimaryColor,
+        backgroundColor:Color.PrimaryColor,
         left:10,
         top:10,
         width:30,
         borderRadius:5,
-        color:"#fff",
+        color:Color.SecondaryColor,
         textAlign:"center",
-        fontFamily:"Urbanist",
+        fontFamily:fontFamily.PrimaryFont,
         fontSize:15
     },
     episodeAnime:{
         position:"absolute",
         bottom:10,
         left:10,
-        color:"#fff",
-        backgroundColor:PrimaryColor,
+        color:Color.SecondaryColor,
+        backgroundColor:Color.PrimaryColor,
         textAlign:"center",
-        fontFamily:"Urbanist",
+        fontFamily:fontFamily.PrimaryFont,
         borderRadius:5,
         textAlignVertical:'center',
         width:90

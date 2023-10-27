@@ -1,5 +1,5 @@
 import React from "react";
-import{View ,Text, StyleSheet, ImageBackground,Image, Dimensions, TouchableOpacity,FlatList} from "react-native"
+import{View ,Text, StyleSheet, ImageBackground,Image, Dimensions, TouchableOpacity,FlatList, ScrollView} from "react-native"
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; 
 import { AuthNavigator, AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
@@ -8,9 +8,10 @@ import { useNavigation } from '@react-navigation/native'
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 import { SafeAreaView } from "react-native-safe-area-context";
-import { PrimaryColor } from "../../common/Colors";
+import { Color } from "../../common/Colors";
 import { Double } from "react-native/Libraries/Types/CodegenTypes";
 import { listHotAnimeData,listNewEpisodeReleases } from "../../utils/data";
+import fontFamily from "../../common/FontFamily";
 const Tab = createBottomTabNavigator();
 const anime = {
     id:1,
@@ -47,8 +48,8 @@ const HomeScreen = () =>{
                     <View style={styles.topheader}>
                         <Image source={require('../../assets/images/logo.png')} style={styles.topLogo} resizeMode="contain"></Image>
                         <View style={styles.topTools}>
-                            <Ionicons name="search" color={'#fff'} size={25}></Ionicons>
-                            <FontAwesomeIcons name="bell" color={'#fff'} size={25}
+                            <Ionicons name="search" color={Color.SecondaryColor} size={25}></Ionicons>
+                            <FontAwesomeIcons name="bell" color={Color.SecondaryColor} size={25}
                             onPress={()=>navigation.navigate(AuthRoutes.Notification)}
                             ></FontAwesomeIcons>
                         </View>
@@ -61,11 +62,11 @@ const HomeScreen = () =>{
                         <Text style={styles.categoryAnime}>Action, Shounen, Martial Arts, Adventure, ...</Text>
                         <View style={styles.btn}>
                             <TouchableOpacity style={styles.btnPlay}>
-                            <Ionicons name="caret-forward-circle" color={'#fff'} size={20}></Ionicons>
+                            <Ionicons name="caret-forward-circle" color={Color.SecondaryColor} size={20}></Ionicons>
                             <Text style={styles.btnText}>Play</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.btnMylist}>
-                                <Ionicons name="add" color={'#fff'} size={20}></Ionicons>
+                                <Ionicons name="add" color={Color.SecondaryColor} size={20}></Ionicons>
                                 <Text style={styles.btnText}>My List</Text>
                             </TouchableOpacity>
                         </View>
@@ -73,7 +74,7 @@ const HomeScreen = () =>{
                     </View>
                 </ImageBackground>
                 
-            
+            <ScrollView>
             <View style={styles.hitanime}>
                 <View style={styles.toplist}>
                     <Text style={styles.titlelist}>Top Hits Anime</Text>
@@ -105,6 +106,7 @@ const HomeScreen = () =>{
                  renderItem={({item,index}:{item:listAnimeProps,index:number})=><ListAnime item={item} index={index}/>}
                  />   
             </View>
+            </ScrollView>
         </SafeAreaView>
     )
 
@@ -146,14 +148,16 @@ const styles=StyleSheet.create({
     },
     nameAnime:{
         fontSize:24,
-        color:'#fff',
-        fontWeight:'bold',
-        fontFamily: 'Urbanist'
+        color:Color.SecondaryColor,
+        fontWeight:'700',
+        fontFamily: fontFamily.PrimaryFont
+        
     },
     categoryAnime:{
         fontSize:16,
-        color:'#fff',
-        fontFamily: 'Urbanist'
+        color:Color.SecondaryColor,
+        fontFamily: fontFamily.PrimaryFont,
+        fontWeight:'500'
     },
     btn:{
         flexDirection:'row',
@@ -161,14 +165,15 @@ const styles=StyleSheet.create({
         height:height*0.07
     },
     btnPlay:{
-        backgroundColor:PrimaryColor,
+        backgroundColor:Color.PrimaryColor,
         width:width*0.2,
         flexDirection:'row',
         justifyContent:'space-evenly',
         alignItems:'center',
         height:height*0.04,
         borderRadius:20,
-        marginRight:20
+        marginRight:20,
+        
     },
     btnMylist:{
         //backgroundColor:PrimaryColor,
@@ -179,15 +184,17 @@ const styles=StyleSheet.create({
         height:height*0.04,
         borderRadius:20,
         borderWidth:2,
-        borderColor:"#fff",
-    
+        borderColor:Color.SecondaryColor,
+        
     },
     btnText:{
-        color:'#fff'
+        color:Color.SecondaryColor,
+        fontWeight:"600"
     },
     hitanime:{
         paddingLeft:20,
         flex:2.5,
+        backgroundColor:Color.SecondaryColor
     },
     toplist:{
         flexDirection:'row',
@@ -197,13 +204,15 @@ const styles=StyleSheet.create({
     titlelist:{
         flex:1,
         fontSize:18,
-        color:'#212121'
+        color:Color.Black,
+        fontWeight:"700"
     },
     buttonlist:{
         width:width*0.2,
         fontSize:14,
         textAlign:'center',
-        color:PrimaryColor
+        fontWeight:"600",
+        color:Color.PrimaryColor
     },
     containerAnime:{
         position:'relative',
@@ -219,8 +228,8 @@ const styles=StyleSheet.create({
     },
     ratingAnime:{
         position:"absolute",
-        backgroundColor:PrimaryColor,
-        color:"#fff",
+        backgroundColor:Color.PrimaryColor,
+        color:Color.SecondaryColor,
         borderRadius:5,
         width:30,
         margin:10,
@@ -230,12 +239,13 @@ const styles=StyleSheet.create({
         position:'absolute',
         bottom:10,
         left:10,
-        color:"#fff",
+        color:Color.SecondaryColor,
         fontSize:35
     },   
     New_Episode_Releases:{
         flex:2.5,
-        paddingLeft:20
+        paddingLeft:20,
+        backgroundColor:Color.SecondaryColor
     },
 
 })
