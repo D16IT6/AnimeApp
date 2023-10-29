@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { WelcomeScreen, LoginScreen, SignUpScreen, LoginMethodScreen, ResetWelcome} from '../../Screens/AuthScreens'
-import { HomeScreen, MainNavigationBar,HitAnime, Notification } from '../../Screens/homeScreen'
+import { HomeScreen, MainNavigationBar,HitAnime, Notification,Filter,SearchAnime ,NewEpisodeReleases} from '../../Screens/homeScreen'
 import { AuthScreenNavigationProps } from "./Type"
 import { AuthRoutes } from './Routes'
 import { getItem } from '../../utils/asyncStorage'
-import NewEpisodeReleases from '../../Screens/homeScreen/NewEpisodeReleases'
-import SearchAnime from '../../Screens/homeScreen/SearchAnime'
-import Filter from '../../Screens/homeScreen/Filter'
+import { AnimeDetails } from '../../Screens/animeDetailsScreens'
 const Stack = createNativeStackNavigator<AuthScreenNavigationProps>();
 
 
@@ -45,7 +43,7 @@ const AuthNavigator = () => {
   }
   else {
     return (
-      <Stack.Navigator initialRouteName={AuthRoutes.Filter}>  
+      <Stack.Navigator initialRouteName={AuthRoutes.AnimeDetails}>  
         <Stack.Screen name={AuthRoutes.ResetWelcome} component={ResetWelcome}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>
@@ -57,6 +55,7 @@ const AuthNavigator = () => {
         <Stack.Screen name={AuthRoutes.Notification} component={Notification} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.SearchAnime}component={SearchAnime} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.Filter}component={Filter} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.AnimeDetails}component={AnimeDetails} options={{ headerShown: false }}></Stack.Screen>
         
       </Stack.Navigator>
     )

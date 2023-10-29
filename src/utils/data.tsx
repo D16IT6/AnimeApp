@@ -323,32 +323,17 @@ const listSort=[
   },
   {
     id:2,
-    name:"Popularity"
-  },
-  {
-    id:3,
-    name:"Popularity"
-  },
-  {
-    id:4,
-    name:"Popularity"
-  },
-  {
-    id:5,
-    name:"Popularity"
-  },
-  {
-    id:6,
-    name:"Popularity"
-  },
-  {
-    id:7,
-    name:"Popularity Popularity Popularity" 
-  },
-  {
-    id:8,
-    name:"Popularity"
-  },
-  
+    name:"Latest Release"
+  }, 
 ]
-export { listNewEpisodeReleases, listHotAnimeData ,listNotification,listSearch,listSort} 
+const listCategories=[
+  {
+    id:1,
+    name:"Episode"
+  },
+  {
+    id:2,
+    name:"Movie"
+  }, 
+]
+export { listNewEpisodeReleases, listHotAnimeData ,listNotification,listSearch,listSort,listCategories} 

@@ -7,49 +7,77 @@ import ButtonAuthScreen from "./ButtonAuthScreen"
 import { Color } from "../Colors"
 
 type AttributeProps ={
-    id: Number,
+    id: number,
     name:string,
-    selected:boolean,
+    selected?:boolean,
 }
 type SeletorAttribute ={
     listAttribute:AttributeProps[],
     title:string,
+    setListAttribute:any
+}
+type ItemSeletorProps ={
+    key?:number
+    Attribute:AttributeProps,
+    index?:number,
+    select:AttributeProps[],
+    setSelect:any
+}
+const handleOnpress =(props:ItemSeletorProps)=>{
+    const { Attribute, select, setSelect } = props;
+    const newAtribute = select.map((val)=>{
+        if(val.id===Attribute.id){
+            return{...val,selected:!val.selected}
+        }
+        else
+        return{...val,selected:false}
+    })
+    setSelect(newAtribute)
 }
 
-const ItemSeletor = (Attribute:AttributeProps,index:Number) =>{
-    const[isSeleted,setSeleted]=useState(false)
+const ItemSeletor = (props:ItemSeletorProps) =>{
+    const {
+        Attribute,
+        index,
+        select,
+        setSelect
+    }=props
     return(
        <TouchableOpacity style={[styles.BtnAttribute,
-       {backgroundColor:isSeleted?Color.PrimaryColor:Color.SecondaryColor}]}
-       onPress={()=>{setSeleted(!isSeleted)}}
+       {backgroundColor:Attribute.selected?Color.PrimaryColor:Color.SecondaryColor}]}
+       onPress={()=>{
+         handleOnpress({Attribute,select,setSelect})
+       }  
+        }
        >
             <Text style={[styles.nameAttribute,
-                {color:isSeleted?Color.SecondaryColor:Color.PrimaryColor}]}
+                {color:Attribute.selected?Color.SecondaryColor:Color.PrimaryColor}]}
                 >{Attribute.name}</Text>
        </TouchableOpacity>
     )
 }
 
-const SelectorAttribtute = (props:SeletorAttribute)=>{
-    const{
+const SelectorAttribtute = (props:SeletorAttribute )=>{
+    const {
         title,
-        listAttribute
+        listAttribute,
+        setListAttribute
     }=props
-    const listAtributeSeleted =listAttribute.map((listAttribute)=>
-    {
-        return{...listAttribute,seleted:false}
-    }
-    )
     return(
         <View style={styles.ContainerSeletor}>
-    <Text style={styles.textTitle}>{title}</Text>
-    <View style={styles.listSeletor}>
-    {
-        listAtributeSeleted.map(ItemSeletor)
-    }
+        <Text style={styles.textTitle}>{title}</Text>
+        <View style={styles.listSeletor}>
+        {listAttribute.map((attribute, index) => (
+        <ItemSeletor
+            key={attribute.id} // Thay 'id' bằng trường dữ liệu duy nhất trong attribute
+            Attribute={attribute}
+            index={index}
+            select={listAttribute}
+            setSelect={setListAttribute}
+        />
+        ))}
     </View>
     </View>
-   
     )
  }
 export default SelectorAttribtute

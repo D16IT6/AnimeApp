@@ -21,7 +21,7 @@ const anime = {
 }
 const {width,height} =Dimensions.get('window')
 
-
+// const navigation = useNavigation<AuthScreenNavigationProps>();
 
 interface listAnimeProps {
     id:string,
@@ -29,19 +29,24 @@ interface listAnimeProps {
     rating:Double
 }
 const ListAnime= ({item,index}:{item:listAnimeProps,index:number})=>{
+    const navigation = useNavigation<AuthScreenNavigationProps>();
     return(
-    <View style={styles.containerAnime}>
+    <TouchableOpacity style={styles.containerAnime}
+    onPress={()=>{
+         navigation.navigate(AuthRoutes.AnimeDetails)
+    }}
+    >
         <Image source={{uri:item.url}}
         style={styles.imageAnime}
         />      
     <Text style={styles.ratingAnime}>{item.rating}</Text>
     <Text style={styles.topOrderAnime}>{index+1}</Text>
-    </View>
+    </TouchableOpacity>
     
     )
 }
 const HomeScreen = () =>{
-    const navigation = useNavigation<AuthScreenNavigationProps>();
+     const navigation = useNavigation<AuthScreenNavigationProps>();
     return(
         <SafeAreaView style={styles.container}>  
                 <ImageBackground source={require('../../assets/images/demon_slayder.png')} style={styles.top} >

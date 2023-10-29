@@ -7,6 +7,7 @@ import NavagitonTop from "./NavigationTop"
 import Loader from "./Loader"
 import KeyboardAvoidingContainer from "./KeyBoardAvoidingContainer"
 import SelectorAttribtute from "./SelectorAttribtute"
+import DropdownComponent from "./DropDown"
 export{InputAuthScreen,
     ButtonAuthScreen,
     CheckedAuthScreen,
@@ -15,5 +16,6 @@ export{InputAuthScreen,
     Loader,
     NavagitonTop,
     KeyboardAvoidingContainer,
-    SelectorAttribtute
+    SelectorAttribtute,
+    DropdownComponent
 }

@@ -12,7 +12,9 @@ type NavagitonTopProps={
     OnPressSearch?:() => void,
     search?:boolean,
     group?:boolean,
-    OnPressGroup?:() => void
+    OnPressGroup?:() => void,
+    backgroudcolor?:any,
+    styleArrowBack?:any
 }
 const NavagitonTop=(props: NavagitonTopProps) => {
     const {
@@ -21,7 +23,7 @@ const NavagitonTop=(props: NavagitonTopProps) => {
         OnPressSearch=()=>{},
         OnPressGroup=()=>{},
         search=false,
-        group=false
+        group=false,
     } = props
     return (
         <View style={styles.header}>

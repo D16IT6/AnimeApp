@@ -12,6 +12,7 @@ enum AuthRoutes {
     NewEpisodeReleases="NewEpisodeReleases",
     Notification="Notification",
     SearchAnime="SearchAnime",
-    Filter="Filter"
+    Filter="Filter",
+    AnimeDetails="AnimeDetails"
 };
 export { AuthRoutes }

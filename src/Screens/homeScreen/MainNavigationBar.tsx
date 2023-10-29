@@ -12,7 +12,7 @@ const MainNavigationBar = ()=>{
 
     const tabOffsetValue = useRef(new Animated.Value(0)).current
     return(
-      <NavigationContainer independent={true}>
+       <View style={{flex:1}}>
     <Tab.Navigator 
     initialRouteName={AuthRoutes.HomeScreen}
    
@@ -88,8 +88,8 @@ const MainNavigationBar = ()=>{
          })}
          ></Tab.Screen>
     </Tab.Navigator>
-    <Animated.View style={[styles.Animatied,{ transform:[{translateX:tabOffsetValue}]}]}></Animated.View>
- </NavigationContainer>
+     <Animated.View style={[styles.Animatied,{ transform:[{translateX:tabOffsetValue}]}]}></Animated.View>
+     </View>
     )
 }
 function GetWidth(){

@@ -13,6 +13,7 @@ import { groupIcon } from "../../common/Icons";
 import LottieView from "lottie-react-native";
 import fontSizes from "../../common/FontSizes";
 import fontFamily from "../../common/FontFamily";
+import Filter from "./Filter";
 const { height, width } = Dimensions.get("window");
 
 type listAnimeProps ={
@@ -40,10 +41,15 @@ return(
 
 </TouchableOpacity>)
 }
+  
 const SearchAnime = () => {
     const [inputSearch, setInputSearch] = useState('')
 
     const navigation = useNavigation<AuthScreenNavigationProps>()
+
+    const GetlistAtitributeSelectedPR =(listSelected:any)=>{
+            console.log(listSelected)
+        }
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
@@ -62,6 +68,9 @@ const SearchAnime = () => {
                     <Image source={groupIcon}></Image>
                 </TouchableOpacity>
             </View>
+            <Filter 
+            GetlistAtitributeSelected={GetlistAtitributeSelectedPR}
+            />
             {listSearch.length != 0 && (
                 <FlatList
                     data={listSearch}
@@ -71,8 +80,6 @@ const SearchAnime = () => {
                     keyExtractor={(item) => item.id}
                 ></FlatList>
             )
-
-
             }
             {listSearch.length == 0 && (
                 <View style={styles.containerNotFound}>

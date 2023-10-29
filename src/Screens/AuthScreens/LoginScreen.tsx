@@ -125,7 +125,7 @@ export default function LoginMethodScreen() {
         <CheckedAuthScreen onCheckedChange={handleCheckedChange} />
         <ButtonAuthScreen
           title='Đăng nhập'
-          onPress={() => {
+          onPressBtn={() => {
             validate()
           }
           }
