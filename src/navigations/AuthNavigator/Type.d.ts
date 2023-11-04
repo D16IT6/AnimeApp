@@ -14,7 +14,9 @@ export type AuthStackParamList = {
     Notification:undefined,
     SearchAnime:undefined,
     Filter:undefined,
-    AnimeDetails:undefined
+    AnimeDetails:undefined,
+    CommentsScreens:undefined,
+    VideoPlayScreen:undefined
 };
 type AuthScreenNavigationProps = NativeStackScreenProps<
     AuthStackParamList,
@@ -32,6 +34,8 @@ type AuthScreenNavigationProps = NativeStackScreenProps<
     Notification,
     SearchAnime,
     Filter,
-    AnimeDetails
+    AnimeDetails,
+    CommentsScreens,
+    VideoPlayScreen
 >
  export { AuthScreenNavigationProps, AuthStackParamList };

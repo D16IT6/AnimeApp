@@ -1,3 +1,7 @@
 import AnimeDetails from "./AnimeDetails";
-
-export {AnimeDetails}
+import CommentsScreens from "./Comments";
+import VideoPlayScreen from "./VideoPlayScreen";
+export {AnimeDetails,
+    CommentsScreens,
+    VideoPlayScreen
+}

@@ -15,6 +15,9 @@ type NavagitonTopProps={
     OnPressGroup?:() => void,
     backgroudcolor?:any,
     styleArrowBack?:any
+    backgrourdColor?:any
+    titleStyle?:any
+    
 }
 const NavagitonTop=(props: NavagitonTopProps) => {
     const {
@@ -24,15 +27,17 @@ const NavagitonTop=(props: NavagitonTopProps) => {
         OnPressGroup=()=>{},
         search=false,
         group=false,
+        backgrourdColor=Color.SecondaryColor,
+        titleStyle
     } = props
     return (
-        <View style={styles.header}>
+        <View style={[styles.header,{backgroundColor:backgrourdColor}]}>
             <Ionicons name='arrow-back'
                 onPress={() => {
                     OnPressArrowBack()
                 }}
                 size={30} color={Color.Black} />
-            <Text style={styles.headerTitle}>{title}</Text>
+            <Text style={titleStyle?titleStyle:styles.headerTitle}>{title}</Text>
             {search&&(
                 <Ionicons name='search'
                 onPress={() => {
@@ -61,7 +66,6 @@ const styles = StyleSheet.create({
         // flex:0.3,
         alignItems:'center',
         paddingHorizontal:10,
-        backgroundColor:Color.SecondaryColor
     },
     headerTitle:{
         flex:1,

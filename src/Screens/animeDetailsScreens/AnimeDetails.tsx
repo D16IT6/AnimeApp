@@ -157,28 +157,17 @@ const AnimeDetails = () => {
                 <View style={styles.comments}>
                     <View style={styles.headerComments}>
                         <Text style={styles.quantityComment}>29.5K Comments</Text>
-                        <Text style={styles.seeAll}>See all</Text>
+                        <Text style={styles.seeAll}
+                        onPress={()=>{
+                            navigation.navigate(AuthRoutes.CommentsScreens)
+                        }}
+                        >See all</Text>
                     </View>
-                    <ScrollView>
-                        <View style={styles.contentComments}>
-                            <Image source={{ uri: "https://scontent.fhan15-2.fna.fbcdn.net/v/t39.30808-6/395546595_3670378293283977_6052018411163155572_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=RPZyqgAIlaEAX_WJVnT&_nc_ht=scontent.fhan15-2.fna&oh=00_AfA5-R4-nZ9Gs5cz_3wTVK0t58OzC_p2Oh3LnIO9AzozAw&oe=65433474" }}
-                                style={styles.backGroundUser}
-                            />
-                            <Text style={styles.nameUser}>Bố đời</Text>
-                            {/* <Text style={styles.textComments}>phim nhu cc</Text> */}
-                            <MaterialCommunityIcons 
-                                name='dots-horizontal-circle-outline'
-                                onPress={() => {
-                                    
-                                }}
-                                size={30} color={Color.Black}>
-
-                                </MaterialCommunityIcons>
-                        </View>
-                    </ScrollView>
+                     <ScrollView>
+                   </ScrollView>
 
 
-                </View>
+             </View>
             )
         }
     </SafeAreaView>
@@ -215,7 +204,6 @@ const styles = StyleSheet.create({
     },
     comments: {
         flex: 0.35,
-        backgroundColor: "green"
     },
     topEpisodes: {
         flexDirection: "row",
@@ -451,21 +439,21 @@ const styles = StyleSheet.create({
         alignItems:'center',
         paddingHorizontal:10
     },
-    backGroundUser: {
-        width:45,
-        height:45,
-        borderRadius:50
-    },
-    nameUser:{
-        marginLeft:20,
-        fontFamily: fontFamily.PrimaryFont,
-        fontSize: 20,
-        fontWeight: "700",
-        letterSpacing: 0.2,
-        color: Color.Black,
-        backgroundColor:"yellow",
-        flex:1
-    },
+    // backGroundUser: {
+    //     width:45,
+    //     height:45,
+    //     borderRadius:50
+    // },
+    // nameUser:{
+    //     marginLeft:20,
+    //     fontFamily: fontFamily.PrimaryFont,
+    //     fontSize: 20,
+    //     fontWeight: "700",
+    //     letterSpacing: 0.2,
+    //     color: Color.Black,
+    //     backgroundColor:"yellow",
+    //     flex:1
+    // },
     seeAll:{
         fontFamily: fontFamily.PrimaryFont,
         fontSize: 14,

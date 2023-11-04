@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   container: {
      //flex: 1
    // do dai man hinh - thanh trang thai
-   height:height-(StatusBar.currentHeight?StatusBar.currentHeight:0)
+    height:height-(StatusBar.currentHeight?StatusBar.currentHeight:0)
   },
   scrollViewContainer: {
     flexGrow: 1,

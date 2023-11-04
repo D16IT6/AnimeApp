@@ -3,6 +3,7 @@ var Color={
     SecondaryColor:"#FFFFFF",
     ErrorColor :"#FF9494",
     Black:"#212121",
+    Gray:"#616161",
     
 }
 export {Color}

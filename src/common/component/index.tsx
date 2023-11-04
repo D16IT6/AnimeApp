@@ -8,6 +8,7 @@ import Loader from "./Loader"
 import KeyboardAvoidingContainer from "./KeyBoardAvoidingContainer"
 import SelectorAttribtute from "./SelectorAttribtute"
 import DropdownComponent from "./DropDown"
+import {Comments,InputComment,Reply} from "./Comment"
 export{InputAuthScreen,
     ButtonAuthScreen,
     CheckedAuthScreen,
@@ -17,5 +18,6 @@ export{InputAuthScreen,
     NavagitonTop,
     KeyboardAvoidingContainer,
     SelectorAttribtute,
-    DropdownComponent
+    DropdownComponent,
+    Comments,InputComment,Reply
 }

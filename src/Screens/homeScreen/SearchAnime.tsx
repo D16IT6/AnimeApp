@@ -46,10 +46,6 @@ const SearchAnime = () => {
     const [inputSearch, setInputSearch] = useState('')
 
     const navigation = useNavigation<AuthScreenNavigationProps>()
-
-    const GetlistAtitributeSelectedPR =(listSelected:any)=>{
-            console.log(listSelected)
-        }
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
@@ -68,9 +64,6 @@ const SearchAnime = () => {
                     <Image source={groupIcon}></Image>
                 </TouchableOpacity>
             </View>
-            <Filter 
-            GetlistAtitributeSelected={GetlistAtitributeSelectedPR}
-            />
             {listSearch.length != 0 && (
                 <FlatList
                     data={listSearch}

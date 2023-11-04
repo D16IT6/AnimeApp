@@ -1,19 +1,21 @@
-import React, { useState,useRef } from "react";
+import React, { useState,useRef, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet ,Animated, Dimensions, StyleProp, ViewStyle } from "react-native";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+
 import { Color } from "../Colors";
 
 const { width, height } = Dimensions.get('window')
 type InputAuthScreenProps = {
     placeholder: string;
-    iconName: string;
+    iconName?: string;
     error?: string;
     password?: boolean;
-    onFocus: Function;
+    onFocus?: Function;
     onChangeText: (text: string) => void;
     children?: React.ReactNode;
-    style?:StyleProp<ViewStyle>
+    style?:StyleProp<ViewStyle>;
+    value?:any;
 }
 
 const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
@@ -21,9 +23,10 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
     iconName,
     error,
     password=false,
-    onFocus,
+    onFocus=()=>{},
     onChangeText,
     style,
+    value,
     ...props
 }) => {
     const [isFocus, setIsFocus] = useState(false)
@@ -32,12 +35,20 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
     const [inputs,setInputs] =useState('')
     const textInputRef = useRef<TextInput>(null);
     
+    useEffect(()=>{
+        if(inputs.length>0){
+            setIsFocusPlacehoder(true)
+            setInputs(value)
+        }
+        
+    },[inputs])
     const handleTextPress = () => {
         if (textInputRef.current) {
           textInputRef.current.focus();
         }
       };
     return (
+        <View>
         <View >
             <View style={[styles.inputContiner,
             {
@@ -45,7 +56,8 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
                 borderColor: error ? 'red' : isFocus ? Color.PrimaryColor : '#FAFAFA' //neu loi do neu chon mau chinh else trang
             },style
             ]}>
-                <FontAwesomeIcons name={iconName} size={20} color={isFocus ? Color.PrimaryColor : "#9e9e9e"} style={{ marginRight: 5 }} />
+                {iconName&&
+                <FontAwesomeIcons name={iconName} size={20} color={isFocus ? Color.PrimaryColor : "#9e9e9e"} style={{ marginRight: 5 }} />}
                 <Text style={[styles.placeholder, 
                     {top:isFocusPlacehoder ? 0 : 11,
                     fontSize:isFocusPlacehoder  ? 13 : 18,
@@ -56,10 +68,11 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
                 >
                     {placeholder}
                 </Text>
-                <TextInput style={[styles.password, { backgroundColor: isFocus ? '#ebfaf1' : '#FAFAFA' }]}
+                <TextInput style={[styles.input, { backgroundColor: isFocus ? '#ebfaf1' : '#FAFAFA' }]}
                 
                     autoCorrect={false}
                     secureTextEntry={!showPassWord&&password}
+                    value={value}
                     onChangeText={(text) => {
                         onChangeText(text)
                         setInputs(text)
@@ -67,8 +80,7 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
                     onFocus={() => {
                         setIsFocus(!isFocus)
                         onFocus()
-                        setIsFocusPlacehoder(true)
-                        
+                        setIsFocusPlacehoder(true)        
                     }}
                     onBlur={() => { 
                         setIsFocus(!isFocus)                    
@@ -87,14 +99,16 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
                             size={20} color={isFocus ? Color.PrimaryColor : "#9e9e9e"} />
                     )
                 }
-
+                           
             </View>
             {
                 error && (
                     <Text style={styles.error}>{error}</Text>
                 )
             }
+            
         </View>
+ </View>
     )
 }
 export default InputAuthScreen
@@ -107,11 +121,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1.5,
         borderColor: '#FAFAFA',
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
     },
-    password: {
+    input: {
         backgroundColor: '#FAFAFA',
-        flex: 1
+        flex: 1,
     },
     error: {
         color: "red",

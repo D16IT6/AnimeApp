@@ -126,8 +126,8 @@ const Filter = (props:any) => {
              <ButtonAuthScreen 
             title="Apply"
             onPressBtn={()=>{
-                GetlistAtitributeSelectedCR()
-                navigation.navigate(AuthRoutes.SearchAnime)   
+                //navigation.navigate(AuthRoutes.SearchAnime)   
+                console.log(listSelected)
             }}
             styleBtn={styles.btnApply}
             />

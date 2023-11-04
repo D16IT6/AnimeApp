@@ -114,12 +114,12 @@ export default function SignUpScreen() {
               handleError(null, "confilmPassword")
             }}
             onChangeText={(text: string) => handleOnChange(text, 'confilmPassword')}//(text: string) => handleOnChange(text, 'password')
-          /> 
-          
+            
+          />        
           {/* <CheckedAuthScreen/> */}
           <ButtonAuthScreen
             title='Đăng Ký'
-            onPress={() => { 
+            onPressBtn={() => { 
               validate()
             }
           }
