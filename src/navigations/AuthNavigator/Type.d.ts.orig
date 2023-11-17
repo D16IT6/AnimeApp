@@ -5,6 +5,9 @@ export type AuthStackParamList = {
     Login: undefined;
     LoginMethod: undefined;
     ResetWelcome:undefined;
+<<<<<<< HEAD
+  
+=======
     Home:undefined;
     MainNavigationBar:undefined;
     MyListSreen:undefined;
@@ -17,6 +20,7 @@ export type AuthStackParamList = {
     AnimeDetails:undefined,
     CommentsScreens:undefined,
     VideoPlayScreen:undefined
+>>>>>>> 1e5bb7d26490d3cb9ff11c70702fad921d966e7c
 };
 type AuthScreenNavigationProps = NativeStackScreenProps<
     AuthStackParamList,
@@ -25,6 +29,9 @@ type AuthScreenNavigationProps = NativeStackScreenProps<
     LoginScreen,
     LoginMethodScreen,
     ResetWelcome,
+<<<<<<< HEAD
+    
+=======
     HomeScreen,
     MainNavigationBar,
     MyListSreen,
@@ -37,5 +44,6 @@ type AuthScreenNavigationProps = NativeStackScreenProps<
     AnimeDetails,
     CommentsScreens,
     VideoPlayScreen
+>>>>>>> 1e5bb7d26490d3cb9ff11c70702fad921d966e7c
 >
  export { AuthScreenNavigationProps, AuthStackParamList };

@@ -53,7 +53,11 @@ const WelcomeScreen = () => {
                 width: width*0.25,
                 backgroundColor: backgroundColor(isLight),
               }}
+<<<<<<< HEAD
+                titleStyle={{ color: color(isLight),fontSize:width*0.025}}
+=======
                 titleStyle={{ color: color(isLight),fontSize:width*0.045}}
+>>>>>>> 1e5bb7d26490d3cb9ff11c70702fad921d966e7c
             {...props}
             
             />
@@ -72,7 +76,11 @@ const WelcomeScreen = () => {
                 width: width*0.25,
                 backgroundColor: backgroundColor(isLight),
               }}
+<<<<<<< HEAD
+                titleStyle={{ color: color(isLight),fontSize:width*0.025 }}
+=======
                 titleStyle={{ color: color(isLight),fontSize:width*0.045 }}
+>>>>>>> 1e5bb7d26490d3cb9ff11c70702fad921d966e7c
             {...props}
             
             />
@@ -91,7 +99,11 @@ const WelcomeScreen = () => {
                 width: width*0.25,
                 backgroundColor: backgroundColor(isLight),
               }}
+<<<<<<< HEAD
+                titleStyle={{ color: color(isLight),fontSize:width*0.025 }}
+=======
                 titleStyle={{ color: color(isLight),fontSize:width*0.045 }}
+>>>>>>> 1e5bb7d26490d3cb9ff11c70702fad921d966e7c
             {...props}
             
             />
