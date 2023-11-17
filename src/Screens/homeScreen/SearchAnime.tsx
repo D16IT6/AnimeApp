@@ -14,6 +14,7 @@ import LottieView from "lottie-react-native";
 import fontSizes from "../../common/FontSizes";
 import fontFamily from "../../common/FontFamily";
 import Filter from "./Filter";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const { height, width } = Dimensions.get("window");
 
 type listAnimeProps ={
@@ -44,7 +45,18 @@ return(
   
 const SearchAnime = () => {
     const [inputSearch, setInputSearch] = useState('')
-
+    AsyncStorage.getItem('listSelected').then((value) => {
+        // Kiểm tra nếu dữ liệu tồn tại
+        if (value) {
+          // Phân giải chuỗi JSON thành đối tượng JSON
+          const jsonData = JSON.parse(value);
+      
+          // Sử dụng dữ liệu
+          console.log(jsonData);
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
     const navigation = useNavigation<AuthScreenNavigationProps>()
     return (
         <SafeAreaView style={styles.container}>

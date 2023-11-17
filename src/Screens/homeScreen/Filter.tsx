@@ -5,32 +5,28 @@ import { useNavigation } from '@react-navigation/native'
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { Color } from "../../common/Colors";
 import { listCategories, listSort } from "../../utils/data";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const {width,height}=Dimensions.get("window")
+const { width, height } = Dimensions.get("window")
 
-const handleReset = (select:any, setSelect:any) => {
-    const newAttributes = select.map((attribute:any) => ({
-      ...attribute,
-      selected: false,
+const handleReset = (select: any, setSelect: any) => {
+    const newAttributes = select.map((attribute: any) => ({
+        ...attribute,
+        selected: false,
     }));
     setSelect(newAttributes);
-  };
+};
 
-const Filter = (props:any) => {
-    const {
-        GetlistAtitributeSelected,
-    }=props
-    console.log(GetlistAtitributeSelected)
+const Filter = () => {
+
     const navigation = useNavigation<AuthScreenNavigationProps>()
 
-    const [selectSort, setSelectSort] = useState(listSort.map((listAttribute)=>
-    {
-        return{...listAttribute,selected:false}
+    const [selectSort, setSelectSort] = useState(listSort.map((listAttribute) => {
+        return { ...listAttribute, selected: false }
     }
     ));
-    const [selectCategories, setSelectCategories] = useState(listCategories.map((listAttribute)=>
-    {
-        return{...listAttribute,selected:false}
+    const [selectCategories, setSelectCategories] = useState(listCategories.map((listAttribute) => {
+        return { ...listAttribute, selected: false }
     }
     ));
     // const [selectRegion, setSelectRegion] = useState(listSort.map((listAttribute)=>
@@ -48,28 +44,32 @@ const Filter = (props:any) => {
     //     return{...listAttribute,selected:false}
     // }
     // ));
+    const handleResetAll = () => {
+        handleReset(selectSort, setSelectSort);
+        handleReset(selectCategories, setSelectCategories);
+        // handleReset(selectRegion, setSelectRegion);
+        // handleReset(selectGenre, setSelectGenre);
+        // handleReset(selectReleaseYear, setSelectReleaseYear);
+    };
 
-    const GetlistAtitributeSelectedCR =()=>{
-        GetlistAtitributeSelected(listSelected)
+   //data
+    const jsonData = {
+        selectSort: selectSort.filter((attribute: any) => {
+            if (attribute.selected === true) {
+                return { ...attribute }
+            }   
+        }),
+        selectCategories: selectCategories.filter((attribute: any) => {
+            if (attribute.selected === true) {
+                return { ...attribute }
+            }
+        })
     }
 
-  const handleResetAll = () => {
-    handleReset(selectSort, setSelectSort);
-    handleReset(selectCategories, setSelectCategories);
-    // handleReset(selectRegion, setSelectRegion);
-    // handleReset(selectGenre, setSelectGenre);
-    // handleReset(selectReleaseYear, setSelectReleaseYear);
-  };
-  const listSelection=selectSort.concat(selectCategories)
-  const listSelected =listSelection.map((attribute:any)=>{
-    if(attribute.selected===true)
-    {
-        return{...attribute}
-    }
-})
-//   console.log(listSelection)
-    return(
-        <SafeAreaView style={styles.container}>
+
+
+        return(
+        <SafeAreaView style = { styles.container } >
             <NavagitonTop
             title="Sort & Filter"
             OnPressArrowBack={()=>{
@@ -126,37 +126,38 @@ const Filter = (props:any) => {
              <ButtonAuthScreen 
             title="Apply"
             onPressBtn={()=>{
-                //navigation.navigate(AuthRoutes.SearchAnime)   
-                console.log(listSelected)
+                navigation.navigate(AuthRoutes.SearchAnime)   
+                // console.log(JSON.stringify(jsonData))
+                AsyncStorage.setItem("listSelected",JSON.stringify(jsonData))
             }}
             styleBtn={styles.btnApply}
             />
             </View>
            
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 export default Filter
 
-const styles= StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:Color.SecondaryColor
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: Color.SecondaryColor
     },
-    buttonContainer:{
-        flexDirection:"row",
-        justifyContent:"space-around"
+    buttonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-around"
     },
-    btnApply:{
-        width:width*0.4,
+    btnApply: {
+        width: width * 0.4,
     },
-    btnReset:{
-        width:width*0.4,
-        backgroundColor:"#e6f9ed",
-        
+    btnReset: {
+        width: width * 0.4,
+        backgroundColor: "#e6f9ed",
+
     },
-    btnTitleReset:{
-        color:"#06C149"
+    btnTitleReset: {
+        color: "#06C149"
     },
-   
+
 })

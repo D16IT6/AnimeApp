@@ -12,53 +12,90 @@ import InputAuthScreen from "./InputAuthScreen";
 import Feather from "react-native-vector-icons/Feather"
 import EmojiPicker, {emojiFromUtf16} from "rn-emoji-picker"
 import {emojis} from "rn-emoji-picker/dist/data"
+import { getCommets } from "../../utils/data";
 const {height,width}= Dimensions.get('window')
-const Comments = ()=>{
-    const navigation = useNavigation<AuthScreenNavigationProps>();
+
+
+type CommentProps ={
+     id: string,
+        body: string,
+        username: string,
+        userId: string,
+        parentId?: null|string,
+        createdAt: string,
+    
+}
+type CommentsProps ={
+    comment:CommentProps,
+    replies:CommentProps[],
+   
+}
+const Comments = (props:CommentsProps)=>{
+    const{
+        comment,
+        replies
+    }=props
     return(
-        <View style={styles.containerComent}>
+        <View>
+            <View style={styles.containerComent}>
                         <View style={styles.headerComments}>
                             <Image source={{ uri: "https://scontent.fhan15-2.fna.fbcdn.net/v/t39.30808-6/395546595_3670378293283977_6052018411163155572_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=RPZyqgAIlaEAX_WJVnT&_nc_ht=scontent.fhan15-2.fna&oh=00_AfA5-R4-nZ9Gs5cz_3wTVK0t58OzC_p2Oh3LnIO9AzozAw&oe=65433474" }}
                                 style={styles.avatarAuthor}
                             />
-                            <Text style={styles.nameAuthor}>Bố đời</Text>
+                            <Text style={styles.nameAuthor}>{comment.username}</Text>
                             {/* <Text style={styles.textComments}>phim nhu cc</Text> */}
-                            <MaterialCommunityIcons
-                     
+                            <MaterialCommunityIcons               
                                 name='dots-horizontal-circle-outline'
-                                onPress={() => {
-                                    
+                                onPress={() => {                                
                                 }}
                                 size={30} color={Color.Black}>
-
-                                </MaterialCommunityIcons> 
-                                
-                                
+                                </MaterialCommunityIcons>  
                         </View> 
                        <Text style ={styles.contentComments}>
-                           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 💯💯💯
+                           {comment.body}
                         </Text>
             
                         <View style ={styles.footter}>
-                        <Text style={styles.timeComment}>3 day</Text>
+                        <Text style={styles.timeComment}>{comment.createdAt}</Text>
                         <Text style={styles.reply}
                         onPress={()=>{
                             Keyboard.isVisible()
                         }}
                         >Reply</Text>  
-                        </View>        
-                </View>
+                        </View>
+                       
+                </View> 
+                {replies.length>0&&(
+                            <View>
+                                {replies.map((x)=>{
+                                    return(
+                                        <Reply
+                                    key={x.id}
+                                    comment={x}
+                                    replies={[]}
+                                    ></Reply>
+                                    )
+                                    
+                                })}
+                            </View>
+                        )}        
+        </View>
+        
     )
         
    
 }
-const Reply=()=>{
+const Reply=(props:CommentsProps)=>{
+    const {
+        comment,
+        replies
+    }=props
     return<View style={styles.replyContainer}>
         <View style={styles.headerComments}>
                             <Image source={{ uri: "https://scontent.fhan15-2.fna.fbcdn.net/v/t39.30808-6/395546595_3670378293283977_6052018411163155572_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=RPZyqgAIlaEAX_WJVnT&_nc_ht=scontent.fhan15-2.fna&oh=00_AfA5-R4-nZ9Gs5cz_3wTVK0t58OzC_p2Oh3LnIO9AzozAw&oe=65433474" }}
                                 style={styles.avatarAuthor}
                             />
-                            <Text style={styles.nameAuthor}>Bố đời</Text>
+                            <Text style={styles.nameAuthor}>{comment.username}</Text>
                             {/* <Text style={styles.textComments}>phim nhu cc</Text> */}
                             <MaterialCommunityIcons
                      
@@ -73,9 +110,9 @@ const Reply=()=>{
                                 
                         </View> 
                        <Text style ={styles.contentComments}>
-                           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 💯💯💯
+                           {comment.body}
                         </Text>
-                        <Text style={styles.timeComment}>3 day</Text>
+                        <Text style={styles.timeComment}>{comment.createdAt}</Text>
             
     </View>
 }
@@ -177,9 +214,9 @@ const styles = StyleSheet.create({
         width:width*0.2
     },
     timeComment:{
-        width:width*0.2,
+        // width:width*0.2,
         fontFamily: fontFamily.PrimaryFont,
-        fontSize: 14,
+        fontSize: 11,
         fontWeight: "500",
         letterSpacing: 0.2,
         color: Color.Gray,

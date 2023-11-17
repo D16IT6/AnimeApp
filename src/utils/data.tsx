@@ -336,4 +336,82 @@ const listCategories=[
     name:"Movie"
   }, 
 ]
-export { listNewEpisodeReleases, listHotAnimeData ,listNotification,listSearch,listSort,listCategories} 
+const getCommets=[
+  {
+    id: "1",
+    body: "First comment",
+    username: "Jack",
+    userId: "1",
+    parentId: null,
+    createdAt: "2021-08-16T23:00:33.010+02:00",
+  },
+  {
+    id: "2",
+    body: "Second comment",
+    username: "John",
+    userId: "2",
+    parentId: null,
+    createdAt: "2021-08-16T23:00:33.010+02:00",
+  },
+  {
+    id: "3",
+    body: "First comment first child",
+    username: "John",
+    userId: "2",
+    parentId: "1",
+    createdAt: "2021-08-16T23:00:33.010+02:00",
+  },
+  {
+    id: "4",
+    body: "Second comment second child",
+    username: "John",
+    userId: "2",
+    parentId: "2",
+    createdAt: "2021-08-16T23:00:33.010+02:00",
+    
+  },
+  {
+    id: "5",
+    body: "chau cua 4",
+    username: "tienanh",
+    userId: "2",
+    parentId: "4",
+    createdAt: "2021-08-16T23:00:33.010+02:00",
+    
+  },
+  {
+    id: "6",
+    body: "con cua 1",
+    username: "tienanh",
+    userId: "2",
+    parentId: "1",
+    createdAt: "2021-08-16T23:00:33.010+02:00",
+    
+  },
+  {
+    id: "7",
+    body: "chau cua 1",
+    username: "tienanh",
+    userId: "2",
+    parentId: "1",
+    createdAt: "2021-08-16T23:00:33.010+02:00",
+  },
+  {
+    id: "8",
+    body: "chau cua 1",
+    username: "tienanh",
+    userId: "2",
+    parentId: null,
+    createdAt: "2021-08-16T23:00:33.010+02:00",
+  },
+  {
+    id: "9",
+    body: "chau cua 1",
+    username: "tienanh",
+    userId: "2",
+    parentId: null,
+    createdAt: "2021-08-16T23:00:33.010+02:00",
+  },
+]
+export { listNewEpisodeReleases, listHotAnimeData ,listNotification,listSearch,listSort,listCategories,getCommets} 
+

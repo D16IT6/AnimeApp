@@ -8,7 +8,7 @@ import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 interface CheckedAuthScreenProps {
     onCheckedChange:Function
 }
-const CheckedAuthScreen:React.FC<CheckedAuthScreenProps> = ( {onCheckedChange  })=>{
+const CheckedAuthScreen:React.FC<CheckedAuthScreenProps> = ( {onCheckedChange})=>{
     const[isChecked,setIsChecked] = useState(false)
     const handleCheckedChange = () => {
         const newCheckedValue = !isChecked;

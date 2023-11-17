@@ -39,13 +39,11 @@ export default function LoginMethodScreen() {
       <View style={styles.footer}>
         <ButtonAuthScreen 
         title ="Đăng nhập bằng tài khoản"
-        onPress={()=>{
+        onPressBtn={()=>{
           navigation.navigate(AuthRoutes.Login)
         }
         }
-        >
-
-        </ButtonAuthScreen>      
+        />
         <LinkAuthScreen 
           title="Bạn có muốn tạo tài khoản? "
           onPress={()=>{

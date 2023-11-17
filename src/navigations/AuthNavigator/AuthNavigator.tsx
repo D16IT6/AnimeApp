@@ -43,7 +43,7 @@ const AuthNavigator = () => {
   }
   else {
     return (
-      <Stack.Navigator initialRouteName={AuthRoutes.VideoPlayScreen}>  
+      <Stack.Navigator initialRouteName={AuthRoutes.Filter}>  
         <Stack.Screen name={AuthRoutes.ResetWelcome} component={ResetWelcome}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>
