@@ -1,5 +1,5 @@
-import { CategoryViewItem } from "./interestCategory";
-import { NavigationBar } from "./navigationBar";
-import { FooterNavigation } from "./footerNavigation";
+import { CategoryViewItem } from "./InterestCategory";
+import { NavigationBar } from "./NavigationBar";
+import { FooterNavigation } from "./FooterNavigation";
 
 export { CategoryViewItem, NavigationBar, FooterNavigation }

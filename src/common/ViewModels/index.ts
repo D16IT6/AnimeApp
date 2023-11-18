@@ -1,1 +1,3 @@
-export { CategoryViewModel } from './CategoryViewModel'
+import { CategoryViewModel } from "./CategoryViewModel";
+
+export { CategoryViewModel }
