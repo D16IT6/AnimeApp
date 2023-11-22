@@ -33,17 +33,26 @@ const AuthNavigator = () => {
     return (
           <Stack.Navigator initialRouteName={AuthRoutes.Welcome}>
             <Stack.Screen name={AuthRoutes.Welcome} component={WelcomeScreen} options={{ headerShown: false }}></Stack.Screen>
-            <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }}></Stack.Screen>
-            <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>
-            <Stack.Screen name={AuthRoutes.SignUp} component={SignUpScreen} options={{ headerShown: false }}></Stack.Screen>
-            <Stack.Screen name={AuthRoutes.HomeScreen} component={HomeScreen} options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen name={AuthRoutes.ResetWelcome} component={ResetWelcome}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.SignUp} component={SignUpScreen} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.MainNavigationBar} component={MainNavigationBar} options={{ headerShown: false }}></Stack.Screen>
+        {/* <Stack.Screen name={AuthRoutes.HomeScreen} component={HomeScreen} options={{ headerShown: false }}></Stack.Screen> */}
+        <Stack.Screen name={AuthRoutes.HitAnime} component={HitAnime} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.NewEpisodeReleases} component={NewEpisodeReleases} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.Notification} component={Notification} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.SearchAnime}component={SearchAnime} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.Filter}component={Filter} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.AnimeDetails}component={AnimeDetails} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.CommentsScreens}component={CommentsScreens} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name={AuthRoutes.VideoPlayScreen}component={VideoPlayScreen} options={{ headerShown: false }}></Stack.Screen>
           </Stack.Navigator>
         )
   }
   else {
     return (
-      <Stack.Navigator initialRouteName={AuthRoutes.Filter}>  
+      <Stack.Navigator initialRouteName={AuthRoutes.CommentsScreens}>  
         <Stack.Screen name={AuthRoutes.ResetWelcome} component={ResetWelcome}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>

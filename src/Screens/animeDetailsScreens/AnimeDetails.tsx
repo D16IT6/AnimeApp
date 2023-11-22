@@ -21,7 +21,8 @@ interface listAnimeProps {
     year: Number,
     contry: string,
     genre: string,
-    url: string,
+    urlImage: string,
+    urlFilm:string,
     rating: Number,
     episode: Number,
 }
@@ -39,7 +40,7 @@ const ListNewEpisodeReleases = ({ item, index }: { item: listAnimeProps, index: 
         ]}
             onPress={() => getItem(item)}
         >
-            <Image source={{ uri: item.url }}
+            <Image source={{ uri: item.urlImage }}
                 style={styles.imageAnimeMore}
             ></Image>
             <Text style={styles.ratingAnime}>{item.rating.toString()}</Text>
@@ -48,7 +49,14 @@ const ListNewEpisodeReleases = ({ item, index }: { item: listAnimeProps, index: 
         </TouchableOpacity>
     )
 }
-const AnimeDetails = () => {
+const AnimeDetails = ({route}:any) => {
+    const{
+        animeInfo,
+    }=route.params;
+
+    // const animeInfo=JSON.stringify(item)
+    // const parsedAnimeInfo = JSON.parse(animeInfo);
+    // console.log("id la"+parsedAnimeInfo.urlFilm)
     const navigation = useNavigation<AuthScreenNavigationProps>();
     const [showComments, setShowComment] = useState(false)
     return <SafeAreaView style={styles.container}>
@@ -60,19 +68,22 @@ const AnimeDetails = () => {
             style={{ position: 'absolute', zIndex: 10 }}
         />
         <ImageBackground
-            source={{ uri: 'https://images8.alphacoders.com/115/1150497.png' }}
+            source={{ uri: animeInfo.urlImage }}
             style={styles.avartar}
         />
         <View style={styles.content}>
-            <Text style={styles.nameAnime}>Demon Slayer (Kimetsu ...</Text>
+            <Text style={styles.nameAnime}>{animeInfo.name}</Text>
             <View style={styles.contentAnime}>
                 <Text style={styles.starRaiting}>☆ 9.8</Text>
                 <Text style={styles.year}>2020</Text>
                 <Text style={styles.ageRaiting}>13+</Text>
                 <Text style={styles.region}>Japan</Text>
+                
             </View>
             <View style={styles.buttons}>
-                <TouchableOpacity style={styles.btnPlay}>
+                <TouchableOpacity style={styles.btnPlay} onPress={()=>{
+                    navigation.navigate(AuthRoutes.VideoPlayScreen,{animeInfo:animeInfo})
+                }}>
                     <AntDesign name="play" color={Color.SecondaryColor} size={20}></AntDesign>
                     <Text style={styles.txtPlay}>Play</Text>
                 </TouchableOpacity>
@@ -105,7 +116,7 @@ const AnimeDetails = () => {
                         }}
                             style={styles.containerAnime}
                         >
-                            <Image source={{ uri: item.url }}
+                            <Image source={{ uri: item.urlImage }}
                                 style={styles.imageAnime}
                             />
                             <AntDesign name="play" color={Color.SecondaryColor} size={20}

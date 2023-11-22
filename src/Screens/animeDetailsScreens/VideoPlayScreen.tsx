@@ -1,18 +1,24 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import { Dimensions, TouchableOpacity, StyleSheet, Text, View, Alert } from "react-native";
 import Video from 'react-native-video';
-import MaterialIcons from "react-native-vector-icons/MaterialIcons"
+import { useNavigation } from '@react-navigation/native';
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Color } from "../../common/Colors";
 import Slider from '@react-native-community/slider';
 import Orientation from 'react-native-orientation-locker';
 import { NavagitonTop } from "../../common/component";
 import fontFamily from "../../common/FontFamily";
 import fontSizes from "../../common/FontSizes";
-const anime = {
-    url: ""
-}
+import { AuthNavigator, AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 
-const VideoPlayScreen = () => {
+//"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+const VideoPlayScreen = ({route}:any) => {
+    const{animeInfo}=route.params
+    
+    // console.log("id la"+parsedAnimeInfo.name)
+
+    const navigation = useNavigation<AuthScreenNavigationProps>()
+
     const [clicked, setClicked] = useState(false)
     const [pause, setPause] = useState(false)
     const videoRef = useRef<Video>(null)
@@ -31,9 +37,9 @@ const VideoPlayScreen = () => {
     const e = {
         onPressVideo: () => {
             setClicked(true)
-            // setTimeout(()=>{
-            //     setClicked(false)
-            // },5000)
+            setTimeout(()=>{
+                setClicked(false)
+            },5000)
         },
         onPressBackWard: () => {
             videoRef.current?.seek(parseInt((progress.currentTime - 10).toString()))
@@ -64,13 +70,14 @@ const VideoPlayScreen = () => {
             setPause(true)
         }
     }
-    console.log(progress)
+    // console.log(progress)
     return <TouchableOpacity
         style={[styles.backgroundVideo, { height: fullScreen ? "100%" : 200 }]}
         onPress={e.onPressVideo}
+        
     >
         <Video 
-            source={{ uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }}   // Can be a URL or a local file.
+            source={{ uri: animeInfo.urlFilm }}   // Can be a URL or a local file.
             muted={mute}
             onProgress={(progress: any) => {
                 setProgress(progress)
@@ -85,8 +92,12 @@ const VideoPlayScreen = () => {
         />
         {clicked&&!lock && (
             <TouchableOpacity style={[styles.backgroundVideo,
-            styles.videoOverlay, { height: fullScreen ? "100%" : 200 }]}>
-                <NavagitonTop OnPressArrowBack={() => { console.log("hhaa")}
+            styles.videoOverlay, { height: fullScreen ? "100%" : 200 }]}
+            // onPress={e.onPressVideo}
+            >
+                <NavagitonTop OnPressArrowBack={() => { 
+                    navigation.navigate(AuthRoutes.AnimeDetails,{animeInfo:animeInfo})
+                }
                 }
                     backgrourdColor={"rgba(0,0,0,0.3)"}
                     title="Đại chiến gà bay"

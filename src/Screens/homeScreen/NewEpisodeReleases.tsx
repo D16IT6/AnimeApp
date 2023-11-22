@@ -17,7 +17,8 @@ interface listAnimeProps {
     year: Number,
     contry: string,
     genre: string,
-    url: string,
+    urlImage: string,
+    urlFilm: string,
     rating: Number,
     episode: Number,
 }
@@ -33,7 +34,7 @@ const ListNewEpisodeReleases = ({ item,index }: { item: listAnimeProps,index:num
         ]}
         onPress={()=>getItem(item)}
         >
-            <Image source={{ uri: item.url }}
+            <Image source={{ uri: item.urlImage }}
             style ={styles.imageAnime}
             ></Image>
             <Text style={styles.ratingAnime}>{item.rating.toString()}</Text>

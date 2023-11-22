@@ -5,7 +5,8 @@ const listNewEpisodeReleases = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -15,7 +16,8 @@ const listNewEpisodeReleases = [
     year: 2022,
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/may01.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1506/138982.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -25,7 +27,8 @@ const listNewEpisodeReleases = [
     year: 2022,
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -35,7 +38,8 @@ const listNewEpisodeReleases = [
     year: 2022,
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -45,7 +49,8 @@ const listNewEpisodeReleases = [
     year: 2022,
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -55,7 +60,8 @@ const listNewEpisodeReleases = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -65,7 +71,8 @@ const listNewEpisodeReleases = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
+    urlImage: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -75,7 +82,8 @@ const listNewEpisodeReleases = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
+    urlImage: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -85,7 +93,8 @@ const listNewEpisodeReleases = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
+    urlImage: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -100,7 +109,8 @@ const listHotAnimeData = [
     year: 2022,
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
+    urlImage: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
+    urlFilm:'http://172.105.118.6/%5bOmamori%5d%20Ahiru%20no%20Sora%20-%2001.m3u8',
     rating: 9.7,
     episode: 10
   },
@@ -110,7 +120,8 @@ const listHotAnimeData = [
     year: 2022,
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/4sutpRK.jpg',
+    urlImage: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/4sutpRK.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.6,
     episode: 10
   },
@@ -120,7 +131,8 @@ const listHotAnimeData = [
     year: 2022,
     contry: 'Japan',
     genre: 'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.1,
     episode: 10
   },
@@ -130,7 +142,8 @@ const listHotAnimeData = [
     year: 2022,
     contry: 'Japan',
     genre: 'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.0,
     episode: 10
   },
@@ -140,7 +153,8 @@ const listHotAnimeData = [
     year: 2022,
     contry: 'Japan',
     genre: 'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode: 10
   },
@@ -150,7 +164,8 @@ const listHotAnimeData = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -160,7 +175,8 @@ const listHotAnimeData = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -170,7 +186,8 @@ const listHotAnimeData = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -180,7 +197,8 @@ const listHotAnimeData = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    urlImage: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
+    urlFilm:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     rating: 9.8,
     episode:10
   },
@@ -214,7 +232,7 @@ const listNotification = [
     year: 2022,
     contry: 'Japan',
     genre: 'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    url: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
     rating: 9.1,
     episode: 10,
     notification_period:"22/10/2023"
@@ -225,7 +243,7 @@ const listNotification = [
     year: 2022,
     contry: 'Japan',
     genre: 'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    url: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
     rating: 9.0,
     episode: 10,
     notification_period:"22/10/2023"
@@ -236,7 +254,7 @@ const listNotification = [
     year: 2022,
     contry: 'Japan',
     genre: 'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    url: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
     rating: 9.8,
     episode: 10,
     notification_period:"22/10/2023"
@@ -247,7 +265,7 @@ const listNotification = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    url: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
     rating: 9.8,
     episode:10,
     notification_period:"22/10/2023"
@@ -258,7 +276,7 @@ const listNotification = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    url: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
     rating: 9.8,
     episode:10,
     notification_period:"22/10/2023"
@@ -269,7 +287,7 @@ const listNotification = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    url: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
     rating: 9.8,
     episode:10,
     notification_period:"22/10/2023"
@@ -280,7 +298,7 @@ const listNotification = [
     name: 'Attack on Titan Final Season Part 1',
     contry: 'Japan',
     genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
-    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    url: 'https://cdn.myanimelist.net/images/anime/1100/138338.jpg',
     rating: 9.8,
     episode:10,
     notification_period:"22/10/2023"

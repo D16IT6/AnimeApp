@@ -12,6 +12,7 @@ import { Color } from "../../common/Colors";
 import { Double } from "react-native/Libraries/Types/CodegenTypes";
 import { listHotAnimeData,listNewEpisodeReleases } from "../../utils/data";
 import fontFamily from "../../common/FontFamily";
+import { logo } from "../../common/Images";
 const Tab = createBottomTabNavigator();
 const anime = {
     id:1,
@@ -25,18 +26,24 @@ const {width,height} =Dimensions.get('window')
 
 interface listAnimeProps {
     id:string,
-    url:string,
-    rating:Double
+    rating:Double,
+    year: number,
+    name: string,
+    contry: string,
+    genre: string,
+    urlImage: string,
+    urlFilm:string,
+    episode:number,
 }
 const ListAnime= ({item,index}:{item:listAnimeProps,index:number})=>{
     const navigation = useNavigation<AuthScreenNavigationProps>();
     return(
     <TouchableOpacity style={styles.containerAnime}
     onPress={()=>{
-         navigation.navigate(AuthRoutes.AnimeDetails)
+         navigation.navigate(AuthRoutes.AnimeDetails,{animeInfo:item})
     }}
     >
-        <Image source={{uri:item.url}}
+        <Image source={{uri:item.urlImage}}
         style={styles.imageAnime}
         />      
     <Text style={styles.ratingAnime}>{item.rating}</Text>
@@ -51,7 +58,7 @@ const HomeScreen = () =>{
         <SafeAreaView style={styles.container}>  
                 <ImageBackground source={require('../../assets/images/demon_slayder.png')} style={styles.top} >
                     <View style={styles.topheader}>
-                        <Image source={require('../../assets/images/logo.png')} style={styles.topLogo} resizeMode="contain"></Image>
+                        <Image source={logo} style={styles.topLogo} resizeMode="contain"></Image>
                         <View style={styles.topTools}>
                             <Ionicons name="search" color={Color.SecondaryColor} size={25}></Ionicons>
                             <FontAwesomeIcons name="bell" color={Color.SecondaryColor} size={25}

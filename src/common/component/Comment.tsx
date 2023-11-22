@@ -59,7 +59,7 @@ const Comments = (props:CommentsProps)=>{
                         <Text style={styles.timeComment}>{comment.createdAt}</Text>
                         <Text style={styles.reply}
                         onPress={()=>{
-                            Keyboard.isVisible()
+                            Alert.alert(`Dang coment ${comment.id}`)
                         }}
                         >Reply</Text>  
                         </View>
@@ -106,8 +106,6 @@ const Reply=(props:CommentsProps)=>{
                                 size={30} color={Color.Black}>
 
                                 </MaterialCommunityIcons> 
-                                
-                                
                         </View> 
                        <Text style ={styles.contentComments}>
                            {comment.body}

@@ -36,7 +36,7 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
     const textInputRef = useRef<TextInput>(null);
     
     useEffect(()=>{
-        if(inputs.length>0){
+        if(inputs&&inputs.length>0){
             setIsFocusPlacehoder(true)
             setInputs(value)
         }
