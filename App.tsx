@@ -6,6 +6,7 @@ const App = () => {
     <NavigationContainer>
       <AuthNavigator />
     </NavigationContainer>
+   
   )
 }
 export { App };
