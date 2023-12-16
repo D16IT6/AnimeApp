@@ -58,14 +58,14 @@ const HomeScreen = () => {
         const fetchData = async() =>{
             const resultAnimehot: AnimeHitViewModel[] | undefined = await animeApi.getAnimeHot();
             if (resultAnimehot !== undefined) {
-                setHotAnime(resultAnimehot)
+                setHotAnime(_ => resultAnimehot)
             } else {
                 console.log('Không tìm thấy danh sách anime hot hoặc giá trị không hợp lệ.');
                 return;
             }
              const resultAnimeNewEpisodeReleases = await animeApi.getAnimNewEpisodeRelease(1,6)
              if(resultAnimeNewEpisodeReleases!==undefined){
-                setNewEpisodeReleases(resultAnimeNewEpisodeReleases)
+                setNewEpisodeReleases(_ => resultAnimeNewEpisodeReleases)
              }
             else{
                 console.log('Không tìm thấy danh sách anime hot hoặc giá trị không hợp lệ.');

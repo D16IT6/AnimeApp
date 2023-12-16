@@ -17,7 +17,7 @@ global.atob = decode;
 interface JwtPayload {
   // ... các thuộc tính khác ...
   'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid': string;
-  exp:any
+  exp:number
 }
 
 // Giả sử AsyncStorage có các loại cần thiết
@@ -30,18 +30,15 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(async (config) => {
-  const accessToken = await AsyncStorage.getItem("AccessToken");
-  const token = accessToken !== null ? accessToken.toString() : "";
-
-  // Thêm token vào header nếu có
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-
-  // Kiểm tra hết hạn token và làm mới nếu cần
+  let accessToken = await AsyncStorage.getItem("AccessToken");
+  
   if (await shouldRefreshToken()) {
-    await refreshAccessToken();
+    accessToken = await refreshAccessToken();
   }
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  console.log(config);
   return config;
 });
 
@@ -66,44 +63,49 @@ async function shouldRefreshToken() {
   const exp = decoded.exp;
   const now = getUTCNow();
   const utcJwt = new Date(exp * 1000);
+  
 
   return utcJwt < now;
 }
 
-async function refreshAccessToken() {
-  const userId = getUserIdFromToken();
-  const refreshToken1 = await AsyncStorage.getItem("RefreshToken");
-  const refreshToken = refreshToken1 !== null ? refreshToken1.toString() : "";
+async function refreshAccessToken() :Promise<string | null> {
+  const userId: number  = await getUserIdFromToken();
+  const refreshToken = (await AsyncStorage.getItem("RefreshToken"))?.toString();
 
   try {
-    const res = await axios.post(`${API_URL}}/Auth/Refresh-Token`, {
+    const res = await axios.post(`${API_URL}/Auth/Refresh-Token`, {
       userId,
       refreshToken
     });
-    console.log( "day roi"+userId+refreshToken)
+
+
+    // console.log( "day roi "+ userId + refreshToken)
     if (res.status === 200) {
       const data: LoginResponseViewModel = res.data;
-      console.log(data);
+      // console.log(data);
       AsyncStorage.setItem("AccessToken", data.AccessToken);
       AsyncStorage.setItem("RefreshToken", data.RefreshToken);
       console.log("Đã làm mới token thành công");
+      return data.AccessToken;
     } else {
       console.log("Chuyển trang về đăng nhập");
+      return null;
     }
   } catch (e) {
     console.log("Chưa thể gọi refresh token");
+    return null;
   }
 }
-async function getUserIdFromToken() {
+async function getUserIdFromToken() :Promise<number>{
   const accessToken = await AsyncStorage.getItem("AccessToken");
 
   // Check if accessToken is present before using it
   if (!accessToken) {
-    return null; // or handle the absence of a valid token
+    return 0; // or handle the absence of a valid token
   }
 
   const decoded: JwtPayload = jwtDecode(accessToken.toString());
-  return decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid"];
+  return parseInt(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid"]);
 }
 function getUTCNow() {
   return new Date();

@@ -9,8 +9,7 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import fontFamily from "../../common/FontFamily";
 import fontSizes from "../../common/FontSizes";
 import AntDesign from "react-native-vector-icons/AntDesign"
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import { color } from "react-native-elements/dist/helpers";
+
 import { DowloadIcon } from "../../common/Icons";
 import { Icon } from "react-native-elements";
 import { animeApi } from "../../apiService/AnimeService";
