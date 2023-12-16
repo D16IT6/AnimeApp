@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     width:width*0.3,
-    height:height*0.03,
     marginRight:20,justifyContent:'center'
   },
   dropdown: {

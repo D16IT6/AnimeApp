@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text,View,SafeAreaView, FlatList, StyleSheet, Dimensions,Image, TouchableOpacity ,Alert} from "react-native";
 //import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -9,38 +9,31 @@ import { Loader } from "../../common/component";
 import { NavagitonTop } from "../../common/component/index";
 import { listHotAnimeData } from "../../utils/data";
 import fontFamily from "../../common/FontFamily";
+import { AnimeHitViewModel } from "../../ModelView";
+import { getAnimeHot } from "../../apiService/AnimeService";
 const{height,width} =Dimensions.get("window");
-interface listAnimeProps {
-    id:string,
-    name:string,
-    year:Number,
-    contry:string,
-    genre:string,
-    url:string,  
-    rating:Number,
-}
-const getItem = (item:any) =>{
-  Alert.alert(`Ban dang xem ${item.id} va${item.name}`)
-}
-const ListAnimeHot=({item}:{item:listAnimeProps})=>{
+
+
+const ListAnimeHot=({item}:{item:AnimeHitViewModel})=>{
   const [addMyList,setAddMyList]=useState(false);
+  const navigation = useNavigation<AuthScreenNavigationProps>();
     return(
         <TouchableOpacity style={styles.containerAnime}
         onPress={()=>{
-          getItem(item)
+          navigation.navigate(AuthRoutes.AnimeDetails,{animeId:item.Id})
         }}
         >
             <View style={styles.container_image_raiting}>
-                 <Image source={{uri:item.url}}
+                 <Image source={{uri:item.Poster}}
                     style={styles.image}
                  ></Image>
-                 <Text style={styles.raiting}> {item.rating.toString()}</Text>
+                 <Text style={styles.raiting}> {item.Rating.toString()}</Text>
             </View>
            <View style={styles.contentAnime}>
-            <Text style={styles.nameAnime}>{item.name}</Text>
-            <Text style={styles.year_contryAnime}>{item.year.toString()} | {item.contry}</Text>
+            <Text style={styles.nameAnime}>{item.Title}</Text>
+            <Text style={styles.year_contryAnime}>{item.Year.toString()} | {item.Country}</Text>
       
-            <Text style={styles.genreAnime}>Genre: {item.genre}</Text>
+            <Text style={styles.genreAnime}>Genre: {item.Categories}</Text>
             <TouchableOpacity 
             style={[styles.btnAddMylist,
             {backgroundColor:addMyList?"#fff":Color.PrimaryColor}]}
@@ -58,6 +51,16 @@ const ListAnimeHot=({item}:{item:listAnimeProps})=>{
 
 const HitAnime =()=>{
     const navigation =useNavigation<AuthScreenNavigationProps>();
+    const [listHitAnime,setListHitAnime] = useState<AnimeHitViewModel[]>();
+
+    useEffect (()=>{
+      const fetchData = async ()=>{
+        const resultAnimeHot = await getAnimeHot()
+        setListHitAnime(resultAnimeHot)
+      }
+      fetchData()
+    },[])
+
     return(
     <SafeAreaView style={styles.container}>
       <NavagitonTop
@@ -72,19 +75,16 @@ const HitAnime =()=>{
       search={true}
       />
         <FlatList 
-        data={listHotAnimeData}
-        keyExtractor={(item:any) => item.id}
-        renderItem={({item}:{item:listAnimeProps})=>{
+        data={listHitAnime}
+        keyExtractor={(item:any) => item.Id}
+        renderItem={({item}:{item:AnimeHitViewModel})=>{
             return(
                 <ListAnimeHot
                 item={item} 
                 />
             )
         }}
-        
         />
-
-       
     </SafeAreaView>
     )
 }

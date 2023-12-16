@@ -1,13 +1,26 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { Comments, InputComment, KeyboardAvoidingContainer, NavagitonTop, Reply } from "../../common/component";
 import { KeyboardAvoidingView, SafeAreaView, Text, View,ScrollView, Dimensions, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { Color } from "../../common/Colors";
 import { getCommets } from "../../utils/data";
+import axios from "axios";
 
 const {width,height} = Dimensions.get("window")
 const CommentsScreens = ()=>{
+
+    useEffect(()=>{
+    axios.get(`http://talonezio.click:1707/API/Anime/Hit/10`)
+    .then((rep)=>{
+            console.log(rep.data)
+        })
+    .catch((e)=>{
+        console.log(e)
+    })
+    },[])
+   
+
     const navigation = useNavigation<AuthScreenNavigationProps>()
     const[backEndComments,setBackEndComments] = useState(getCommets);
 

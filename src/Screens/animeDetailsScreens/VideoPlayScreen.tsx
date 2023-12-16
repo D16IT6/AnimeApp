@@ -13,9 +13,8 @@ import { AuthNavigator, AuthRoutes, AuthScreenNavigationProps } from "../../navi
 
 //"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 const VideoPlayScreen = ({route}:any) => {
-    const{animeInfo}=route.params
+    const{url,name}=route.params
     
-    // console.log("id la"+parsedAnimeInfo.name)
 
     const navigation = useNavigation<AuthScreenNavigationProps>()
 
@@ -77,7 +76,7 @@ const VideoPlayScreen = ({route}:any) => {
         
     >
         <Video 
-            source={{ uri: animeInfo.urlFilm }}   // Can be a URL or a local file.
+            source={{ uri: url }}   // Can be a URL or a local file.
             muted={mute}
             onProgress={(progress: any) => {
                 setProgress(progress)
@@ -96,11 +95,11 @@ const VideoPlayScreen = ({route}:any) => {
             // onPress={e.onPressVideo}
             >
                 <NavagitonTop OnPressArrowBack={() => { 
-                    navigation.navigate(AuthRoutes.AnimeDetails,{animeInfo:animeInfo})
+                    // navigation.navigate(AuthRoutes.AnimeDetails,{animeInfo:animeInfo})
                 }
                 }
                     backgrourdColor={"rgba(0,0,0,0.3)"}
-                    title="Đại chiến gà bay"
+                    title={name}
                     titleStyle={styles.titleVideo}
                 ></NavagitonTop>
 

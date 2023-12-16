@@ -26,19 +26,19 @@ const ProfileScreen = () =>{
         </View>
         <NavigationProfile
         title="Edit Profile"
-        iconName=""
+        iconName="user"
         />
         <NavigationProfile
         title="Notification"
-        iconName=""
+        iconName="bell"
         />
         <NavigationProfile
         title="Language"
-        iconName=""
+        iconName="language"
         />
         <NavigationProfile
         title="Logout"
-        iconName=""
+        iconName="log-out"//Entypo
         isLogout={true}
         />
        </SafeAreaView>
@@ -51,14 +51,15 @@ export default ProfileScreen
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:"red",
+        backgroundColor:Color.SecondaryColor,
     },
     header:{
-        flex:0.07,
+        flex:0.1,
         backgroundColor:Color.SecondaryColor,
         flexDirection:"row",
         justifyContent:"flex-start",
-        alignItems:'center'
+        alignItems:'center',
+        
     },
     logoHeader:{
       height:width*0.1,
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
         color:Color.Black
     },
     profile:{
+        marginVertical:10,
         flex:0.2,
         backgroundColor:Color.SecondaryColor,
         flexDirection:"row",
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
         marginHorizontal:20
     },
     contentProfile:{
-        backgroundColor:'red',
+        backgroundColor:Color.SecondaryColor,
         flex:1,
         height:"80%",
         justifyContent:"center"

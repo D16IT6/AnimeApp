@@ -5,7 +5,7 @@ import { logo } from "../../common/Images";
 import fontSizes from "../../common/FontSizes";
 import fontFamily from "../../common/FontFamily";
 import { Color } from "../../common/Colors";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import Entypo from "react-native-vector-icons/Entypo"
 
 const{width,height}=Dimensions.get("window");
 
@@ -22,8 +22,16 @@ const NavigationProfile=(props:navigationProfileProps)=>{
         isLogout=false
     } = props
     return<View style={styles.container}>
-        <Icon name={iconName} size={20} color={"black"}></Icon>
-        <Text>{title}</Text>
+        <Entypo name={iconName} size={30} color={isLogout?"red":"black"} style={styles.iconNavigation}></Entypo>
+        <Text style={[styles.titleNavigation,{color:isLogout?"red":Color.Black}]}>{title}</Text>
+        {!isLogout&&(
+             <Entypo name={"chevron-right"} size={30} color={"black"}
+        onPress={()=>{  
+        }}
+        ></Entypo>
+        )
+        }
+       
     </View>
 }
 
@@ -31,6 +39,21 @@ export  default NavigationProfile
 
 const styles = StyleSheet.create({
     container:{
-        width:width*0.05
+        backgroundColor:Color.SecondaryColor,
+        marginBottom:20,
+        marginHorizontal:20,
+        flexDirection:'row',
+        height:height*0.06,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    titleNavigation:{
+        flex:1,
+        fontFamily:fontFamily.PrimaryFont,
+        fontSize:18,
+        fontWeight:'600',
+    },
+    iconNavigation:{
+        marginHorizontal:10
     }
 })

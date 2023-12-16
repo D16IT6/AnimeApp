@@ -18,15 +18,27 @@ export default function SignUpScreen() {
   const [inputs, setInputs] = useState({
     username:'',
     password:'',
-    confilmPassword:''
+    confilmPassword:'',
+    email:''
   })
   interface Errors {
     username?: string;
+    email?:string;
     password?: string;
     confilmPassword?:string;
   }
   const [errors, setErrors] = useState<Errors>({})
   const [loading,setLoading] =useState(false)
+
+ 
+  const validateEmail = (email:string) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
   const validate = () => {
     Keyboard.dismiss();
     let isValid = true;
@@ -46,6 +58,16 @@ export default function SignUpScreen() {
     if(inputs.password!==inputs.confilmPassword)
     {
       handleError("Xác nhận mật khẩu không đúng !", "confilmPassword")
+      isValid =false;
+    }
+    if(!inputs.email)
+    {
+      handleError("Chưa nhập email !", "email")
+      isValid =false;
+    }
+    else if(validateEmail(inputs.email))
+    {
+      handleError("Nhập email chưa đúng định dạng !", "email")
       isValid =false;
     }
     if(isValid)
@@ -89,11 +111,19 @@ export default function SignUpScreen() {
             placeholder="Tài Khoản"
             iconName="user"
             error={errors.username}
-            password={false}
             onFocus={() => {
               handleError(null, "username")     
             }}
             onChangeText={(text: string) => handleOnChange(text, 'username')}
+          />
+          <InputAuthScreen
+            placeholder="Email"
+            iconName="envelope-o"
+            error={errors.email}
+            onFocus={() => {
+              handleError(null, "email")     
+            }}
+            onChangeText={(text: string) => handleOnChange(text, 'email')}
           />
           <InputAuthScreen
             placeholder="Mật Khẩu"

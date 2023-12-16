@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, SafeAreaView, FlatList, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
@@ -8,24 +8,16 @@ import { Loader } from "../../common/component";
 import { NavagitonTop } from "../../common/component";
 import { listNewEpisodeReleases } from "../../utils/data";
 import fontFamily from "../../common/FontFamily";
+import { AnimeNewEpisodeReleasesViewModel } from "../../ModelView";
+import { getAnimNewEpisodeRelease } from "../../apiService/AnimeService";
+
 
 const { height, width } = Dimensions.get("window");
 
-interface listAnimeProps {
-    id: string,
-    name: string,
-    year: Number,
-    contry: string,
-    genre: string,
-    urlImage: string,
-    urlFilm: string,
-    rating: Number,
-    episode: Number,
-}
 const getItem = (item:any)=>{
     Alert.alert(`Ban dang xem ${item.id} va${item.name}`)
 }
-const ListNewEpisodeReleases = ({ item,index }: { item: listAnimeProps,index:number }) => {
+const ListNewEpisodeReleases = ({ item,index }: { item: AnimeNewEpisodeReleasesViewModel,index:number }) => {
     var check = index%2==0;
     return (
         <TouchableOpacity style={[styles.contentAnime,
@@ -34,17 +26,26 @@ const ListNewEpisodeReleases = ({ item,index }: { item: listAnimeProps,index:num
         ]}
         onPress={()=>getItem(item)}
         >
-            <Image source={{ uri: item.urlImage }}
+            <Image source={{ uri: item.Poster }}
             style ={styles.imageAnime}
             ></Image>
-            <Text style={styles.ratingAnime}>{item.rating.toString()}</Text>
-            <Text style={styles.episodeAnime}>episode {item.episode.toString()}</Text>
+            <Text style={styles.ratingAnime}>{item.Rating}</Text>
+            <Text style={styles.episodeAnime}>episode {item.CurrentEpisode.toString()}</Text>
             
         </TouchableOpacity>
     )
 }
 const NewEpisodeReleases = () => {
+
+    const [listAnimeNewEpisodeReleases,setListAnimeNewEpisodeReleases] = useState<AnimeNewEpisodeReleasesViewModel[]>();
     const navigation = useNavigation<AuthScreenNavigationProps>();
+    useEffect (()=>{
+        const fetchData = async ()=>{
+          const resultAnimeNewEpisodeReleases = await getAnimNewEpisodeRelease(1,6)
+          setListAnimeNewEpisodeReleases(resultAnimeNewEpisodeReleases)
+        }
+        fetchData()
+      },[])
     return (
         <SafeAreaView style={styles.container}>
             <NavagitonTop
@@ -60,9 +61,9 @@ const NewEpisodeReleases = () => {
                 columnWrapperStyle={styles.columnWrapper}
                 horizontal={false}
                 numColumns={2}
-                data={listNewEpisodeReleases}
-                keyExtractor={(item: any) => item.id}
-                renderItem={({ item,index}: { item: listAnimeProps,index:number }) => {
+                data={listAnimeNewEpisodeReleases}
+                keyExtractor={(item: AnimeNewEpisodeReleasesViewModel) => item.Id.toString()}
+                renderItem={({ item,index}: { item: AnimeNewEpisodeReleasesViewModel,index:number }) => {
                     return (
                         <ListNewEpisodeReleases
                             item={item}

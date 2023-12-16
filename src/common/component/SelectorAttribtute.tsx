@@ -5,54 +5,47 @@ import fontFamily from "../FontFamily"
 import fontSizes from "../FontSizes"
 import ButtonAuthScreen from "./ButtonAuthScreen"
 import { Color } from "../Colors"
+import { ItemSeletorProps, SeletorAttribute } from "../../ModelView"
 
-type AttributeProps ={
-    id: number,
-    name:string,
-    selected?:boolean,
-}
-type SeletorAttribute ={
-    listAttribute:AttributeProps[],
-    title:string,
-    setListAttribute:any
-}
-type ItemSeletorProps ={
-    key?:number
-    Attribute:AttributeProps,
-    index?:number,
-    select:AttributeProps[],
-    setSelect:any
-}
+
 const handleOnpress =(props:ItemSeletorProps)=>{
-    const { Attribute, select, setSelect } = props;
-    const newAtribute = select.map((val)=>{
-        if(val.id===Attribute.id){
-            return{...val,selected:!val.selected}
+    const { Attribute, Select, SetSelect ,MutiSeletion} = props;
+    const newAtribute = Select.map((val)=>{
+        if(val.Id===Attribute.Id){
+            return{...val,"Selected":!val.Selected}
         }
         else
-        return{...val,selected:false}
+        {
+            if(MutiSeletion)
+            {
+                return{...val}
+            }
+            return{...val,"Selected":false}
+        }
+        
     })
-    setSelect(newAtribute)
+    SetSelect(newAtribute)
 }
 
 const ItemSeletor = (props:ItemSeletorProps) =>{
     const {
         Attribute,
-        index,
-        select,
-        setSelect
+        Index,
+        Select,
+        SetSelect,
+        MutiSeletion
     }=props
     return(
        <TouchableOpacity style={[styles.BtnAttribute,
-       {backgroundColor:Attribute.selected?Color.PrimaryColor:Color.SecondaryColor}]}
+       {backgroundColor:Attribute.Selected?Color.PrimaryColor:Color.SecondaryColor}]}
        onPress={()=>{
-         handleOnpress({Attribute,select,setSelect})
+         handleOnpress({Attribute,Select,SetSelect,MutiSeletion})
        }  
         }
        >
             <Text style={[styles.nameAttribute,
-                {color:Attribute.selected?Color.SecondaryColor:Color.PrimaryColor}]}
-                >{Attribute.name}</Text>
+                {color:Attribute.Selected?Color.SecondaryColor:Color.PrimaryColor}]}
+                >{Attribute.Name}</Text>
        </TouchableOpacity>
     )
 }
@@ -61,19 +54,22 @@ const SelectorAttribtute = (props:SeletorAttribute )=>{
     const {
         title,
         listAttribute,
-        setListAttribute
+        setListAttribute,
+        mutiSeletion=false,
     }=props
     return(
         <View style={styles.ContainerSeletor}>
         <Text style={styles.textTitle}>{title}</Text>
         <View style={styles.listSeletor}>
-        {listAttribute.map((attribute, index) => (
+
+        {listAttribute && listAttribute.map((attribute, index) => (
         <ItemSeletor
-            key={attribute.id} // Thay 'id' bằng trường dữ liệu duy nhất trong attribute
+            key={attribute.Id} // Thay 'id' bằng trường dữ liệu duy nhất trong attribute
             Attribute={attribute}
-            index={index}
-            select={listAttribute}
-            setSelect={setListAttribute}
+            Index={index}
+            Select={listAttribute}
+            SetSelect={setListAttribute}
+            MutiSeletion={mutiSeletion}
         />
         ))}
     </View>

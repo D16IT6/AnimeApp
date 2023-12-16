@@ -33,19 +33,22 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
     const [showPassWord, setShowPassword] = useState(false)
     const [isFocusPlacehoder, setIsFocusPlacehoder] = useState(false)
     const [inputs,setInputs] =useState('')
+
     const textInputRef = useRef<TextInput>(null);
+    
     
     useEffect(()=>{
         if(inputs&&inputs.length>0){
             setIsFocusPlacehoder(true)
             setInputs(value)
+           
         }
         
     },[inputs])
     const handleTextPress = () => {
         if (textInputRef.current) {
           textInputRef.current.focus();
-        }
+        } 
       };
     return (
         <View>
@@ -74,8 +77,8 @@ const InputAuthScreen: React.FC<InputAuthScreenProps> = ({
                     secureTextEntry={!showPassWord&&password}
                     value={value}
                     onChangeText={(text) => {
-                        onChangeText(text)
                         setInputs(text)
+                        onChangeText(text)
                     }}
                     onFocus={() => {
                         setIsFocus(!isFocus)

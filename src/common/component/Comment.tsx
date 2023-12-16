@@ -131,14 +131,16 @@ const InputComment=()=>{
             setIsDisabledBtn(true)
         }
       };
+    
+    const handleChildInputChange = (value:string) => {
+        setComment(value);
+      };
 
     return(
     <View style={styles.containerInput}>
        <InputAuthScreen
        placeholder="Add Comments"
-       onChangeText={(text)=>{
-        setComment(text)     
-        }}
+       onChangeText={handleChildInputChange}
         value={comment}
        style={styles.inputComment}
        ></InputAuthScreen>
@@ -147,7 +149,7 @@ const InputComment=()=>{
        disabled={isDisabledBtn}
        onPress={()=>{
         Alert.alert(comment.trim())
-        setComment('')
+        // setComment('')
         }}
        >
         <Feather name="send" size={40} color={isDisabledBtn?Color.Gray:Color.SecondaryColor}></Feather>
