@@ -85,7 +85,24 @@ type AnimeSearchResponseViewModel ={
     Title: string,
     Poster: string
 }
-export {AnimeHitViewModel,
+
+type LoginRequestViewModel = {
+    UserName: string,
+    Password: string,
+    RememberMe:boolean
+}
+type LoginResponseViewModel = {
+    AccessToken: string;
+    RefreshToken: string;
+}
+
+
+export {
+    LoginRequestViewModel,
+    LoginResponseViewModel,
+
+    AnimeHitViewModel,
+    
     AnimeSearchResponseViewModel,
     AnimeSearchParams,
     AnimeSearchRequestViewModel,

@@ -1,27 +1,22 @@
 import { View, Text, SafeAreaView, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView, TextInputProps, Keyboard, ScrollView, Platform, StatusBar } from 'react-native'
 import React, { useState } from 'react'
 import { logo } from '../../common/Images'
-import Icon from 'react-native-vector-icons/FontAwesome';
-//icon
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome'
 import { Color } from '../../common/Colors';
 import { useNavigation } from '@react-navigation/native'
 import { AuthScreenNavigationProps, AuthRoutes } from '../../navigations/AuthNavigator';
 import { ButtonAuthScreen, CheckedAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthScreen, LinkAuthScreen, Loader, NavagitonTop } from '../../common/component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fontFamily from '../../common/FontFamily';
-import{mainApiUrl} from '../../../app.json'
+import { login } from '../../apiService/AuthService';
+import { LoginRequestViewModel } from '../../ModelView';
 
 
-const loginApi = mainApiUrl + '/Auth'
 const { width, height } = Dimensions.get('window')
 export default function LoginMethodScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
   const [inputs, setInputs] = useState({
-    username:'',
-    password:''
+    username: '',
+    password: ''
   })
   interface Errors {
     username?: string;
@@ -48,36 +43,51 @@ export default function LoginMethodScreen() {
       regisiter()
     }
   }
-  interface UserData1 {
-    username: string;
-    password: string;
-    loggedIn: boolean
-  }
-  const regisiter = () => {
-    setLoading(true),
-      setTimeout(async () => {
-        setLoading(false);
-        let userData = await AsyncStorage.getItem('userData');
-        console.log(userData)
-        if (userData) {
-          const parsedUserData: UserData1 = JSON.parse(userData);
-          console.log(parsedUserData)
-          if (
-            inputs.username === parsedUserData.username &&
-            inputs.password === parsedUserData.password
-          ) {
-            navigation.navigate(AuthRoutes.MainNavigationBar);
-            // AsyncStorage.setItem(
-            //   'userData',
-            //   JSON.stringify({...userData, loggedIn: true}),
-            // );
-          } else {
-            Alert.alert('Lỗi', 'Bạn đã nhập sai thông tin');
-          }
-        } else {
-          Alert.alert('Error', 'User does not exist');
-        }
-      }, 3000);
+  const regisiter = async () => {
+    setLoading(true)
+    const model: LoginRequestViewModel = {
+      UserName: inputs.username,
+      Password: inputs.password,
+      RememberMe: true
+    }
+    const data = await login(model)
+    setLoading(false)
+    if (data !== null) {
+      console.log(data);
+
+      AsyncStorage.setItem("AccessToken", data.AccessToken)
+      AsyncStorage.setItem("RefreshToken", data.RefreshToken)
+      
+      navigation.navigate(AuthRoutes.MainNavigationBar)
+    }
+    else {
+      alert("Đăng nhập thất bại")
+    }
+
+    // setLoading(true),
+    //   setTimeout(async () => {
+    //     setLoading(false);
+    //     let userData = await AsyncStorage`.getItem('userData');
+    //     console.log(userData)
+    //     if (userData) {
+    //       const parsedUserData: UserData1 = JSON.parse(userData);
+    //       console.log(parsedUserData)
+    //       if (
+    //         inputs.username === parsedUserData.username &&
+    //         inputs.password === parsedUserData.password
+    //       ) {
+    //         navigation.navigate(AuthRoutes.MainNavigationBar);
+    //         // AsyncStorage.setItem(
+    //         //   'userData',
+    //         //   JSON.stringify({...userData, loggedIn: true}),
+    //         // );
+    //       } else {
+    //         Alert.alert('Lỗi', 'Bạn đã nhập sai thông tin');
+    //       }
+    //     } else {
+    //       Alert.alert('Error', 'User does not exist');
+    //     }
+    //   }, 3000);
 
   }
 
@@ -88,7 +98,7 @@ export default function LoginMethodScreen() {
     setErrors(prevState => ({ ...prevState, [input]: errorMessage }))
   }
   return (
-    <KeyboardAvoidingContainer style={styles.container}>            
+    <KeyboardAvoidingContainer style={styles.container}>
       <Loader visible={loading} />
       <NavagitonTop
         OnPressArrowBack={
@@ -101,7 +111,7 @@ export default function LoginMethodScreen() {
         <Text style={styles.title}> Đăng nhập với tài khoản của bạn </Text>
       </View>
       <View
-      style={styles.contentSignUp}>
+        style={styles.contentSignUp}>
         <InputAuthScreen
           placeholder="Tài Khoản"
           iconName="user"
@@ -172,9 +182,9 @@ const handleCheckedChange = (isChecked: string) => {
 
 const styles = StyleSheet.create({
   container: {
-     //flex: 1
-   // do dai man hinh - thanh trang thai
-    height:height-(StatusBar.currentHeight?StatusBar.currentHeight:0)
+    //flex: 1
+    // do dai man hinh - thanh trang thai
+    height: height - (StatusBar.currentHeight ? StatusBar.currentHeight : 0)
   },
   scrollViewContainer: {
     flexGrow: 1,
@@ -204,7 +214,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.PrimaryFont,
   },
   contentSignUp: {
-      flex: 3,
+    flex: 3,
     backgroundColor: Color.SecondaryColor,
     justifyContent: 'space-evenly',
     alignItems: 'center'
