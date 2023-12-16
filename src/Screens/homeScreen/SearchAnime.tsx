@@ -13,7 +13,7 @@ import fontSizes from "../../common/FontSizes";
 import fontFamily from "../../common/FontFamily";
 import { AnimeSearchParams, AnimeSearchRequestViewModel, AnimeSearchResponseViewModel, AttributeProps } from "../../ModelView";
 import { SearchAnimeRouteProps } from "../../navigations/AuthNavigator/Type";
-import { getSearch } from "../../apiService/SearchService";
+import { apiSearch } from "../../apiService/SearchService";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 const { height, width } = Dimensions.get("window");
 
@@ -63,14 +63,14 @@ const SearchAnime = ({ route }: { route: SearchAnimeRouteProps }) => {
         }
         console.log(inputSearch)
         const fetchData = async () =>{
-            const result = await getSearch(jsonApiTile(inputSearch,jsonApi))
+            const result = await apiSearch.getSearch(jsonApiTile(inputSearch,jsonApi))
             setSearch(x=>result);
         }
         fetchData();
     }
     useEffect(()=>{
         const fetchData = async () =>{
-            const result = await getSearch(jsonApi)
+            const result = await apiSearch.getSearch(jsonApi)
             setSearch(x=>result);
         }
         fetchData();

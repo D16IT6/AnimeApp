@@ -21,6 +21,7 @@ type EpisodesViewModel ={
 type AnimeDetailsViewModel={
         Id: number,
         Title: string,
+        Poster:string,
         Rating: string,
         Year: number,
         Country: string,
@@ -95,12 +96,16 @@ type LoginResponseViewModel = {
     AccessToken: string;
     RefreshToken: string;
 }
-
+type AsyncStorage ={
+    getItem(key: string): Promise<string | null>;
+    setItem(key: string,value:string): Promise<string | null>;
+    removeItem(key: string): Promise<string | null>;
+}
 
 export {
     LoginRequestViewModel,
     LoginResponseViewModel,
-
+    AsyncStorage,
     AnimeHitViewModel,
     
     AnimeSearchResponseViewModel,

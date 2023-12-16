@@ -13,7 +13,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { color } from "react-native-elements/dist/helpers";
 import { DowloadIcon } from "../../common/Icons";
 import { Icon } from "react-native-elements";
-import { getAnimeById } from "../../apiService/AnimeService";
+import { animeApi } from "../../apiService/AnimeService";
 import { AnimeDetailsViewModel } from "../../ModelView";
 import HTMLView from 'react-native-htmlview';
 import LottieView from "lottie-react-native";
@@ -69,7 +69,7 @@ const AnimeDetails = ({route}:any) => {
 
     useEffect (()=>{
         const fetchData = async ()=>{
-          const resultAnimeDetail = await getAnimeById(animeId)
+          const resultAnimeDetail= await animeApi.getAnimeById(animeId)
           setAnimeDetail(resultAnimeDetail)
         }
         fetchData()
@@ -100,7 +100,7 @@ const AnimeDetails = ({route}:any) => {
             style={{ position: 'absolute', zIndex: 10 }}
         />
         <ImageBackground
-            source={{ uri:"https://cdn.animevietsub.fan/data/poster/2023/08/27/animevsub-9WN9igDHMH.jpg" }}
+            source={{ uri:animeDetail?.Poster}}
             style={styles.avartar}
         />
         <View style={{height:height*0.7}}>
@@ -163,7 +163,7 @@ const AnimeDetails = ({route}:any) => {
                         }}
                             style={styles.containerAnime}
                         >
-                            <Image source={{ uri:"https://st.quantrimang.com/photos/image/2020/10/01/hinh-nen-den.jpg" }}
+                            <Image source={{ uri:animeDetail?.Poster }}
                                 style={styles.imageAnime}
                             />
                             <AntDesign name="play" color={Color.SecondaryColor} size={20}

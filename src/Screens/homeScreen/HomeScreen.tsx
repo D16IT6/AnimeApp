@@ -14,7 +14,7 @@ import fontFamily from "../../common/FontFamily";
 import { logo } from "../../common/Images";
 import axios from "axios";
 import { AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel } from "../../ModelView";
-import { getAnimNewEpisodeRelease, getAnimeHot } from "../../apiService/AnimeService";
+import { animeApi } from "../../apiService/AnimeService";
 
 
 const Tab = createBottomTabNavigator();
@@ -56,10 +56,21 @@ const HomeScreen = () => {
     const navigation = useNavigation<AuthScreenNavigationProps>();
     useEffect(() =>  {
         const fetchData = async() =>{
-             const resultAnimehot = await getAnimeHot()
-             setHotAnime(resultAnimehot)
-             const resultAnimeNewEpisodeReleases = await getAnimNewEpisodeRelease(1,6)
-             setNewEpisodeReleases(resultAnimeNewEpisodeReleases)
+            const resultAnimehot: AnimeHitViewModel[] | undefined = await animeApi.getAnimeHot();
+            if (resultAnimehot !== undefined) {
+                setHotAnime(resultAnimehot)
+            } else {
+                console.log('Không tìm thấy danh sách anime hot hoặc giá trị không hợp lệ.');
+                return;
+            }
+             const resultAnimeNewEpisodeReleases = await animeApi.getAnimNewEpisodeRelease(1,6)
+             if(resultAnimeNewEpisodeReleases!==undefined){
+                setNewEpisodeReleases(resultAnimeNewEpisodeReleases)
+             }
+            else{
+                console.log('Không tìm thấy danh sách anime hot hoặc giá trị không hợp lệ.');
+                return;
+            }
         }
         fetchData()
 
@@ -121,9 +132,7 @@ const HomeScreen = () => {
                         <Text style={styles.buttonlist}
                             onPress={() => { navigation.navigate(AuthRoutes.NewEpisodeReleases) }}
                         >See all</Text>
-
                     </View>
-
                     <FlatList
                         horizontal={true}
                         data={newEpisodeReleases}

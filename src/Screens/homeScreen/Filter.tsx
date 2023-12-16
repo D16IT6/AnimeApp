@@ -6,7 +6,7 @@ import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNav
 import { Color } from "../../common/Colors";
 
 import { AnimeAgeRaitingModelView, AnimeCategoryModelView, AnimeSearchParams, AnimeSearchRequestViewModel, AnimeStatusModelView, AnimeTypeModelView, AttributeProps, CountryModelView } from "../../ModelView";
-import { getAllAnimeAgeRating, getAllAnimeCategory, getAllAnimeStatus, getAllAnimeType, getAllCountry } from "../../apiService/FilterService";
+import { apiFilter } from "../../apiService/FilterService";
 
 const { width, height } = Dimensions.get("window")
 
@@ -30,28 +30,37 @@ const Filter = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const resultCountry = await getAllCountry();
-                const resultAnimeAgeRaiting = await getAllAnimeAgeRating();
-                const resultAnimeCategory = await getAllAnimeCategory();
-                const resultAnimeType = await getAllAnimeType();
-                const resultAnimeStatus = await getAllAnimeStatus();
+                const resultCountry: CountryModelView[] | undefined = await apiFilter.getAllCountry();
+                const resultAnimeAgeRaiting: AnimeAgeRaitingModelView[] | undefined = await apiFilter.getAllAnimeAgeRating();
+                const resultAnimeCategory: AnimeCategoryModelView[] | undefined = await apiFilter.getAllAnimeCategory();
+                const resultAnimeType: AnimeTypeModelView[] | undefined = await apiFilter.getAllAnimeType();
+                const resultAnimeStatus: AnimeStatusModelView[] | undefined = await apiFilter.getAllAnimeStatus();
 
-                const updateCountry = resultCountry.map((value: CountryModelView) =>
-                    ({ ...value, "Selected": false }));
-                setListCountry(updateCountry);
-                const updateAnimeAgeRaiting = resultAnimeAgeRaiting.map((value: AnimeAgeRaitingModelView) =>
-                    ({ ...value, "Selected": false }));
-                setListAnimeAgeRaiting(updateAnimeAgeRaiting);
-                const updateAnimeCategory = resultAnimeCategory.map((value: AnimeCategoryModelView) =>
-                    ({ ...value, "Selected": false }));
-                setListAnimeCategory(updateAnimeCategory);
-                const updateAnimeType = resultAnimeType.map((value: AnimeTypeModelView) =>
-                    ({ ...value, "Selected": false }));
-                setListAnimeType(updateAnimeType);
-                const updateAnimeStatus = resultAnimeStatus.map((value: AnimeStatusModelView) =>
-                    ({ ...value, "Selected": false }));
-                setListAnimeStatus(updateAnimeStatus);
-
+                if (resultCountry !== undefined) {
+                    const updateCountry = resultCountry.map((value: CountryModelView) =>
+                        ({ ...value, "Selected": false }));
+                    setListCountry(updateCountry);
+                }
+                if (resultAnimeAgeRaiting !== undefined) {
+                    const updateAnimeAgeRaiting = resultAnimeAgeRaiting.map((value: AnimeAgeRaitingModelView) =>
+                        ({ ...value, "Selected": false }));
+                    setListAnimeAgeRaiting(updateAnimeAgeRaiting);
+                }
+                if (resultAnimeCategory !== undefined) {
+                    const updateAnimeCategory = resultAnimeCategory.map((value: AnimeCategoryModelView) =>
+                        ({ ...value, "Selected": false }));
+                    setListAnimeCategory(updateAnimeCategory);
+                }
+                if (resultAnimeType !== undefined) {
+                    const updateAnimeType = resultAnimeType.map((value: AnimeTypeModelView) =>
+                        ({ ...value, "Selected": false }));
+                    setListAnimeType(updateAnimeType);
+                }
+                if (resultAnimeStatus !== undefined) {
+                    const updateAnimeStatus = resultAnimeStatus.map((value: AnimeStatusModelView) =>
+                        ({ ...value, "Selected": false }));
+                    setListAnimeStatus(updateAnimeStatus);
+                }
             } catch (error) {
                 console.error("Lỗi khi lấy dữ liệu:", error);
             }
@@ -102,7 +111,7 @@ const Filter = () => {
             <NavagitonTop
                 title="Sort & Filter"
                 OnPressArrowBack={() => {
-                    navigation.navigate(AuthRoutes.SearchAnime,null)
+                    navigation.navigate(AuthRoutes.SearchAnime, null)
                 }}
             ></NavagitonTop>
             <ScrollView>

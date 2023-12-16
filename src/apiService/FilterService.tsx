@@ -1,64 +1,66 @@
 import axios from "axios"
-import { apiUrl, baseUrl } from "../utils/httpReponse"
+import axiosClient from "./axiosClient"
+import { API_URL } from "@env"
+import { AnimeAgeRaitingModelView, AnimeCategoryModelView, AnimeStatusModelView, AnimeTypeModelView, CountryModelView } from "../ModelView"
 
-const getAllCountry = async ()=>{
-    try
-    {
-        const res = await axios.get(`${apiUrl}/Country`)
-        return res.data
-    }
-     catch (error) {
-        console.log(error)
-    }
-    
-} 
-const getAllAnimeAgeRating = async ()=>{
-    try
-    {
-        const res = await axios.get(`${apiUrl}/AnimeAgeRating`)
-        return res.data
-    }
-     catch (error) {
-        console.log(error)
-    }
-    
-} 
-const getAllAnimeCategory = async ()=>{
-    try
-    {
-        const res = await axios.get(`${apiUrl}/AnimeCategory`)
-        return res.data
-    }
-     catch (error) {
-        console.log(error)
-    }
-    
-} 
-const getAllAnimeStatus = async ()=>{
-    try
-    {
-        const res = await axios.get(`${apiUrl}/AnimeStatus`)
-        return res.data
-    }
-     catch (error) {
-        console.log(error)
-    }
-    
-} 
-const getAllAnimeType = async ()=>{
-    try
-    {
-        const res = await axios.get(`${apiUrl}/AnimeType`)
-        return res.data
-    }
-     catch (error) {
-        console.log(error)
-    }
-    
-} 
-export {getAllCountry,
-    getAllAnimeAgeRating,
-    getAllAnimeType,
-    getAllAnimeStatus,
-    getAllAnimeCategory
+
+const apiFilter={
+    getAllCountry : async ()=>{
+        try
+        {
+            const res:CountryModelView[] = await axiosClient.get(`${API_URL}/Country`)
+            return res
+        }
+         catch (error) {
+            console.log(error)
+        }
+        
+    },
+    getAllAnimeAgeRating : async ()=>{
+        try
+        {
+            const res:AnimeAgeRaitingModelView[] = await axiosClient.get(`${API_URL}/AnimeAgeRating`)
+            return res
+        }
+         catch (error) {
+            console.log(error)
+        }
+        
+    } ,
+     getAllAnimeCategory : async ()=>{
+        try
+        {
+            const res:AnimeCategoryModelView[] = await axiosClient.get(`${API_URL}/AnimeCategory`)
+            return res
+        }
+         catch (error) {
+            console.log(error)
+        }
+        
+    } ,
+     getAllAnimeStatus : async ()=>{
+        try
+        {
+            const res:AnimeStatusModelView[] = await axiosClient.get(`${API_URL}/AnimeStatus`)
+            return res
+        }
+         catch (error) {
+            console.log(error)
+        }
+        
+    } ,
+     getAllAnimeType : async ()=>{
+        try
+        {
+            const res:AnimeTypeModelView[] = await axiosClient.get(`${API_URL}/AnimeType`)
+            return res
+        }
+         catch (error) {
+            console.log(error)
+        }
+        
+    } 
 }
+
+
+export {apiFilter}
