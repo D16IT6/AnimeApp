@@ -1,7 +1,7 @@
 import axios from "axios";
 import { imageError } from "../utils/httpReponse";
 import { API_URL, BASE_URL } from '@env';
-import { AnimeDetailsViewModel, AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel, LoginResponseViewModel } from "../ModelView";
+import { AnimeDetailsViewModel, AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel } from "../ModelView";
 
 import axiosClient from "./axiosClient";
 

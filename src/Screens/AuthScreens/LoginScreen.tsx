@@ -7,7 +7,7 @@ import { AuthScreenNavigationProps, AuthRoutes } from '../../navigations/AuthNav
 import { ButtonAuthScreen, CheckedAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthScreen, LinkAuthScreen, Loader, NavagitonTop } from '../../common/component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fontFamily from '../../common/FontFamily';
-import { login } from '../../apiService/AuthService';
+import { apiAuth } from '../../apiService/AuthService';
 import { LoginRequestViewModel } from '../../ModelView';
 
 
@@ -50,7 +50,7 @@ export default function LoginMethodScreen() {
       Password: inputs.password,
       RememberMe: true
     }
-    const data = await login(model)
+    const data = await apiAuth.login(model)
     setLoading(false)
     if (data !== null) {
       console.log(data);
@@ -61,7 +61,7 @@ export default function LoginMethodScreen() {
       navigation.navigate(AuthRoutes.MainNavigationBar)
     }
     else {
-      alert("Đăng nhập thất bại")
+      Alert.alert("Đăng nhập thất bại")
     }
 
     // setLoading(true),
