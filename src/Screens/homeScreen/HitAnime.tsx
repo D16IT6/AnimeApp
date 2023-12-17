@@ -11,11 +11,26 @@ import fontFamily from "../../common/FontFamily";
 import { AnimeHitViewModel } from "../../ModelView";
 import { animeApi } from "../../apiService/AnimeService";
 import LoadScreen from "../loadScreens/loadScreens";
+import { apiMyList } from "../../apiService/MylistService";
+import { AnimeDetails } from "../animeDetailsScreens";
 const { height, width } = Dimensions.get("window");
 
 
+const AddMylist = async (animeId: number) => {
+  try {
+      const result = await apiMyList.createMyList(animeId)
+      if (result) {
+          Alert.alert("Thông báo", "Thêm thành công")
+      } else {
+          Alert.alert("Thông báo", "Thêm thất bại")
+      }
+  } catch (error) {
+      console.log(error)
+  }
+}
+
 const ListAnimeHot = ({ item }: { item: AnimeHitViewModel }) => {
-  const [addMyList, setAddMyList] = useState(false);
+  // const [addMyList, setAddMyList] = useState(false);
   const navigation = useNavigation<AuthScreenNavigationProps>();
   return (
     <TouchableOpacity style={styles.containerAnime}
@@ -36,13 +51,15 @@ const ListAnimeHot = ({ item }: { item: AnimeHitViewModel }) => {
         <Text style={styles.genreAnime}>Genre: {item.Categories}</Text>
         <TouchableOpacity
           style={[styles.btnAddMylist,
-          { backgroundColor: addMyList ? "#fff" : Color.PrimaryColor }]}
+          { backgroundColor: item.IsFavorite ? "#fff" : Color.PrimaryColor }]}
           onPress={() => {
-            setAddMyList(!addMyList)
+            if(!item.IsFavorite){
+              AddMylist(item.Id)
+          }
           }}>
-          <Ionicons name={addMyList ? "checkmark" : "add"} size={20} color={addMyList ? Color.PrimaryColor : "#ffffff"}></Ionicons>
+          <Ionicons name={item.IsFavorite ? "checkmark" : "add"} size={20} color={item.IsFavorite ? Color.PrimaryColor : "#ffffff"}></Ionicons>
           <Text style={[styles.btnText,
-          { color: addMyList ? Color.PrimaryColor : "#ffffff" }
+          { color: item.IsFavorite ? Color.PrimaryColor : "#ffffff" }
           ]}>My List</Text>
         </TouchableOpacity>
       </View>

@@ -17,6 +17,7 @@ import LottieView from "lottie-react-native";
 import { CommentApi } from "../../apiService/CommentService";
 import { imageError } from "../../utils/httpReponse";
 import LoadScreen from "../loadScreens/loadScreens";
+import { apiMyList } from "../../apiService/MylistService";
 import { AnimeDetailRouteProps } from "../../navigations/AuthNavigator/Type";
 const { width, height } = Dimensions.get("window")
 
@@ -55,6 +56,15 @@ const AnimeDetails = ({ route }: { route: AnimeDetailRouteProps }) => {
     const [allComment, setAllComment] = useState<CommentResponseView[]>();
     const [listAnimeMoreLikeThis, setListAnimeMoreLikeThis] = useState<AnimeRandomViewModel[]>();
     const [showComments, setShowComment] = useState(false)
+    const rootComments: CommentResponseView[] = allComment?.filter((comment) => {
+        return comment.ParentId === null;
+    }) || [];
+
+    const getReplies = (commentId: number) => {
+        return (
+            allComment?.filter((comment) => comment.ParentId === commentId) || []
+        ).sort((a, b) => new Date(a.CreatedDate).getTime() - new Date(b.CreatedDate).getTime());
+    };
     const scrollY = useRef(new Animated.Value(0)).current;
     useEffect(() => {
         return () => {
@@ -75,6 +85,18 @@ const AnimeDetails = ({ route }: { route: AnimeDetailRouteProps }) => {
         fetchData()
     }, [])
 
+    const AddMylist = async (animeId: number) => {
+        try {
+            const result = await apiMyList.createMyList(animeId)
+            if (result) {
+                Alert.alert("Thông báo", "Thêm thành công")
+            } else {
+                Alert.alert("Thông báo", "Thêm thất bại")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
     const headerOpacity = scrollY.interpolate({
         inputRange: [0, 100], // Thay đổi dựa trên giá trị cuộn
         outputRange: [1, 0],   // Giá trị opacity tương ứng
@@ -86,6 +108,7 @@ const AnimeDetails = ({ route }: { route: AnimeDetailRouteProps }) => {
         outputRange: [height * 0.5, height * 0.45, height * 0.25, 0],   // Giá trị opacity tương ứng
         extrapolate: 'clamp',
     });
+
 
     const navigation = useNavigation<AuthScreenNavigationProps>();
     return <SafeAreaView style={styles.container}>
@@ -133,6 +156,19 @@ const AnimeDetails = ({ route }: { route: AnimeDetailRouteProps }) => {
                             <Image source={DowloadIcon}
                             ></Image>
                             <Text style={styles.txtDowload} >Dowload</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.btnAddMylist,
+                            { backgroundColor: animeDetail?.IsFavorite ? "#fff" : Color.PrimaryColor }]}
+                            onPress={() => {
+                                if(!animeDetail?.IsFavorite){
+                                    AddMylist(animeId)
+                                }
+                            }}>
+                            <Ionicons name={animeDetail?.IsFavorite ? "checkmark" : "add"} size={20} color={animeDetail?.IsFavorite ? Color.PrimaryColor : "#ffffff"}></Ionicons>
+                            <Text style={[styles.btnText,
+                            { color: animeDetail?.IsFavorite ? Color.PrimaryColor : "#ffffff" }
+                            ]}>My List</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.container_genre_describe}>
@@ -254,13 +290,14 @@ const AnimeDetails = ({ route }: { route: AnimeDetailRouteProps }) => {
                                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
                                     { useNativeDriver: false }
                                 )}
-                                data={allComment}
+                                data={rootComments}
                                 keyExtractor={(item) => item.Id.toString()}
                                 renderItem={({ item }: { item: CommentResponseView, index: number }) => {
                                     return (
                                         <Comments
                                             key={item.Id}
                                             comment={item}
+                                            replies={getReplies(item.Id)}
                                         />
                                     )
                                 }}
@@ -568,5 +605,21 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         letterSpacing: 0.2,
         color: Color.Black
+    },
+    btnAddMylist: {
+        marginTop: 10,
+        width: width * 0.25,
+        height: height * 0.04,
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        flexDirection: 'row',
+        borderRadius: 20,
+        borderColor: Color.PrimaryColor,
+        borderWidth: 2
+    },
+    btnText: {
+        fontWeight: '600',
+        fontSize: 16,
+        fontFamily: fontFamily.PrimaryFont
     }
 })
