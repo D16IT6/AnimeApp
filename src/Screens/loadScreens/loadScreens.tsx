@@ -2,15 +2,15 @@ import React from "react";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import { Color } from "../../common/Colors";
 import { logo } from "../../common/Images";
+import LottieView from "lottie-react-native";
 
 const {width,height}=Dimensions.get("window")
 const LoadScreen =({visible,title}:{visible:boolean,title:string})=>{
         return(visible&&(
-            <View style={styles.container}>
-                <View style={styles.loader}>
-                    <Image source={logo}></Image>
-                 <Text style={styles.textLoader}>{title}....</Text>      
-                </View>
+            <View style={styles.container}>            
+                    <Image source={logo} style={styles.logo}></Image>
+                    <Text style={styles.textLoader}>{title}....</Text>  
+                    <LottieView source={require("../../assets/animation/animation_loading.json") } style={styles.lottie} autoPlay loop></LottieView>                              
             </View>
         ))
 }
@@ -22,23 +22,25 @@ const styles = StyleSheet.create({
         width:width,
         height:height,
         position:'absolute',
-        zIndex:10,
+        zIndex:100,
         backgroundColor:Color.SecondaryColor,
         justifyContent:"center",
-        alignItems:'center'
+        alignItems:'center',
     },
-    loader:{
-        height:height*0.1,
-        width:width*0.8,
-        backgroundColor:Color.SecondaryColor,
-        borderRadius:10,
-        flexDirection:'row',         
+    logo:{
+        width:width*0.5,
+        height:width*0.5,
+        marginBottom:50
     },
     textLoader:{
-        flex:3,
         paddingVertical:30,
         color:Color.Black,
-        fontSize:20,       
+        fontSize:40,   
+        textAlign:'center'    
+    },
+    lottie:{
+        width:width*0.4,
+        height:width*0.4
     }
    
 })

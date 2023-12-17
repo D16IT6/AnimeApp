@@ -16,14 +16,13 @@ import axios from "axios";
 import { AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel } from "../../ModelView";
 import { animeApi } from "../../apiService/AnimeService";
 import LoadScreen from "../loadScreens/loadScreens";
+import HitAnime from "./HitAnime";
+import { imageError } from "../../utils/httpReponse";
 
 
 const Tab = createBottomTabNavigator();
 
 const { width, height } = Dimensions.get('window')
-
-
-
 type ListAnimeProps<T> = {
     item: T;
     index: number;
@@ -51,14 +50,13 @@ const ListAnime = <T extends { Id: number, Poster: string; Rating: string }>(
 }
 
 const HomeScreen = () => {
-    const [loading, setLoading] = useState<boolean>();
+    const [loading, setLoading] = useState<boolean>(true);
     const [hotAnime, setHotAnime] = useState<AnimeHitViewModel[]>([]);
     const [newEpisodeReleases, setNewEpisodeReleases] = useState<AnimeNewEpisodeReleasesViewModel[]>([]);
 
     const navigation = useNavigation<AuthScreenNavigationProps>();
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true)
             const resultAnimehot: AnimeHitViewModel[] | undefined = await animeApi.getAnimeHot();
             if (resultAnimehot !== undefined) {
                 setHotAnime(_ => resultAnimehot)
@@ -83,10 +81,10 @@ const HomeScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <LoadScreen
-                visible={loading ?? true}
+                visible={loading}
                 title="Đang tải"
             />
-            <ImageBackground source={require('../../assets/images/demon_slayder.png')} style={styles.top} >
+            <ImageBackground source={{uri:hotAnime[0]?.Poster||imageError}} style={styles.top} >
                 <View style={styles.topheader}>
                     <Image source={logo} style={styles.topLogo} resizeMode="contain"></Image>
                     <View style={styles.topTools}>
@@ -101,9 +99,9 @@ const HomeScreen = () => {
 
                 <View style={styles.topContent}>
                     <Text style={styles.nameAnime}>
-                        Demon Slayer: Kimetsu ...
+                        {hotAnime[0]?.Title}
                     </Text>
-                    <Text style={styles.categoryAnime}>Action, Shounen, Martial Arts, Adventure, ...</Text>
+                    <Text style={styles.categoryAnime}>{hotAnime[0]?.Categories}</Text>
                     <View style={styles.btn}>
                         <TouchableOpacity style={styles.btnPlay}>
                             <Ionicons name="caret-forward-circle" color={Color.SecondaryColor} size={20}></Ionicons>
@@ -193,8 +191,8 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: Color.SecondaryColor,
         fontWeight: '700',
-        fontFamily: fontFamily.PrimaryFont
-
+        fontFamily: fontFamily.PrimaryFont,
+        width:width*0.8,
     },
     categoryAnime: {
         fontSize: 16,

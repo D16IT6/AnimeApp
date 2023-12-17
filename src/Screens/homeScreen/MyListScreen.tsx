@@ -9,10 +9,12 @@ import { Image, Text } from 'react-native-elements';
 import { logo, mylistEmpty } from '../../common/Images';
 import fontFamily from '../../common/FontFamily';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import LoadScreen from '../loadScreens/loadScreens';
 
 const {width,height}= Dimensions.get("window")
 
 const MyListScreen = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [myList,setMyList] = useState<MyListResponseViewModel[]>();
   console.log(myList)
   useEffect(()=>{
@@ -20,6 +22,7 @@ const MyListScreen = () => {
       try {
       const resultMyList = await apiMyList.getMyList(await getUserIdFromToken())
       setMyList(x=>resultMyList)
+      setLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -28,6 +31,10 @@ const MyListScreen = () => {
   },[])
  return(
   <SafeAreaView style={styles.container}>
+    <LoadScreen
+                visible={loading}
+                title="Đang tải danh sách yêu thích"
+    />
     <View style={styles.header}>
       <Image source={logo} style={styles.logoImage}></Image>
       <Text style={styles.title}>My List</Text>

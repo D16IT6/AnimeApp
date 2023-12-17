@@ -9,13 +9,10 @@ import { NavagitonTop } from "../../common/component";
 import fontFamily from "../../common/FontFamily";
 import { AnimeNewEpisodeReleasesViewModel } from "../../ModelView";
 import { animeApi } from "../../apiService/AnimeService";
+import LoadScreen from "../loadScreens/loadScreens";
 
 
 const { height, width } = Dimensions.get("window");
-
-const getItem = (item: any) => {
-    Alert.alert(`Ban dang xem ${item.id} va${item.name}`)
-}
 const ListNewEpisodeReleases = ({ item, index }: { item: AnimeNewEpisodeReleasesViewModel, index: number }) => {
     var check = index % 2 == 0;
     const navigation = useNavigation<AuthScreenNavigationProps>();
@@ -43,6 +40,7 @@ const ListNewEpisodeReleases = ({ item, index }: { item: AnimeNewEpisodeReleases
     )
 }
 const NewEpisodeReleases = () => {
+    const [loading, setLoading] = useState<boolean>(true);
     const navigation = useNavigation<AuthScreenNavigationProps>();
 
     const [listAnimeNewEpisodeReleases, setListAnimeNewEpisodeReleases] = useState<AnimeNewEpisodeReleasesViewModel[]>();
@@ -50,11 +48,16 @@ const NewEpisodeReleases = () => {
         const fetchData = async () => {
             const resultAnimeNewEpisodeReleases = await animeApi.getAnimNewEpisodeRelease(1, 6)
             setListAnimeNewEpisodeReleases(resultAnimeNewEpisodeReleases)
+            setLoading(false)
         }
         fetchData()
     }, [])
     return (
         <SafeAreaView style={styles.container}>
+           <LoadScreen
+                visible={loading}
+                title="Đang tải Anime Hot nhất"
+            />
             <NavagitonTop
                 title="New Episode Releases"
                 OnPressArrowBack={() => {
