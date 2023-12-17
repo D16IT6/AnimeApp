@@ -16,22 +16,35 @@ import { AnimeDetails } from "../animeDetailsScreens";
 const { height, width } = Dimensions.get("window");
 
 
-const AddMylist = async (animeId: number) => {
-  try {
-      const result = await apiMyList.createMyList(animeId)
-      if (result) {
-          Alert.alert("Thông báo", "Thêm thành công")
-      } else {
-          Alert.alert("Thông báo", "Thêm thất bại")
-      }
-  } catch (error) {
-      console.log(error)
-  }
+type ListAnimeHotProps ={
+  item:AnimeHitViewModel,
+  resetData:Function,
 }
 
-const ListAnimeHot = ({ item }: { item: AnimeHitViewModel }) => {
+const ListAnimeHot = (props:ListAnimeHotProps) => {
+  const{
+    item,
+    resetData
+  }=props
   // const [addMyList, setAddMyList] = useState(false);
   const navigation = useNavigation<AuthScreenNavigationProps>();
+  const AddMylist = async (animeId: number) => {
+    try {
+        const result = await apiMyList.createMyList(animeId)
+        if (result) {
+          console.log(animeId)
+          const result = await apiMyList.createMyList(animeId)
+          console.log(result)
+          if (result) { 
+              resetData();
+          }
+        } else {
+            Alert.alert("Thông báo", "Thêm thất bại")
+        }
+    } catch (error) {
+        console.log(error)
+    }
+  }
   return (
     <TouchableOpacity style={styles.containerAnime}
       onPress={() => {
@@ -79,7 +92,22 @@ const HitAnime = () => {
     }
     fetchData()
   }, [])
-
+  const ResetData = ()=>{
+    const fetchData = async () => {
+      Alert.alert("Thông báo", "Thêm thành công", [
+          {
+              text: "OK",
+              onPress: async () => {
+                  setLoading(true);
+                  const resultAnimeHot = await animeApi.getAnimeHot()
+                  setListHitAnime(resultAnimeHot)
+                  setLoading(false)
+              }
+          }
+      ]);
+  };
+  fetchData();
+  }
   return (
     <SafeAreaView style={styles.container}>
       <LoadScreen
@@ -104,6 +132,7 @@ const HitAnime = () => {
           return (
             <ListAnimeHot
               item={item}
+              resetData={ResetData}
             />
           )
         }}

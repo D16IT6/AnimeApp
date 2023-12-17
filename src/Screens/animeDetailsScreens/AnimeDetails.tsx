@@ -87,9 +87,27 @@ const AnimeDetails = ({ route }: { route: AnimeDetailRouteProps }) => {
 
     const AddMylist = async (animeId: number) => {
         try {
+            console.log(animeId)
             const result = await apiMyList.createMyList(animeId)
+            console.log(result)
             if (result) {
-                Alert.alert("Thông báo", "Thêm thành công")
+               
+                const fetchData = async () => {
+                    // Hiển thị alert
+                    Alert.alert("Thông báo", "Thêm thành công", [
+                        {
+                            text: "OK",
+                            onPress: async () => {
+                                setLoading(true);
+                                const resultAnimeDetail = await animeApi.getAnimeById(animeId);
+                                setAnimeDetail(resultAnimeDetail);
+                                setLoading(false);
+                            }
+                        }
+                    ]);
+                };
+                
+                fetchData();
             } else {
                 Alert.alert("Thông báo", "Thêm thất bại")
             }
@@ -453,7 +471,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: 'center',
         justifyContent: 'center',
-        width: width * 0.4,
+        width: width * 0.3,
         backgroundColor: Color.PrimaryColor,
         height: 40,
         borderRadius: 30
@@ -478,7 +496,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: 'center',
         justifyContent: 'center',
-        width: width * 0.4,
+        width: width * 0.3,
         backgroundColor: Color.SecondaryColor,
         borderWidth: 2,
         borderColor: Color.PrimaryColor,
@@ -607,9 +625,8 @@ const styles = StyleSheet.create({
         color: Color.Black
     },
     btnAddMylist: {
-        marginTop: 10,
-        width: width * 0.25,
-        height: height * 0.04,
+        width: width * 0.3,
+        height: 40,
         alignItems: 'center',
         justifyContent: 'space-evenly',
         flexDirection: 'row',

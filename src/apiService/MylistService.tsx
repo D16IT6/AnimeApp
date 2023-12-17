@@ -40,8 +40,10 @@ const apiMyList = {
     },
     createMyList: async (animeId:number) => {
         try {
-            const res  = await axiosClient.put(`/AnimeFavorite/${animeId}`)
-            if(res.status===200)
+            
+            const res  = await axiosClient.put(`/AnimeFavorite?animeId=${animeId}`)
+            console.log(res)
+            if(res!==undefined)
             {
                 return true
             }

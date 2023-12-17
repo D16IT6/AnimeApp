@@ -10,26 +10,18 @@ import { logo, mylistEmpty } from '../../common/Images';
 import fontFamily from '../../common/FontFamily';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import LoadScreen from '../loadScreens/loadScreens';
-<<<<<<< HEAD
 
 const { width, height } = Dimensions.get("window")
 
-=======
->>>>>>> c57cc3ef7b30d82b3ac93500707e2a99de756047
 
 
 const MyListScreen = () => {
   const [loading, setLoading] = useState<boolean>(true);
-<<<<<<< HEAD
   const [myList, setMyList] = useState<MyListResponseViewModel[]>();
-=======
-  const [myList,setMyList] = useState<MyListResponseViewModel[]>();
->>>>>>> c57cc3ef7b30d82b3ac93500707e2a99de756047
   console.log(myList)
   const ResetData= () =>{
     const fetData = async () => {
       try {
-<<<<<<< HEAD
         const resultMyList = await apiMyList.getMyList()
         setMyList(x => resultMyList)
         setLoading(false)
@@ -66,7 +58,9 @@ const MyListScreen = () => {
         <Text style={styles.titleMyListEmpty}>Danh sách của bạn trống</Text>
         <Text style={styles.contentMyListEmpty}>Có vẻ như bạn chưa thêm bất kỳ anime nào vào danh sách</Text>
       </View>)
-        : (<FlatList
+        : (
+        <View style={{height:height*0.8}}>
+          <FlatList
           data={myList}
           keyExtractor={(item) => item.Id.toString()}
           renderItem={({ item }) => {
@@ -76,43 +70,9 @@ const MyListScreen = () => {
             ></MyListAnime>
           }}
         >
-        </FlatList>)
+        </FlatList>
+          </View>)
       }
-=======
-      const resultMyList = await apiMyList.getMyList(await getUserIdFromToken())
-      setMyList(x=>resultMyList)
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
-    }
-    fetData()
-  },[])
- return(
-  <SafeAreaView style={styles.container}>
-    <LoadScreen
-                visible={loading}
-                title="Đang tải danh sách yêu thích"
-    />
-    <View style={styles.header}>
-      <Image source={logo} style={styles.logoImage}></Image>
-      <Text style={styles.title}>My List</Text>
-    </View>
-    {myList&&myList?.length<=0?(<View style={styles.containerEmpty}>
-      <Image source={mylistEmpty} style={styles.mylistEmptyImage}></Image>
-      <Text style={styles.titleMyListEmpty}>Danh sách của bạn trống</Text>
-      <Text style={styles.contentMyListEmpty}>Có vẻ như bạn chưa thêm bất kỳ anime nào vào danh sách</Text>
-    </View>)
-    :(<FlatList 
-    data={myList}
-    keyExtractor={(item)=>item.Id.toString()}
-    renderItem={({item})=>{
-      return<MyListAnime item={item}></MyListAnime>
-    }}
-    >
-    </FlatList>)
-    } 
->>>>>>> c57cc3ef7b30d82b3ac93500707e2a99de756047
 
     </SafeAreaView>
   )

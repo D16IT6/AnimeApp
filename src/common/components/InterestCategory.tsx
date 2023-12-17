@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextProps, TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { CategoryViewModel } from "../viewModels";
 import React, { useState } from "react";
-import { PrimaryColor } from "../Colors";
+import { Color } from "../Colors";
 
 type CategoryViewItemProps = {
     model: CategoryViewModel,
@@ -20,7 +20,7 @@ const CategoryViewItem = (props: CategoryViewItemProps) => {
     const {
         model,
         touchableOpacityStyle = {},
-        textColor = PrimaryColor,
+        textColor = Color.PrimaryColor,
         swapColor = 'white',
         onPress = () => { },
         textStyle = {},
@@ -67,7 +67,7 @@ const CategoryViewItem = (props: CategoryViewItemProps) => {
 const styles = StyleSheet.create({
     contentCategoryItem:
     {
-        borderColor: PrimaryColor,
+        borderColor:Color.PrimaryColor,
         padding: 12,
         borderRadius: 50,
         marginRight: 8,

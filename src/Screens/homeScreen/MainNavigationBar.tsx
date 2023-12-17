@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; 
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import {HomeScreen,MyListSreen} from "../homeScreen";
@@ -11,6 +11,15 @@ const Tab = createBottomTabNavigator();
 const MainNavigationBar = ()=>{
     
    const tabOffsetValue = useRef(new Animated.Value(0)).current
+  // const navigation = useNavigation();
+  //  useEffect(() => {
+  //   const unsubscribe = navigation.addListener('tabPress', (e) => {
+  //     // Thực hiện các công việc tải lại dữ liệu ở đây khi chuyển đổi màn hình
+  //     console.log('Reload data here');
+  //   });
+
+  //   return unsubscribe;
+  // }, [navigation]);
     return(
        <View style={{flex:1}}>
     <Tab.Navigator 

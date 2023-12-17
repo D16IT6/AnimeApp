@@ -21,7 +21,7 @@ const NavigationProfile = (props: navigationProfileProps) => {
         isLogout = false,
         press = () => { Alert.alert("Không làm gì cả","Không làm gì cả") }
     } = props
-    return <TouchableOpacity style={styles.container} onPress={press}>
+    return <TouchableOpacity style={styles.container} onPress={()=>press()}>
         <Entypo name={iconName} size={30} color={isLogout ? "red" : "black"} style={styles.iconNavigation}></Entypo>
         <Text style={[styles.titleNavigation, { color: isLogout ? "red" : Color.Black }]}>{title}</Text>
         {!isLogout && (

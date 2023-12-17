@@ -10,37 +10,38 @@ import { CommentsRouteProps } from "../../navigations/AuthNavigator/Type";
 import LoadScreen from "../loadScreens/loadScreens";
 
 const { width, height } = Dimensions.get("window")
-const CommentsScreens = ({ route }: { route: CommentsRouteProps }) => {
-    const resetData = () => {
-        const fetchData = async () => {
-            setLoading(true)
-            const resultAllComment = await CommentApi.getAllComment(animeId)
-            setBackEndComments(x => resultAllComment)
-
-            setLoading(false)
-        }
-        fetchData()
-    }
+const CommentsScreens = ({ route }: {route:CommentsRouteProps}) => {
     const { animeId } = route.params;
     const [loading, setLoading] = useState<boolean>(true);
     const navigation = useNavigation<AuthScreenNavigationProps>()
     const [backEndComments, setBackEndComments] = useState<CommentResponseView[]>();
 
-    const rootComments = backEndComments?.filter((comment) => {
-        return comment.ParentId === null;
-    }) || [];
-
+   
+    const rootComments : CommentResponseView[] = backEndComments?.filter((comment) => {
+                return comment.ParentId === null;
+              }) || [];
+              
     const getReplies = (commentId: number) => {
-        return (
-            backEndComments?.filter((comment) => comment.ParentId === commentId) || []
-        ).sort((a, b) => new Date(a.CreatedDate).getTime() - new Date(b.CreatedDate).getTime());
-    };
+                return (
+                  backEndComments?.filter((comment) => comment.ParentId === commentId) || []
+                ).sort((a, b) => new Date(a.CreatedDate).getTime() - new Date(b.CreatedDate).getTime());
+              };
+    const resetData=()=>{
+        const fetchData = async () => {
+            setLoading(true)
+            const resultAllComment = await CommentApi.getAllComment(animeId)
+            setBackEndComments(x => resultAllComment)
+          
+            setLoading(false)
+        }
+        fetchData()
+    }
     useEffect(() => {
         const fetchData = async () => {
 
             const resultAllComment = await CommentApi.getAllComment(animeId)
             setBackEndComments(x => resultAllComment)
-
+          
             setLoading(false)
         }
         fetchData()
@@ -66,7 +67,7 @@ const CommentsScreens = ({ route }: { route: CommentsRouteProps }) => {
                         <Comments
                             key={item.Id}
                             comment={item}
-                        // replies={}
+                            replies={getReplies(item.Id)}
                         />
                     )
                 }}
