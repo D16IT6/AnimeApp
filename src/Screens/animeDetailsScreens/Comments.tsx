@@ -1,51 +1,58 @@
 import React,{useEffect, useState} from "react";
 import { Comments, InputComment, KeyboardAvoidingContainer, NavagitonTop, Reply } from "../../common/component";
-import { KeyboardAvoidingView, SafeAreaView, Text, View,ScrollView, Dimensions, StyleSheet } from "react-native";
+import { KeyboardAvoidingView, SafeAreaView, Text, View,ScrollView, Dimensions, StyleSheet, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { Color } from "../../common/Colors";
-import { getCommets } from "../../utils/data";
-import axios from "axios";
+import { CommentApi } from "../../apiService/CommentService";
+import {  CommentResponseView } from "../../ModelView";
+import { CommentsRouteProps } from "../../navigations/AuthNavigator/Type";
 
 const {width,height} = Dimensions.get("window")
-const CommentsScreens = ()=>{
-
-    useEffect(()=>{
-    axios.get(`http://talonezio.click:1707/API/Anime/Hit/10`)
-    .then((rep)=>{
-            console.log(rep.data)
-        })
-    .catch((e)=>{
-        console.log(e)
-    })
-    },[])
-   
-
+const CommentsScreens = ({route}:CommentsRouteProps)=>{
+    const{animeId}=route.params;
     const navigation = useNavigation<AuthScreenNavigationProps>()
-    const[backEndComments,setBackEndComments] = useState(getCommets);
+    const[backEndComments,setBackEndComments] = useState<CommentResponseView[]>();
 
-    const rootComments = backEndComments.filter((Comments)=>{
-        return Comments.parentId===null
-    })
-    const getReplies = (commentId:string)=>{
-        return backEndComments
-        .filter((backEndComments)=> backEndComments.parentId===commentId)
-        .sort((a,b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
-    }
-    // backEndComments.forEach((x)=>{
-    //     console.log(new Date(x.createdAt).getDay())
+    // const rootComments = backEndComments.filter((Comments)=>{
+    //     return Comments.parentId===null
     // })
-    // console.log(getReplies("1"))
+    // const getReplies = (commentId:string)=>{
+    //     return backEndComments
+    //     .filter((backEndComments)=> backEndComments.parentId===commentId)
+    //     .sort((a,b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+    // }
+    useEffect (()=>{
+                const fetchData = async ()=>{
+            
+                const resultAllComment= await CommentApi.getAllComment(animeId)
+                setBackEndComments(x=>resultAllComment)
+                }
+                fetchData()
+            },[])
     return (
+       
         <SafeAreaView style={{flex:1,backgroundColor:Color.SecondaryColor}}>
                 <NavagitonTop
-        title={`${backEndComments.length} Comments`}
+        title={` Comments`}
         OnPressArrowBack={()=>{
-            navigation.navigate(AuthRoutes.AnimeDetails)
+            navigation.navigate(AuthRoutes.AnimeDetails,{animeId:animeId})
         }}
         group={true}
         ></NavagitonTop>
-        <ScrollView style={styles.scrollViewContainer}>
+        <FlatList  style={styles.scrollViewContainer}            
+                        data={backEndComments}
+                        keyExtractor={(item) => item.Id.toString()}
+                        renderItem={({ item }: { item: CommentResponseView, index: number }) => {
+                            return (
+                                <Comments 
+                                key={item.Id}
+                                comment ={item}
+                                /> 
+                            )
+                        }}
+                    />
+        {/* <ScrollView style={styles.scrollViewContainer}>
              {rootComments.map((rootComments)=>{
                 return<Comments 
                 key={rootComments.id}
@@ -53,17 +60,14 @@ const CommentsScreens = ()=>{
                 replies ={getReplies(rootComments.id)}
                 /> 
              })}
-        </ScrollView>
-       
+        </ScrollView> */}
         <View style={styles.bottomInput}>    
-            <InputComment></InputComment>
+            <InputComment 
+            animeId={animeId}
+            ></InputComment>
         </View>
         </SafeAreaView>
     )
-    
-   
-    
-    
 }
 
 export default CommentsScreens

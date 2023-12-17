@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Color } from "../../common/Colors";
 import { Loader } from "../../common/component";
 import { NavagitonTop } from "../../common/component/index";
-import { listHotAnimeData } from "../../utils/data";
+import { listHotAnimeData } from "../../utils/getUserId";
 import fontFamily from "../../common/FontFamily";
 import { AnimeHitViewModel } from "../../ModelView";
 import { getAnimeHot } from "../../apiService/AnimeService";

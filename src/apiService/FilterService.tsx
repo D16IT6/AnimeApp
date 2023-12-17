@@ -8,7 +8,7 @@ const apiFilter={
     getAllCountry : async ()=>{
         try
         {
-            const res:CountryModelView[] = await axiosClient.get(`${API_URL}/Country`)
+            const res:CountryModelView[] = await axiosClient.get(`/Country`)
             return res
         }
          catch (error) {
@@ -19,7 +19,7 @@ const apiFilter={
     getAllAnimeAgeRating : async ()=>{
         try
         {
-            const res:AnimeAgeRaitingModelView[] = await axiosClient.get(`${API_URL}/AnimeAgeRating`)
+            const res:AnimeAgeRaitingModelView[] = await axiosClient.get(`/AnimeAgeRating`)
             return res
         }
          catch (error) {
@@ -30,7 +30,7 @@ const apiFilter={
      getAllAnimeCategory : async ()=>{
         try
         {
-            const res:AnimeCategoryModelView[] = await axiosClient.get(`${API_URL}/AnimeCategory`)
+            const res:AnimeCategoryModelView[] = await axiosClient.get(`/AnimeCategory`)
             return res
         }
          catch (error) {
@@ -41,7 +41,7 @@ const apiFilter={
      getAllAnimeStatus : async ()=>{
         try
         {
-            const res:AnimeStatusModelView[] = await axiosClient.get(`${API_URL}/AnimeStatus`)
+            const res:AnimeStatusModelView[] = await axiosClient.get(`/AnimeStatus`)
             return res
         }
          catch (error) {
@@ -52,7 +52,7 @@ const apiFilter={
      getAllAnimeType : async ()=>{
         try
         {
-            const res:AnimeTypeModelView[] = await axiosClient.get(`${API_URL}/AnimeType`)
+            const res:AnimeTypeModelView[] = await axiosClient.get(`/AnimeType`)
             return res
         }
          catch (error) {

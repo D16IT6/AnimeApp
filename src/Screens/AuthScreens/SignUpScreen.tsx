@@ -12,9 +12,11 @@ import { AuthScreenNavigationProps, AuthRoutes } from '../../navigations/AuthNav
 import { ButtonAuthScreen, CheckedAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthScreen,LinkAuthScreen,Loader, NavagitonTop } from '../../common/component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fontSizes from '../../common/FontSizes';
+import { apiAuth } from '../../apiService/AuthService';
 const { width, height } = Dimensions.get('window')
 export default function SignUpScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
+  
   const [inputs, setInputs] = useState({
     username:'',
     password:'',
@@ -32,11 +34,9 @@ export default function SignUpScreen() {
 
  
   const validateEmail = (email:string) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
+    const regex = (/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/);
+  
+    return regex.test(email);
   };
 
   const validate = () => {
@@ -65,7 +65,7 @@ export default function SignUpScreen() {
       handleError("Chưa nhập email !", "email")
       isValid =false;
     }
-    else if(validateEmail(inputs.email))
+    else if(!validateEmail(inputs.email))
     {
       handleError("Nhập email chưa đúng định dạng !", "email")
       isValid =false;
@@ -75,17 +75,69 @@ export default function SignUpScreen() {
       regisiter()
     }
   }
-  const regisiter = ()=>{
-    setLoading(true),
-    setTimeout(() => {
+  const regisiter = async ()=>{
+    try {
+      setLoading(true)
+      const checkSiup = await apiAuth.sigup(
+        {UserName:inputs.username,
+        Password:inputs.password,
+        Email:inputs.email
+      })
       setLoading(false)
-      try {
-        AsyncStorage.setItem("userData",JSON.stringify(inputs))    
+      if(checkSiup)
+      {
+        Alert.alert(
+          'Thông báo',
+          'Thêm tài khoản thành công!!!',
+          [
+            {
+              text: 'Đóng',
+              onPress: () => console.log('Đóng Pressed'),
+              style: 'cancel', // Màu đậm cho nút "Đóng"
+            },
+            {
+              text: 'Xác nhận',
+              onPress: () => console.log('Xác nhận Pressed'),
+              style: 'default', // Màu mặc định cho nút "Xác nhận"
+            },
+          ],
+          { cancelable: false } // Ngăn chặn người dùng đóng Alert bằng cách chạm bên ngoài
+        );
         navigation.navigate(AuthRoutes.Login)
-      } catch (error) {
-        Alert.alert("Error","Có lỗi rồi!!!")
       }
-    }, 3000);
+      else{
+        Alert.alert(
+          'Cảnh báo',
+          'Thêm tài khoản thất bại!!!\n*Trùng email\n*Trùng userName',
+          [
+            {
+              text: 'Đóng',
+              onPress: () => console.log('Đóng Pressed'),
+              style: 'cancel', // Màu đậm cho nút "Đóng"
+            },
+            {
+              text: 'Xác nhận',
+              onPress: () => console.log('Xác nhận Pressed'),
+              style: 'default', // Màu mặc định cho nút "Xác nhận"
+            },
+          ],
+          { cancelable: false } // Ngăn chặn người dùng đóng Alert bằng cách chạm bên ngoài
+        );
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    
+    // setLoading(true),
+    // setTimeout(() => {
+    //   setLoading(false)
+    //   try {
+    //     AsyncStorage.setItem("userData",JSON.stringify(inputs))    
+    //     navigation.navigate(AuthRoutes.Login)
+    //   } catch (error) {
+    //     Alert.alert("Error","Có lỗi rồi!!!")
+    //   }
+    // }, 3000);
   }
   const handleOnChange = (text: any, input: string) => {
     setInputs(prevState => ({ ...prevState, [input]: text }))

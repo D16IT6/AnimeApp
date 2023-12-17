@@ -1,10 +1,9 @@
 import React, { useState,useRef, useEffect } from "react"
 import { Alert, Dimensions, FlatList, SafeAreaView, ScrollView, Image, StyleSheet, Text, View, ImageBackground, TouchableOpacity,Animated } from "react-native";
-import { ButtonAuthScreen, DropdownComponent, NavagitonTop, SelectorAttribtute } from "../../common/component";
+import { ButtonAuthScreen, Comments, DropdownComponent, NavagitonTop, SelectorAttribtute } from "../../common/component";
 import { useNavigation } from '@react-navigation/native'
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { Color } from "../../common/Colors";
-import { listCategories, listHotAnimeData, listNewEpisodeReleases, listSort } from "../../utils/data";
 import Ionicons from "react-native-vector-icons/Ionicons"
 import fontFamily from "../../common/FontFamily";
 import fontSizes from "../../common/FontSizes";
@@ -13,26 +12,18 @@ import AntDesign from "react-native-vector-icons/AntDesign"
 import { DowloadIcon } from "../../common/Icons";
 import { Icon } from "react-native-elements";
 import { animeApi } from "../../apiService/AnimeService";
-import { AnimeDetailsViewModel } from "../../ModelView";
+import { AnimeDetailsViewModel, AnimeRandomViewModel, CommentResponseView } from "../../ModelView";
 import HTMLView from 'react-native-htmlview';
 import LottieView from "lottie-react-native";
+import { CommentApi } from "../../apiService/CommentService";
+import { AnimeDetailRouteProps } from "../../navigations/AuthNavigator/Type";
 const { width, height } = Dimensions.get("window")
 
-interface listAnimeProps {
-    id: string,
-    name: string,
-    year: Number,
-    contry: string,
-    genre: string,
-    urlImage: string,
-    urlFilm:string,
-    rating: Number,
-    episode: Number,
-}
+
 const getItem = (item: any) => {
     Alert.alert(`Ban dang xem ${item.id} va${item.name}`)
 }
-const ListNewEpisodeReleases = ({ item, index }: { item: listAnimeProps, index: number }) => {
+const ListAnimeMoreLikeThis = ({ item, index }: { item: AnimeRandomViewModel, index: number }) => {
     var check = index % 2 == 0;
     return (
         <TouchableOpacity style={[styles.contentAnimeMore,
@@ -43,22 +34,22 @@ const ListNewEpisodeReleases = ({ item, index }: { item: listAnimeProps, index: 
         ]}
             onPress={() => getItem(item)}
         >
-            <Image source={{ uri: item.urlImage }}
+            <Image source={{ uri: item.Poster }}
                 style={styles.imageAnimeMore}
             ></Image>
-            <Text style={styles.ratingAnime}>{item.rating.toString()}</Text>
-            <Text style={styles.episodeAnime}>episode {item.episode.toString()}</Text>
-
+            <Text style={styles.ratingAnime}>{item.Rating}</Text>
         </TouchableOpacity>
     )
 }
-const AnimeDetails = ({route}:any) => {
+const AnimeDetails = ({route}:AnimeDetailRouteProps) => {
     const{
-        animeId,
+        animeId
     }=route.params;
 
     const [animeDetail,setAnimeDetail] = useState<AnimeDetailsViewModel>();
-
+    const [allComment,setAllComment]= useState<CommentResponseView[]>();
+    const [listAnimeMoreLikeThis,setListAnimeMoreLikeThis] = useState<AnimeRandomViewModel[]>();
+    const [showComments, setShowComment] = useState(false)
     const scrollY = useRef(new Animated.Value(0)).current;
     useEffect(() => {
         return () => {
@@ -69,7 +60,11 @@ const AnimeDetails = ({route}:any) => {
     useEffect (()=>{
         const fetchData = async ()=>{
           const resultAnimeDetail= await animeApi.getAnimeById(animeId)
-          setAnimeDetail(resultAnimeDetail)
+          setAnimeDetail(x=>resultAnimeDetail)
+          const resultAllComment= await CommentApi.getAllComment(animeId)
+          setAllComment(x=>resultAllComment)
+          const resultListAnimeRandom = await animeApi.getAnimeRandom();
+          setListAnimeMoreLikeThis(x=>resultListAnimeRandom)
         }
         fetchData()
     },[])
@@ -85,11 +80,8 @@ const AnimeDetails = ({route}:any) => {
         outputRange: [height*0.5,height*0.45,height*0.25,0],   // Giá trị opacity tương ứng
         extrapolate: 'clamp', 
       });
-    // const animeInfo=JSON.stringify(item)
-    // const parsedAnimeInfo = JSON.parse(animeInfo);
-    // console.log("id la"+parsedAnimeInfo.urlFilm)
+
     const navigation = useNavigation<AuthScreenNavigationProps>();
-    const [showComments, setShowComment] = useState(false)
     return <SafeAreaView style={styles.container}>
         <Ionicons name='arrow-back'
             onPress={() => {
@@ -208,11 +200,11 @@ const AnimeDetails = ({route}:any) => {
                           )}
                         horizontal={false}
                         numColumns={2}
-                        data={listNewEpisodeReleases}
-                        keyExtractor={(item: any) => item.id}
-                        renderItem={({ item, index }: { item: listAnimeProps, index: number }) => {
+                        data={listAnimeMoreLikeThis}
+                        keyExtractor={(item) => item.Id.toString()}
+                        renderItem={({ item, index }: { item: AnimeRandomViewModel, index: number }) => {
                             return (
-                                <ListNewEpisodeReleases
+                                <ListAnimeMoreLikeThis
                                     item={item}
                                     index={index}
                                 />
@@ -225,20 +217,35 @@ const AnimeDetails = ({route}:any) => {
         }
         {
             showComments && (
-                <View style={styles.comments}>
+                <Animated.View style={{height:height*0.7}}>
+                    <View style={styles.comments}>
                     <View style={styles.headerComments}>
                         <Text style={styles.quantityComment}>29.5K Comments</Text>
                         <Text style={styles.seeAll}
                         onPress={()=>{
-                            navigation.navigate(AuthRoutes.CommentsScreens)
+                            navigation.navigate(AuthRoutes.CommentsScreens,{animeId:animeId})
                         }}
                         >See all</Text>
                     </View>
-                     <ScrollView>
-                   </ScrollView>
-
-
-             </View>
+                    <FlatList            
+                        onScroll={Animated.event(
+                            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                            { useNativeDriver: false }
+                          )}
+                        data={allComment}
+                        keyExtractor={(item) => item.Id.toString()}
+                        renderItem={({ item }: { item: CommentResponseView, index: number }) => {
+                            return (
+                                <Comments 
+                                key={item.Id}
+                                comment ={item}
+                                /> 
+                            )
+                        }}
+                    />
+                     </View>
+                </Animated.View>
+                
             )
         }
         </View>
@@ -278,7 +285,7 @@ const styles = StyleSheet.create({
         
     },
     comments: {
-        flex: 0.35,
+       
     },
     topEpisodes: {
         flexDirection: "row",

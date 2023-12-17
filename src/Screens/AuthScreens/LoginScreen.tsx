@@ -63,32 +63,6 @@ export default function LoginMethodScreen() {
     else {
       Alert.alert("Đăng nhập thất bại")
     }
-
-    // setLoading(true),
-    //   setTimeout(async () => {
-    //     setLoading(false);
-    //     let userData = await AsyncStorage`.getItem('userData');
-    //     console.log(userData)
-    //     if (userData) {
-    //       const parsedUserData: UserData1 = JSON.parse(userData);
-    //       console.log(parsedUserData)
-    //       if (
-    //         inputs.username === parsedUserData.username &&
-    //         inputs.password === parsedUserData.password
-    //       ) {
-    //         navigation.navigate(AuthRoutes.MainNavigationBar);
-    //         // AsyncStorage.setItem(
-    //         //   'userData',
-    //         //   JSON.stringify({...userData, loggedIn: true}),
-    //         // );
-    //       } else {
-    //         Alert.alert('Lỗi', 'Bạn đã nhập sai thông tin');
-    //       }
-    //     } else {
-    //       Alert.alert('Error', 'User does not exist');
-    //     }
-    //   }, 3000);
-
   }
 
   const handleOnChange = (text: any, input: string) => {

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Color } from "../../common/Colors";
 import { Loader } from "../../common/component";
 import { NavagitonTop } from "../../common/component";
-import { listNewEpisodeReleases } from "../../utils/data";
+import { listNewEpisodeReleases } from "../../utils/getUserId";
 import fontFamily from "../../common/FontFamily";
 import { AnimeNewEpisodeReleasesViewModel } from "../../ModelView";
 import { getAnimNewEpisodeRelease } from "../../apiService/AnimeService";

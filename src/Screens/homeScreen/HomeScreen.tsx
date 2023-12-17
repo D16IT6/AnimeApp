@@ -15,6 +15,7 @@ import { logo } from "../../common/Images";
 import axios from "axios";
 import { AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel } from "../../ModelView";
 import { animeApi } from "../../apiService/AnimeService";
+import LoadScreen from "../loadScreens/loadScreens";
 
 
 const Tab = createBottomTabNavigator();
@@ -50,12 +51,14 @@ type ListAnimeProps<T> = {
 }
 
 const HomeScreen = () => {
+    const [loading,setLoading]= useState<boolean>();
     const [hotAnime, setHotAnime] = useState<AnimeHitViewModel[]>([]);
     const [newEpisodeReleases, setNewEpisodeReleases] = useState<AnimeNewEpisodeReleasesViewModel[]>([]);
 
     const navigation = useNavigation<AuthScreenNavigationProps>();
     useEffect(() =>  {
         const fetchData = async() =>{
+            setLoading(true)
             const resultAnimehot: AnimeHitViewModel[] | undefined = await animeApi.getAnimeHot();
             if (resultAnimehot !== undefined) {
                 setHotAnime(_ => resultAnimehot)
@@ -64,6 +67,7 @@ const HomeScreen = () => {
                 return;
             }
              const resultAnimeNewEpisodeReleases = await animeApi.getAnimNewEpisodeRelease(1,6)
+             
              if(resultAnimeNewEpisodeReleases!==undefined){
                 setNewEpisodeReleases(_ => resultAnimeNewEpisodeReleases)
              }
@@ -71,12 +75,17 @@ const HomeScreen = () => {
                 console.log('Không tìm thấy danh sách anime hot hoặc giá trị không hợp lệ.');
                 return;
             }
+            setLoading(false)
         }
         fetchData()
 
     }, [])
     return (
         <SafeAreaView style={styles.container}>
+            <LoadScreen 
+            visible={true} 
+            title="Đang tải"
+            />
             <ImageBackground source={require('../../assets/images/demon_slayder.png')} style={styles.top} >
                 <View style={styles.topheader}>
                     <Image source={logo} style={styles.topLogo} resizeMode="contain"></Image>

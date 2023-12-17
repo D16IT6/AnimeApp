@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import{View ,Text, SafeAreaView, StyleSheet, Dimensions} from "react-native"
 import { Image } from "react-native-elements";
 import { logo } from "../../common/Images";
@@ -6,10 +6,26 @@ import fontSizes from "../../common/FontSizes";
 import fontFamily from "../../common/FontFamily";
 import { Color } from "../../common/Colors";
 import NavigationProfile from "../../common/component/NavigationProfile";
+import { UserReponseViewModel } from "../../ModelView";
+import { apiUser } from "../../apiService/UserService";
+import getUserIdFromToken from "../../utils/getUserId";
 
 const{width,height}=Dimensions.get("window");
 
 const ProfileScreen = () =>{
+    const[user,setUser] = useState<UserReponseViewModel>();
+    useEffect(()=>{
+        const fetData = async ()=>{
+            try {
+                const resultUser = await apiUser.getUserProfile(await getUserIdFromToken())
+                setUser(resultUser)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetData();
+    },[])
+
     return(
        <SafeAreaView style={styles.container}>
         <View style={styles.header}>
@@ -17,10 +33,10 @@ const ProfileScreen = () =>{
             <Text style={styles.contentHeader}>Profile</Text>
         </View>
         <View style={styles.profile}>
-            <Image source={require("../../assets/images/aot.png")} style={styles.avatar} ></Image>
+            <Image source={{uri:user?.AvatarUrl}} style={styles.avatar} ></Image>
             <View style={styles.contentProfile}>
-                 <Text style={styles.name}>Andrew Ainsley</Text>
-                 <Text style={styles.email}>andrew_ainsley@yourdomain.com</Text>
+                 <Text style={styles.name}>{user?.FullName==null?"Chưa có tên":user.FullName}</Text>
+                 <Text style={styles.email}>{user?.Email}</Text>
             </View>
            
         </View>

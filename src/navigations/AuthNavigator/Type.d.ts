@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AuthRoutes } from "./Routes";
+import { AnimeDetailParams, AnimeSearchParams } from "../../ModelView";
 export type AuthStackParamList = {
     Welcome: undefined;
     SignUp: undefined;
@@ -15,13 +16,14 @@ export type AuthStackParamList = {
     Notification:undefined,
     SearchAnime:AnimeSearchParams,
     Filter:undefined,
-    AnimeDetails:undefined,
-    CommentsScreens:undefined,
+    AnimeDetails:AnimeDetailParams,
+    CommentsScreens:CommentParams,
     VideoPlayScreen:undefined
 };
 
 type SearchAnimeRouteProps = RouteProp<AuthStackParamList, AuthRoutes.SearchAnime>
-
+type AnimeDetailRouteProps = RouteProp<AuthStackParamList, AuthRoutes.AnimeDetails>
+type CommentsRouteProps = RouteProp<AuthStackParamList, AuthRoutes.CommentsScreens>
 
 type AuthScreenNavigationProps = NativeStackScreenProps<
     AuthStackParamList,
@@ -43,4 +45,9 @@ type AuthScreenNavigationProps = NativeStackScreenProps<
     CommentsScreens,
     VideoPlayScreen
 >
- export { AuthScreenNavigationProps, AuthStackParamList ,SearchAnimeRouteProps};
+ export { AuthScreenNavigationProps, 
+    AuthStackParamList ,
+    SearchAnimeRouteProps,
+    AnimeDetailRouteProps,
+    CommentsRouteProps
+};

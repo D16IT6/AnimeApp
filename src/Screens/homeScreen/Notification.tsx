@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Color } from "../../common/Colors";
 import { Loader } from "../../common/component";
 import { NavagitonTop } from "../../common/component";
-import { listNotification } from "../../utils/data";
+import { listNotification } from "../../utils/getUserId";
 import fontFamily from "../../common/FontFamily";
 
 const { height, width } = Dimensions.get("window");
