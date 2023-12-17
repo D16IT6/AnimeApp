@@ -8,11 +8,6 @@ import { LoginResponseViewModel } from '../ModelView';
 
 global.atob = decode;
 
-// function getUTCNow() {
-//   var now = new Date();
-//   var utc = new Date(now.getTime());
-//   return utc;
-// }
 
 interface JwtPayload {
   // ... các thuộc tính khác ...
@@ -38,7 +33,7 @@ axiosClient.interceptors.request.use(async (config) => {
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
-  console.log(config);
+  // console.log(config);
   return config;
 });
 

@@ -1,41 +1,37 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView, TextInputProps, Keyboard, ScrollView, StatusBar } from 'react-native'
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, Alert, Keyboard, StatusBar } from 'react-native'
 import React, { useState } from 'react'
 import { logo } from '../../common/Images'
-import Icon from 'react-native-vector-icons/FontAwesome';
-//icon
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome'
+
 import { Color } from '../../common/Colors';
 import { useNavigation } from '@react-navigation/native'
 import { AuthScreenNavigationProps, AuthRoutes } from '../../navigations/AuthNavigator';
-import { ButtonAuthScreen, CheckedAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthScreen,LinkAuthScreen,Loader, NavagitonTop } from '../../common/component';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ButtonAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthScreen, LinkAuthScreen, Loader, NavagitonTop } from '../../common/component';
 import fontSizes from '../../common/FontSizes';
 import { apiAuth } from '../../apiService/AuthService';
+import { notDev } from '../../utils/extensionMethod';
 const { width, height } = Dimensions.get('window')
 export default function SignUpScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
-  
+
   const [inputs, setInputs] = useState({
-    username:'',
-    password:'',
-    confilmPassword:'',
-    email:''
+    username: '',
+    password: '',
+    confilmPassword: '',
+    email: ''
   })
   interface Errors {
     username?: string;
-    email?:string;
+    email?: string;
     password?: string;
-    confilmPassword?:string;
+    confilmPassword?: string;
   }
   const [errors, setErrors] = useState<Errors>({})
-  const [loading,setLoading] =useState(false)
+  const [loading, setLoading] = useState(false)
 
- 
-  const validateEmail = (email:string) => {
+
+  const validateEmail = (email: string) => {
     const regex = (/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/);
-  
+
     return regex.test(email);
   };
 
@@ -50,42 +46,37 @@ export default function SignUpScreen() {
       handleError("Vui lòng nhập mật khẩu !", "password")
       isValid = false;
     }
-    else if(inputs.password.length<5)
-    {
+    else if (inputs.password.length < 5) {
       handleError("Mật khẩu phải trên 5 kí tự !", "password")
       isValid = false;
     }
-    if(inputs.password!==inputs.confilmPassword)
-    {
+    if (inputs.password !== inputs.confilmPassword) {
       handleError("Xác nhận mật khẩu không đúng !", "confilmPassword")
-      isValid =false;
+      isValid = false;
     }
-    if(!inputs.email)
-    {
+    if (!inputs.email) {
       handleError("Chưa nhập email !", "email")
-      isValid =false;
+      isValid = false;
     }
-    else if(!validateEmail(inputs.email))
-    {
+    else if (!validateEmail(inputs.email)) {
       handleError("Nhập email chưa đúng định dạng !", "email")
-      isValid =false;
+      isValid = false;
     }
-    if(isValid)
-    {
+    if (isValid) {
       regisiter()
     }
   }
-  const regisiter = async ()=>{
+  const regisiter = async () => {
     try {
       setLoading(true)
       const checkSiup = await apiAuth.sigup(
-        {UserName:inputs.username,
-        Password:inputs.password,
-        Email:inputs.email
-      })
+        {
+          UserName: inputs.username,
+          Password: inputs.password,
+          Email: inputs.email
+        })
       setLoading(false)
-      if(checkSiup)
-      {
+      if (checkSiup) {
         Alert.alert(
           'Thông báo',
           'Thêm tài khoản thành công!!!',
@@ -105,7 +96,7 @@ export default function SignUpScreen() {
         );
         navigation.navigate(AuthRoutes.Login)
       }
-      else{
+      else {
         Alert.alert(
           'Cảnh báo',
           'Thêm tài khoản thất bại!!!\n*Trùng email\n*Trùng userName',
@@ -127,7 +118,6 @@ export default function SignUpScreen() {
     } catch (error) {
       console.log(error)
     }
-    
     // setLoading(true),
     // setTimeout(() => {
     //   setLoading(false)
@@ -147,87 +137,87 @@ export default function SignUpScreen() {
   }
   return (
     <KeyboardAvoidingContainer style={styles.container}>
-    <Loader visible={loading} />
+      <Loader visible={loading} />
       <NavagitonTop
-      OnPressArrowBack={ 
-        ()=>{navigation.navigate(AuthRoutes.LoginMethod)}
-      }
+        OnPressArrowBack={
+          () => { navigation.navigate(AuthRoutes.LoginMethod) }
+        }
       />
       <View style={styles.header}>
         <Image source={logo} style={styles.logo}></Image>
 
         <Text style={styles.title}>Tạo tài khoản của bạn</Text>
       </View>
-      <View style={styles.contentSignUp}>      
-          <InputAuthScreen
-            placeholder="Tài Khoản"
-            iconName="user"
-            error={errors.username}
-            onFocus={() => {
-              handleError(null, "username")     
-            }}
-            onChangeText={(text: string) => handleOnChange(text, 'username')}
-          />
-          <InputAuthScreen
-            placeholder="Email"
-            iconName="envelope-o"
-            error={errors.email}
-            onFocus={() => {
-              handleError(null, "email")     
-            }}
-            onChangeText={(text: string) => handleOnChange(text, 'email')}
-          />
-          <InputAuthScreen
-            placeholder="Mật Khẩu"
-            iconName="lock"
-            error={errors.password}
-            password={true}
-            onFocus={() => {
-              handleError(null, "password")
-            }}
-            onChangeText={(text: string) => handleOnChange(text, 'password')}//(text: string) => handleOnChange(text, 'password')
-          />  
-             <InputAuthScreen
-            placeholder="Xác nhận mật khẩu"
-            iconName="lock"
-            error={errors.confilmPassword}
-            password={true}
-            onFocus={() => {
-              handleError(null, "confilmPassword")
-            }}
-            onChangeText={(text: string) => handleOnChange(text, 'confilmPassword')}//(text: string) => handleOnChange(text, 'password')
-            
-          />        
-          {/* <CheckedAuthScreen/> */}
-          <ButtonAuthScreen
-            title='Đăng Ký'
-            onPressBtn={() => { 
-              validate()
-            }
+      <View style={styles.contentSignUp}>
+        <InputAuthScreen
+          placeholder="Tài Khoản"
+          iconName="user"
+          error={errors.username}
+          onFocus={() => {
+            handleError(null, "username")
+          }}
+          onChangeText={(text: string) => handleOnChange(text, 'username')}
+        />
+        <InputAuthScreen
+          placeholder="Email"
+          iconName="envelope-o"
+          error={errors.email}
+          onFocus={() => {
+            handleError(null, "email")
+          }}
+          onChangeText={(text: string) => handleOnChange(text, 'email')}
+        />
+        <InputAuthScreen
+          placeholder="Mật Khẩu"
+          iconName="lock"
+          error={errors.password}
+          password={true}
+          onFocus={() => {
+            handleError(null, "password")
+          }}
+          onChangeText={(text: string) => handleOnChange(text, 'password')}//(text: string) => handleOnChange(text, 'password')
+        />
+        <InputAuthScreen
+          placeholder="Xác nhận mật khẩu"
+          iconName="lock"
+          error={errors.confilmPassword}
+          password={true}
+          onFocus={() => {
+            handleError(null, "confilmPassword")
+          }}
+          onChangeText={(text: string) => handleOnChange(text, 'confilmPassword')}//(text: string) => handleOnChange(text, 'password')
+
+        />
+        {/* <CheckedAuthScreen/> */}
+        <ButtonAuthScreen
+          title='Đăng Ký'
+          onPressBtn={() => {
+            validate()
           }
-          />
-          <LineAuthScreen title="or continue with"/>
-        
+          }
+        />
+        <LineAuthScreen title="or continue with" />
+
       </View>
       <View style={styles.footer}>
-          <View style={styles.containerMethodLogin}>
-            <TouchableOpacity style={styles.methodlogin}>
-              <Image source={require("../../assets/icons/facebook.png")} style={styles.iconMethodLogin}></Image>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.methodlogin}>
-              <Image source={require("../../assets/icons/google.png")} style={styles.iconMethodLogin}></Image>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.methodlogin}>
+        <View style={styles.containerMethodLogin}>
+          <TouchableOpacity style={styles.methodlogin} onPress={notDev}>
+            <Image source={require("../../assets/icons/facebook.png")} style={styles.iconMethodLogin}></Image>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.methodlogin} onPress={notDev}>
+            <Image source={require("../../assets/icons/google.png")} style={styles.iconMethodLogin}></Image>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.methodlogin} onPress={notDev}>
             <Image source={require("../../assets/icons/apple.png")} style={styles.iconMethodLogin}></Image>
-            </TouchableOpacity>
-          </View>
-          <LinkAuthScreen 
+          </TouchableOpacity>
+        </View>
+        <LinkAuthScreen
           title="Bạn đã có tài khoản"
-          onPress={()=>{
+          onPress={() => {
             navigation.navigate(AuthRoutes.Login)
           }}
-          textlink="Đăng Nhập"         
-          ></LinkAuthScreen>
+          textlink="Đăng Nhập"
+        ></LinkAuthScreen>
       </View>
     </KeyboardAvoidingContainer>
   )
@@ -237,7 +227,7 @@ const styles = StyleSheet.create({
   container: {
     //  flex: 1
     // do dai man hinh - thanh trang thai
-    height:height-(StatusBar.currentHeight?StatusBar.currentHeight:0)
+    height: height - (StatusBar.currentHeight ? StatusBar.currentHeight : 0)
   },
   header: {
     flex: 2,
@@ -262,28 +252,28 @@ const styles = StyleSheet.create({
     backgroundColor: Color.SecondaryColor,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    
+
   },
   footer: {
     flex: 1,
-    justifyContent:'space-around',
-    backgroundColor:Color.SecondaryColor
+    justifyContent: 'space-around',
+    backgroundColor: Color.SecondaryColor
   },
-  containerMethodLogin:{
-    flexDirection:'row',
-    justifyContent:'center',
-    alignContent:'center'
+  containerMethodLogin: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center'
   },
-  methodlogin:{
-    width:"20%",  
-    height:height*0.07,
-    backgroundColor:Color.SecondaryColor,
-    borderRadius:16,
-    justifyContent:'center',
-    alignItems:'center',
-    borderWidth:1,
-    borderColor:"#EEE",
-    marginHorizontal:20
+  methodlogin: {
+    width: "20%",
+    height: height * 0.07,
+    backgroundColor: Color.SecondaryColor,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: "#EEE",
+    marginHorizontal: 20
   },
   iconMethodLogin: {
     maxWidth: "40%",

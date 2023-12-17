@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import fontFamily from '../../common/FontFamily';
 import { apiAuth } from '../../apiService/AuthService';
 import { LoginRequestViewModel } from '../../ModelView';
+import { notDev } from '../../utils/extensionMethod';
 
 
 const { width, height } = Dimensions.get('window')
@@ -18,6 +19,8 @@ export default function LoginMethodScreen() {
     username: '',
     password: ''
   })
+
+
   interface Errors {
     username?: string;
     password?: string;
@@ -57,7 +60,7 @@ export default function LoginMethodScreen() {
 
       AsyncStorage.setItem("AccessToken", data.AccessToken)
       AsyncStorage.setItem("RefreshToken", data.RefreshToken)
-      
+
       navigation.navigate(AuthRoutes.MainNavigationBar)
     }
     else {
@@ -114,9 +117,7 @@ export default function LoginMethodScreen() {
           }
           }
         />
-        <Text style={styles.forgotPassword} onPress={() => {
-          navigation.navigate(AuthRoutes.ResetWelcome)
-        }}>
+        <Text style={styles.forgotPassword} onPress={notDev}>
           Bạn đã quên mật khẩu ?
         </Text>
         <LineAuthScreen title="or continue with" />
@@ -124,13 +125,13 @@ export default function LoginMethodScreen() {
       </View>
       <View style={styles.footer}>
         <View style={styles.containerMethodLogin}>
-          <TouchableOpacity style={styles.methodlogin}>
+          <TouchableOpacity style={styles.methodlogin} onPress={notDev}>
             <Image source={require("../../assets/icons/facebook.png")} style={styles.iconMethodLogin}></Image>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.methodlogin}>
+          <TouchableOpacity style={styles.methodlogin} onPress={notDev}>
             <Image source={require("../../assets/icons/google.png")} style={styles.iconMethodLogin}></Image>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.methodlogin}>
+          <TouchableOpacity style={styles.methodlogin} onPress={notDev}>
             <Image source={require("../../assets/icons/apple.png")} style={styles.iconMethodLogin}></Image>
           </TouchableOpacity>
         </View>

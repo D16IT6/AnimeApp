@@ -48,7 +48,7 @@ const Comments = (props:CommentsProps)=>{
                         onPress={()=>{
                             Alert.alert(`Dang coment ${comment.Id}`)
                         }}
-                        >Reply</Text>  
+                        > </Text>  
                         </View>
                        
                 </View> 

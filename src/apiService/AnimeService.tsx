@@ -80,7 +80,7 @@ const animeApi = {
         Poster: res && res.Poster !== null ? (!res.Poster.startsWith('http') ? `${BASE_URL}${res.Poster}` : res.Poster) : imageError,
         Rating: res.Rating === "NaN" ? "0" : res.Rating,
       };
-      console.log(updatedData)
+      // console.log(updatedData)
       return updatedData
     } catch (error) {
       console.log(error)
