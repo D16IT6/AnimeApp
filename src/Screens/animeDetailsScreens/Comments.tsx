@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Comments, InputComment, NavagitonTop } from "../../common/component";
+import { Comments, InputComment, NavagitonTop } from "../../common/components";
 import { SafeAreaView, View, Dimensions, StyleSheet, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";

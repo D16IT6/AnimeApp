@@ -4,8 +4,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { useNavigation } from '@react-navigation/native'
 import { Color } from "../../common/Colors";
-import { Loader } from "../../common/component";
-import { NavagitonTop } from "../../common/component";
+import { Loader } from "../../common/components";
+import { NavagitonTop } from "../../common/components";
 import fontFamily from "../../common/FontFamily";
 import { AnimeNewEpisodeReleasesViewModel } from "../../ModelView";
 import { animeApi } from "../../apiService/AnimeService";

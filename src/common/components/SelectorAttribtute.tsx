@@ -1,9 +1,8 @@
-import React, { useState } from "react"
-import { Dimensions, FlatList, StyleSheet, TouchableOpacity, View } from "react-native"
+import React from "react"
+import { Dimensions,  StyleSheet, TouchableOpacity, View } from "react-native"
 import { Text } from "react-native-elements"
 import fontFamily from "../FontFamily"
 import fontSizes from "../FontSizes"
-import ButtonAuthScreen from "./ButtonAuthScreen"
 import { Color } from "../Colors"
 import { ItemSeletorProps, SeletorAttribute } from "../../ModelView"
 

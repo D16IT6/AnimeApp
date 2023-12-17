@@ -1,3 +1,3 @@
 import { ChooseInterestScreen } from "./ChooseInsterestScreen";
-import { ProfileScreen } from './ProfileScreen'
-export { ChooseInterestScreen, ProfileScreen }
+import { AccountInfo } from './AccountInfoScreen'
+export { ChooseInterestScreen, AccountInfo }

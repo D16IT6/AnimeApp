@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Dimensions, FlatList, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ButtonAuthScreen, NavagitonTop, SelectorAttribtute } from "../../common/component";
+import { ButtonAuthScreen, NavagitonTop, SelectorAttribtute } from "../../common/components";
 import { useNavigation } from '@react-navigation/native'
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { Color } from "../../common/Colors";

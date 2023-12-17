@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, Animated, StyleSheet, SafeAreaView, FlatList, Dimensions } from 'react-native';
 import { Color } from '../../common/Colors';
-import { MyListAnime } from '../../common/component/RenderFlastList';
+import { MyListAnime } from '../../common/components/RenderFlastList';
 import { MyListResponseViewModel } from '../../ModelView';
 import { apiMyList } from '../../apiService/MylistService';
 import getUserIdFromToken from '../../utils/getUserId';

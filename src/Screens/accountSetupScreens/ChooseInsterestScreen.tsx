@@ -1,16 +1,14 @@
 import { useNavigation } from "@react-navigation/native"
 import React, { useState } from "react"
-import { Alert, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { AccountSetupRoutes, AccountSetupScreenNavigationProps } from "../../navigations/AccountSetupNavigator"
+import { ScrollView, StyleSheet, Text, View } from "react-native"
 import { CategoryViewModel } from "../../common/ViewModels"
-import { PrimaryColor } from "../../common/Colors"
 import { NavigationBar } from "../../common/components/NavigationBar"
 import { CategoryViewItem, FooterNavigation } from "../../common/components"
 import { arrowLeftIcon } from "../../common/Icons"
 const ChooseInterestScreen = () => {
 
 
-    const navigation = useNavigation<AccountSetupScreenNavigationProps>();
+    const navigation = useNavigation();
 
 
     const categoryItems = ["Action",
@@ -153,10 +151,8 @@ const ChooseInterestScreen = () => {
                 rightTitle="Continue"
                 leftEvent={
                     () => {
-                        navigation.navigate(AccountSetupRoutes.Profile)
                     }}
                 rightEvent={() => {
-                    navigation.navigate(AccountSetupRoutes.Profile)
 
                 }}
 

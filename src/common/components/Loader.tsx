@@ -1,8 +1,7 @@
 import React from "react";
 import { View,Text ,Dimensions,StyleSheet, ActivityIndicator} from "react-native";
 import { Color } from "../Colors";
-import fontFamily from "../FontFamily";
-import fontSizes from "../FontSizes";
+
 const {width,height} =Dimensions.get('window')
 const Loader = ({visible}:{visible:boolean}) =>{
     return(visible&&(

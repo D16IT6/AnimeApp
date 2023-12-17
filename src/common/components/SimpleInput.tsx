@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Dimensions, ViewProps } from "react-native";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import { PrimaryColor } from "../Colors";
+import { Color } from "../Colors";
 const { width, height } = Dimensions.get('window')
 interface SimpleInputProps {
     placeholder: string;
@@ -31,10 +31,10 @@ const SimpleInput: React.FC<SimpleInputProps> = ({
             <View style={[styles.inputContainer,
             {
                 backgroundColor: isFocus ? '#ebfaf1' : '#FAFAFA',
-                borderColor: error ? 'red' : isFocus ? PrimaryColor : '#FAFAFA' //neu loi do neu chon mau chinh else trang
+                borderColor: error ? 'red' : isFocus ? Color.PrimaryColor : '#FAFAFA' //neu loi do neu chon mau chinh else trang
             }, viewStyle
             ]}>
-                {iconName && <FontAwesomeIcons name={iconName} size={20} color={isFocus ? PrimaryColor : "#9e9e9e"} style={{ marginRight: 5 }} />}
+                {iconName && <FontAwesomeIcons name={iconName} size={20} color={isFocus ? Color.PrimaryColor : "#9e9e9e"} style={{ marginRight: 5 }} />}
 
                 <TextInput style={[styles.password, { backgroundColor: isFocus ? '#ebfaf1' : '#FAFAFA', }]}
                     autoCorrect={false}
@@ -60,7 +60,7 @@ const SimpleInput: React.FC<SimpleInputProps> = ({
                             onPress={() => {
                                 setHidePassword(!hidePassWord)
                             }}
-                            size={20} color={isFocus ? PrimaryColor : "#9e9e9e"} />
+                            size={20} color={isFocus ? Color.PrimaryColor : "#9e9e9e"} />
                     )
                 }
 

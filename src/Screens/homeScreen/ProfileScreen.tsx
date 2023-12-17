@@ -5,11 +5,10 @@ import { logo } from "../../common/Images";
 import fontSizes from "../../common/FontSizes";
 import fontFamily from "../../common/FontFamily";
 import { Color } from "../../common/Colors";
-import NavigationProfile from "../../common/component/NavigationProfile";
+import NavigationProfile from "../../common/components/NavigationProfile";
 import { UserReponseViewModel } from "../../ModelView";
 import { apiUser } from "../../apiService/UserService";
 import getUserIdFromToken from "../../utils/getUserId";
-import { AxiosError } from "axios";
 import { imageError } from "../../utils/httpReponse";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -58,7 +57,7 @@ const ProfileScreen = () => {
                 iconName="user"
                 press={
                     () => {
-
+                        navigation.navigate(AuthRoutes.AccountInfoScreen)
                     }
                 }
             />

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Alert, Dimensions, FlatList, SafeAreaView, ScrollView, Image, StyleSheet, Text, View, ImageBackground, TouchableOpacity, Animated } from "react-native";
-import { Comments } from "../../common/component";
+import { Comments } from "../../common/components";
 import { useNavigation } from '@react-navigation/native'
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { Color } from "../../common/Colors";
@@ -15,9 +15,9 @@ import { AnimeDetailsViewModel, AnimeRandomViewModel, CommentResponseView } from
 import HTMLView from 'react-native-htmlview';
 import LottieView from "lottie-react-native";
 import { CommentApi } from "../../apiService/CommentService";
-import { AnimeDetailRouteProps } from "../../navigations/AuthNavigator/Type";
 import { imageError } from "../../utils/httpReponse";
 import LoadScreen from "../loadScreens/loadScreens";
+import { AnimeDetailRouteProps } from "../../navigations/AuthNavigator/Type";
 const { width, height } = Dimensions.get("window")
 
 
@@ -46,7 +46,7 @@ const ListAnimeMoreLikeThis = ({ item, index }: { item: AnimeRandomViewModel, in
         </TouchableOpacity>
     )
 }
-const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
+const AnimeDetails = ({ route }: { route: AnimeDetailRouteProps }) => {
     const {
         animeId
     } = route.params;
@@ -90,8 +90,8 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
     const navigation = useNavigation<AuthScreenNavigationProps>();
     return <SafeAreaView style={styles.container}>
         <LoadScreen
-        visible={loading}
-        title="Đang tải thông tin anime"
+            visible={loading}
+            title="Đang tải thông tin anime"
         />
         <Ionicons name='arrow-back'
             onPress={() => {
@@ -117,12 +117,12 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
                     <View style={styles.buttons}>
                         <TouchableOpacity style={styles.btnPlay} onPress={() => {
                             animeDetail?.Episodes?.length || 0 > 0
-                            ? navigation.navigate(AuthRoutes.VideoPlayScreen, {
-                                animeId:animeId,
-                                url: animeDetail?.Episodes[0].Url,
-                                name: `${animeDetail?.Title}(Tập ${animeDetail?.Episodes[0].Title})`
+                                ? navigation.navigate(AuthRoutes.VideoPlayScreen, {
+                                    animeId: animeId,
+                                    url: animeDetail?.Episodes[0].Url,
+                                    name: `${animeDetail?.Title}(Tập ${animeDetail?.Episodes[0].Title})`
                                 })
-                            : Alert.alert(`Phim ${animeDetail?.Title} chưa có tập nào`);
+                                : Alert.alert(`Phim ${animeDetail?.Title} chưa có tập nào`);
                         }}>
                             <AntDesign name="play" color={Color.SecondaryColor} size={20}></AntDesign>
                             <Text style={styles.txtPlay}>Play</Text>
@@ -169,7 +169,7 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
                             return (
                                 <TouchableOpacity onPress={() => {
                                     navigation.navigate(AuthRoutes.VideoPlayScreen, {
-                                        animeId:animeId,
+                                        animeId: animeId,
                                         url: item.Url,
                                         name: `${animeDetail?.Title}(Tập ${item.Title})`
                                     })
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
         top: "45%",
     },
     textEpisode: {
-        backgroundColor:Color.PrimaryColor,
+        backgroundColor: Color.PrimaryColor,
         position: "absolute",
         left: 10,
         bottom: 10,
@@ -351,8 +351,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '500',
         color: Color.SecondaryColor,
-        padding:5,
-        borderRadius:10
+        padding: 5,
+        borderRadius: 10
     },
     nameAnime: {
         fontFamily: fontFamily.PrimaryFont,

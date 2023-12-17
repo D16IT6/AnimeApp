@@ -4,10 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 const App = () => {
   return (
     <NavigationContainer>
-      {/* <AuthNavigator /> */}
-      <AccountSetupNavigator/>
+      <AuthNavigator />
     </NavigationContainer>
-   
+
   )
 }
 export { App };

@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { WelcomeScreen, LoginScreen, SignUpScreen, LoginMethodScreen, ResetWelcome } from '../../Screens/AuthScreens'
 import { MainNavigationBar, HitAnime, Notification, Filter, SearchAnime, NewEpisodeReleases } from '../../Screens/homeScreen'
@@ -6,6 +6,8 @@ import { AuthScreenNavigationProps } from "./Type"
 import { AuthRoutes } from './Routes'
 import { getItem, setItem } from '../../utils/asyncStorage'
 import { AnimeDetails, CommentsScreens, VideoPlayScreen } from '../../Screens/animeDetailsScreens'
+import { AccountInfo, ChooseInterestScreen } from '../../Screens/accountSetupScreens'
+
 const Stack = createNativeStackNavigator<AuthScreenNavigationProps>();
 
 const AuthNavigator = () => {
@@ -52,6 +54,10 @@ const AuthNavigator = () => {
   return (
     <Stack.Navigator initialRouteName={firstRoute}>
       <Stack.Screen name={AuthRoutes.Welcome} component={WelcomeScreen} options={{ headerShown: false }} key={AuthRoutes.Welcome}></Stack.Screen>
+
+      <Stack.Screen name={AuthRoutes.AccountInfoScreen} component={AccountInfo} options={{ headerShown: false }} key={AuthRoutes.AccountInfoScreen}></Stack.Screen>
+      <Stack.Screen name={AuthRoutes.ChooseInsterestScreen} component={ChooseInterestScreen} options={{ headerShown: false }} key={AuthRoutes.ChooseInsterestScreen}></Stack.Screen>
+
       <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>
       <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }} key={AuthRoutes.Login}></Stack.Screen>
       <Stack.Screen name={AuthRoutes.SignUp} component={SignUpScreen} options={{ headerShown: false }}></Stack.Screen>

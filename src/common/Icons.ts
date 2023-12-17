@@ -12,5 +12,5 @@ export {
     googleIcon,
     appleIcon,
     groupIcon,
-    DowloadIcon
+    DowloadIcon, arrowLeftIcon
 }

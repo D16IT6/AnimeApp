@@ -1,4 +1,4 @@
-type AnimeHitViewModel ={
+type AnimeHitViewModel = {
     Id: number,
     Title: string,
     Year: number,
@@ -7,97 +7,97 @@ type AnimeHitViewModel ={
     Poster: string,
     Rating: string,
 }
-type AnimeNewEpisodeReleasesViewModel ={
-        Id: number,
-        Poster: string,
-        Rating: string,
-        CurrentEpisode: number
+type AnimeNewEpisodeReleasesViewModel = {
+    Id: number,
+    Poster: string,
+    Rating: string,
+    CurrentEpisode: number
 }
-type AnimeRandomViewModel ={
+type AnimeRandomViewModel = {
     Id: number,
     Poster: string,
     Rating: string,
 }
-type EpisodesViewModel ={
-    Id:number,
-    Title:string,
-    Url:string
-}
-type AnimeDetailsViewModel={
-        Id: number,
-        Title: string,
-        Poster:string,
-        Rating: string,
-        Year: number,
-        Country: string,
-        AgeRating: string,
-        Categories: string[],
-        Synopsis: string,
-        Episodes: EpisodesViewModel[] 
-}
-type CountryModelView={
-    Id:number,
-    Name:string,
-}
-type AnimeAgeRaitingModelView={
-    Id:number,
-    Name:string,
-}
-type AnimeCategoryModelView={
-    Id:number,
-    Name:string,
-}
-type AnimeTypeModelView={
-    Id:number,
-    Name:string,
-}
-type AnimeStatusModelView={
-    Id:number,
-    Name:string,
-}
-type AttributeProps ={
+type EpisodesViewModel = {
     Id: number,
-    Name:string,
-    Selected?:boolean,
+    Title: string,
+    Url: string
 }
-type SeletorAttribute ={
-    listAttribute:AttributeProps[],
-    title:string,
-    setListAttribute:any
-    mutiSeletion?:boolean
+type AnimeDetailsViewModel = {
+    Id: number,
+    Title: string,
+    Poster: string,
+    Rating: string,
+    Year: number,
+    Country: string,
+    AgeRating: string,
+    Categories: string[],
+    Synopsis: string,
+    Episodes: EpisodesViewModel[]
 }
-type ItemSeletorProps ={
-    Key?:number
-    Attribute:AttributeProps,
-    Index?:number,
-    Select:AttributeProps[],
-    SetSelect:any,
-    MutiSeletion:boolean
+type CountryModelView = {
+    Id: number,
+    Name: string,
+}
+type AnimeAgeRaitingModelView = {
+    Id: number,
+    Name: string,
+}
+type AnimeCategoryModelView = {
+    Id: number,
+    Name: string,
+}
+type AnimeTypeModelView = {
+    Id: number,
+    Name: string,
+}
+type AnimeStatusModelView = {
+    Id: number,
+    Name: string,
+}
+type AttributeProps = {
+    Id: number,
+    Name: string,
+    Selected?: boolean,
+}
+type SeletorAttribute = {
+    listAttribute: AttributeProps[],
+    title: string,
+    setListAttribute: any
+    mutiSeletion?: boolean
+}
+type ItemSeletorProps = {
+    Key?: number
+    Attribute: AttributeProps,
+    Index?: number,
+    Select: AttributeProps[],
+    SetSelect: any,
+    MutiSeletion: boolean
 }
 
 
-type AnimeSearchRequestViewModel ={
+type AnimeSearchRequestViewModel = {
 
 }
-type AnimeSearchParams= {
+type AnimeSearchParams = {
     selectedAgeRaiting: AttributeProps[],
     selectedCategories: AttributeProps[],
     selectedCountry: AttributeProps[],
     selectedStatus: AttributeProps[],
     selectedType: AttributeProps[]
 }
-type AnimeDetailParams= {
-    animeId :number
+type AnimeDetailParams = {
+    animeId: number
 }
-type CommentParams={
-    animeId :number
+type CommentParams = {
+    animeId: number
 }
-type AnimeSearchResponseViewModel ={
+type AnimeSearchResponseViewModel = {
     Id: number,
     Title: string,
     Poster: string
 }
-type MyListResponseViewModel ={
+type MyListResponseViewModel = {
     Id: number,
     Title: string,
     Poster: string,
@@ -106,7 +106,7 @@ type MyListResponseViewModel ={
 type LoginRequestViewModel = {
     UserName: string,
     Password: string,
-    RememberMe:boolean
+    RememberMe: boolean
 }
 type LoginResponseViewModel = {
     AccessToken: string;
@@ -115,39 +115,47 @@ type LoginResponseViewModel = {
 type SignupRequestViewModel = {
     UserName: string,
     Password: string,
-    Email:string
+    Email: string
 }
-type UserReponseViewModel={
+type UserReponseViewModel = {
     Id: number,
-    FullName:string,
+    FullName: string,
     Email: string,
     AvatarUrl: string,
     PhoneNumber: string,
     BirthDay: string
 }
-type AsyncStorage ={
+type AsyncStorage = {
     getItem(key: string): Promise<string | null>;
-    setItem(key: string,value:string): Promise<string | null>;
+    setItem(key: string, value: string): Promise<string | null>;
     removeItem(key: string): Promise<string | null>;
 }
 
-type CommentResponseView ={
+type CommentResponseView = {
     Id: number,
     Content: string,
     FullName: string,
     AvatarUrl: string,
     CreatedDate: string
 }
-type CommentsProps ={
-    comment:CommentResponseView,
-    replies?:CommentResponseView[],
+type CommentsProps = {
+    comment: CommentResponseView,
+    replies?: CommentResponseView[],
 }
-type CommentRequestViewModel ={
-    AnimeId:number,
-    UserId:number,
-    Content:string
+type CommentRequestViewModel = {
+    AnimeId: number,
+    UserId: number,
+    Content: string
 }
+type UserPostViewModel = {
+    FullName: string | undefined,
+    Email: string | undefined,
+    PhoneNumber: string | undefined
+}
+
+
 export {
+    UserPostViewModel,
     LoginRequestViewModel,
     LoginResponseViewModel,
     CommentRequestViewModel,
@@ -164,12 +172,12 @@ export {
     CountryModelView,
     AttributeProps,
     SeletorAttribute,
-    ItemSeletorProps, 
+    ItemSeletorProps,
     AnimeAgeRaitingModelView,
     AnimeCategoryModelView,
     AnimeTypeModelView,
-    AnimeStatusModelView ,
-    AnimeRandomViewModel ,
+    AnimeStatusModelView,
+    AnimeRandomViewModel,
     AnimeDetailParams,
     CommentParams,
     SignupRequestViewModel,

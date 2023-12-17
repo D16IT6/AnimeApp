@@ -5,7 +5,7 @@ import { logo } from '../../common/Images'
 import { Color } from '../../common/Colors';
 import { useNavigation } from '@react-navigation/native'
 import { AuthScreenNavigationProps, AuthRoutes } from '../../navigations/AuthNavigator';
-import { ButtonAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthScreen, LinkAuthScreen, Loader, NavagitonTop } from '../../common/component';
+import { ButtonAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthScreen, LinkAuthScreen, Loader, NavagitonTop } from '../../common/components';
 import fontSizes from '../../common/FontSizes';
 import { apiAuth } from '../../apiService/AuthService';
 import { notDev } from '../../utils/extensionMethod';

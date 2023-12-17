@@ -5,7 +5,7 @@ import { AuthScreenNavigationProps, AuthRoutes, AuthNavigator } from "../../navi
 import { appleIcon, facebookIcon, googleIcon } from '../../common/Icons';
 import LottieView from 'lottie-react-native';
 import { Color } from '../../common/Colors';
-import { LineAuthScreen ,ButtonAuthScreen,LinkAuthScreen } from '../../common/component';
+import { LineAuthScreen ,ButtonAuthScreen,LinkAuthScreen } from '../../common/components';
 import fontFamily from '../../common/FontFamily';
 import fontSizes from '../../common/FontSizes';
 const { width, height } = Dimensions.get('window')

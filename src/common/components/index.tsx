@@ -21,3 +21,9 @@ export{InputAuthScreen,
     DropdownComponent,
     Comments,InputComment,Reply
 }
+
+import { CategoryViewItem } from "./InterestCategory";
+import { NavigationBar } from "./NavigationBar";
+import { FooterNavigation } from "./footerNavigation";
+
+export { CategoryViewItem, NavigationBar, FooterNavigation }

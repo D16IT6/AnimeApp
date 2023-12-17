@@ -1,6 +1,6 @@
 import React from "react"
 import { Alert, StyleSheet, Text, TextProps, TouchableOpacity, TouchableOpacityProps, View, ViewProps } from "react-native"
-import { PrimaryColor } from '../Colors'
+import { Color } from '../Colors'
 type ButtonProps = {
     viewStyle?: ViewProps['style'],
 
@@ -131,14 +131,14 @@ const styles = StyleSheet.create({
     },
     LeftText:
     {
-        color: PrimaryColor,
+        color: Color.PrimaryColor,
         fontSize: 18
 
     },
     Right:
     {
 
-        backgroundColor: PrimaryColor,
+        backgroundColor: Color.PrimaryColor,
         borderRadius: 50,
         width: '45%',
         alignItems: 'center',

@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, StyleSheet, Dimensions, Alert, TouchableOpacity } from "react-native"
 
-import fontFamily from "../../common/FontFamily";
-import { Color } from "../../common/Colors";
+import fontFamily from "../FontFamily";
+import { Color } from "../Colors";
 import Entypo from "react-native-vector-icons/Entypo"
 
 const { width, height } = Dimensions.get("window");

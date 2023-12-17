@@ -6,7 +6,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Color } from "../../common/Colors";
 import Slider from '@react-native-community/slider';
 import Orientation from 'react-native-orientation-locker';
-import { NavagitonTop } from "../../common/component";
+import { NavagitonTop } from "../../common/components";
 import fontFamily from "../../common/FontFamily";
 import fontSizes from "../../common/FontSizes";
 import { AuthNavigator, AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";

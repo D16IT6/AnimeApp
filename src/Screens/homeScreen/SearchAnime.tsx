@@ -3,8 +3,8 @@ import { Text, View, SafeAreaView, FlatList, StyleSheet, Dimensions, Image, Touc
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { useNavigation } from '@react-navigation/native'
-import { InputAuthScreen, Loader } from "../../common/component";
-import { NavagitonTop } from "../../common/component";
+import { InputAuthScreen, Loader } from "../../common/components";
+import { NavagitonTop } from "../../common/components";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { Color } from "../../common/Colors";
 import { groupIcon } from "../../common/Icons";

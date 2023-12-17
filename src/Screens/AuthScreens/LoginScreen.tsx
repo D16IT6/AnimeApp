@@ -4,7 +4,7 @@ import { logo } from '../../common/Images'
 import { Color } from '../../common/Colors';
 import { useNavigation } from '@react-navigation/native'
 import { AuthScreenNavigationProps, AuthRoutes } from '../../navigations/AuthNavigator';
-import { ButtonAuthScreen, CheckedAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthScreen, LinkAuthScreen, Loader, NavagitonTop } from '../../common/component';
+import { ButtonAuthScreen, CheckedAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthScreen, LinkAuthScreen, Loader, NavagitonTop } from '../../common/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fontFamily from '../../common/FontFamily';
 import { apiAuth } from '../../apiService/AuthService';
