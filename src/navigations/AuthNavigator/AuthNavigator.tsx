@@ -24,11 +24,11 @@ const AuthNavigator = () => {
       console.log(token)
       if (welcomed === '1') {
         setWelcome(false);
-        if(token===null||token===undefined){
+        if (token === null || token === undefined) {
           console.log("vào login")
           setFirstRoute(AuthRoutes.Login);
         }
-        else{
+        else {
           console.log("vào main")
           setFirstRoute(AuthRoutes.MainNavigationBar);
         }
@@ -41,14 +41,14 @@ const AuthNavigator = () => {
     };
 
     checkIfAlreadyWelcomed();
-  }, []); 
+  }, []);
 
   // Các useEffect khác
 
   if (isLoading) {
     return null; // Hoặc bạn có thể hiển thị một Spinner component trong quá trình loading
   }
-  console.log("man hinh",firstRoute)
+  console.log("man hinh", firstRoute)
   return (
     <Stack.Navigator initialRouteName={firstRoute}>
       <Stack.Screen name={AuthRoutes.Welcome} component={WelcomeScreen} options={{ headerShown: false }} key={AuthRoutes.Welcome}></Stack.Screen>

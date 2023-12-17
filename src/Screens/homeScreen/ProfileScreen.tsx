@@ -37,10 +37,17 @@ const ProfileScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+<<<<<<< HEAD
              <LoadScreen
                 visible={loading}
                 title="Đang tải thông tin cá nhân"
                  />
+=======
+            <LoadScreen
+                visible={loading}
+                title="Đang tải thông tin cá nhân"
+            />
+>>>>>>> c57cc3ef7b30d82b3ac93500707e2a99de756047
             <View style={styles.header}>
                 <Image source={logo} style={styles.logoHeader}></Image>
                 <Text style={styles.contentHeader}>Profile</Text>
@@ -54,8 +61,13 @@ const ProfileScreen = () => {
 
             </View>
             <NavigationProfile
-                title="Edit Profile"
+                title="Thông tin cá nhân"
                 iconName="user"
+                press={
+                    () => {
+
+                    }
+                }
             />
             <NavigationProfile
                 title="Notification"

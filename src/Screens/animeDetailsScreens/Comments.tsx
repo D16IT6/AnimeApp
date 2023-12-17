@@ -16,8 +16,12 @@ const CommentsScreens = ({ route }: CommentsRouteProps) => {
     const navigation = useNavigation<AuthScreenNavigationProps>()
     const [backEndComments, setBackEndComments] = useState<CommentResponseView[]>();
 
+<<<<<<< HEAD
    
     const rootComments : CommentResponseView[] = backEndComments?.filter((comment) => {
+=======
+    const rootComments = backEndComments?.filter((comment) => {
+>>>>>>> c57cc3ef7b30d82b3ac93500707e2a99de756047
                 return comment.ParentId === null;
               }) || [];
               
@@ -26,6 +30,7 @@ const CommentsScreens = ({ route }: CommentsRouteProps) => {
                   backEndComments?.filter((comment) => comment.ParentId === commentId) || []
                 ).sort((a, b) => new Date(a.CreatedDate).getTime() - new Date(b.CreatedDate).getTime());
               };
+<<<<<<< HEAD
     const resetData=()=>{
         const fetchData = async () => {
             setLoading(true)
@@ -36,6 +41,8 @@ const CommentsScreens = ({ route }: CommentsRouteProps) => {
         }
         fetchData()
     }
+=======
+>>>>>>> c57cc3ef7b30d82b3ac93500707e2a99de756047
     useEffect(() => {
         const fetchData = async () => {
 
@@ -67,7 +74,11 @@ const CommentsScreens = ({ route }: CommentsRouteProps) => {
                         <Comments
                             key={item.Id}
                             comment={item}
+<<<<<<< HEAD
                             replies={getReplies(item.Id)}
+=======
+                            // replies={}
+>>>>>>> c57cc3ef7b30d82b3ac93500707e2a99de756047
                         />
                     )
                 }}
