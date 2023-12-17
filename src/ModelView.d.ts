@@ -6,6 +6,7 @@ type AnimeHitViewModel ={
     Categories: string,
     Poster: string,
     Rating: string,
+    IsFavorite: boolean
 }
 type AnimeNewEpisodeReleasesViewModel ={
         Id: number,
@@ -33,7 +34,8 @@ type AnimeDetailsViewModel={
         AgeRating: string,
         Categories: string[],
         Synopsis: string,
-        Episodes: EpisodesViewModel[] 
+        Episodes: EpisodesViewModel[] ,
+        IsFavorite: boolean
 }
 type CountryModelView={
     Id:number,
@@ -99,6 +101,7 @@ type AnimeSearchResponseViewModel ={
 }
 type MyListResponseViewModel ={
     Id: number,
+    AnimeId: number,
     Title: string,
     Poster: string,
     Rating: string,
@@ -136,11 +139,12 @@ type CommentResponseView ={
     Content: string,
     FullName: string,
     AvatarUrl: string,
-    CreatedDate: string
+    CreatedDate: string,
+    ParentId:number|null 
 }
 type CommentsProps ={
     comment:CommentResponseView,
-    replies?:CommentResponseView[],
+    replies:CommentResponseView[],
 }
 type CommentRequestViewModel ={
     AnimeId:number,

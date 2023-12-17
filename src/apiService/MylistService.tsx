@@ -4,9 +4,9 @@ import {  BASE_URL } from "@env";
 import axiosClient from "./axiosClient";
 
 const apiMyList = {
-    getMyList: async (userId:number) => {
+    getMyList: async () => {
         try {
-            const res: MyListResponseViewModel[] = await axiosClient.get(`/AnimeFavorite/${userId}`)
+            const res: MyListResponseViewModel[] = await axiosClient.get(`/AnimeFavorite`)
             const updatedData: MyListResponseViewModel[] = res.map((item: MyListResponseViewModel) => {
                 if (item && item.Poster !== null) {
                     if (!item.Poster.startsWith('http')) {
@@ -20,6 +20,32 @@ const apiMyList = {
             });
             
             return updatedData
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    deleteMyList: async (myListId:number) => {
+        try {
+            const res  = await axiosClient.delete(`/AnimeFavorite/${myListId}`)
+            if(res.status===200)
+            {
+                return true
+            }
+            return false
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    createMyList: async (animeId:number) => {
+        try {
+            const res  = await axiosClient.put(`/AnimeFavorite/${animeId}`)
+            if(res.status===200)
+            {
+                return true
+            }
+            return false
         }
         catch (error) {
             console.log(error);

@@ -18,6 +18,7 @@ import { CommentApi } from "../../apiService/CommentService";
 import { AnimeDetailRouteProps } from "../../navigations/AuthNavigator/Type";
 import { imageError } from "../../utils/httpReponse";
 import LoadScreen from "../loadScreens/loadScreens";
+import { apiMyList } from "../../apiService/MylistService";
 const { width, height } = Dimensions.get("window")
 
 
@@ -55,6 +56,15 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
     const [allComment, setAllComment] = useState<CommentResponseView[]>();
     const [listAnimeMoreLikeThis, setListAnimeMoreLikeThis] = useState<AnimeRandomViewModel[]>();
     const [showComments, setShowComment] = useState(false)
+    const rootComments: CommentResponseView[] = allComment?.filter((comment) => {
+        return comment.ParentId === null;
+    }) || [];
+
+    const getReplies = (commentId: number) => {
+        return (
+            allComment?.filter((comment) => comment.ParentId === commentId) || []
+        ).sort((a, b) => new Date(a.CreatedDate).getTime() - new Date(b.CreatedDate).getTime());
+    };
     const scrollY = useRef(new Animated.Value(0)).current;
     useEffect(() => {
         return () => {
@@ -75,6 +85,18 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
         fetchData()
     }, [])
 
+    const AddMylist = async (animeId: number) => {
+        try {
+            const result = await apiMyList.createMyList(animeId)
+            if (result) {
+                Alert.alert("Thông báo", "Thêm thành công")
+            } else {
+                Alert.alert("Thông báo", "Thêm thất bại")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
     const headerOpacity = scrollY.interpolate({
         inputRange: [0, 100], // Thay đổi dựa trên giá trị cuộn
         outputRange: [1, 0],   // Giá trị opacity tương ứng
@@ -87,11 +109,12 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
         extrapolate: 'clamp',
     });
 
+
     const navigation = useNavigation<AuthScreenNavigationProps>();
     return <SafeAreaView style={styles.container}>
         <LoadScreen
-        visible={loading}
-        title="Đang tải thông tin anime"
+            visible={loading}
+            title="Đang tải thông tin anime"
         />
         <Ionicons name='arrow-back'
             onPress={() => {
@@ -117,12 +140,12 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
                     <View style={styles.buttons}>
                         <TouchableOpacity style={styles.btnPlay} onPress={() => {
                             animeDetail?.Episodes?.length || 0 > 0
-                            ? navigation.navigate(AuthRoutes.VideoPlayScreen, {
-                                animeId:animeId,
-                                url: animeDetail?.Episodes[0].Url,
-                                name: `${animeDetail?.Title}(Tập ${animeDetail?.Episodes[0].Title})`
+                                ? navigation.navigate(AuthRoutes.VideoPlayScreen, {
+                                    animeId: animeId,
+                                    url: animeDetail?.Episodes[0].Url,
+                                    name: `${animeDetail?.Title}(Tập ${animeDetail?.Episodes[0].Title})`
                                 })
-                            : Alert.alert(`Phim ${animeDetail?.Title} chưa có tập nào`);
+                                : Alert.alert(`Phim ${animeDetail?.Title} chưa có tập nào`);
                         }}>
                             <AntDesign name="play" color={Color.SecondaryColor} size={20}></AntDesign>
                             <Text style={styles.txtPlay}>Play</Text>
@@ -133,6 +156,19 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
                             <Image source={DowloadIcon}
                             ></Image>
                             <Text style={styles.txtDowload} >Dowload</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.btnAddMylist,
+                            { backgroundColor: animeDetail?.IsFavorite ? "#fff" : Color.PrimaryColor }]}
+                            onPress={() => {
+                                if(!animeDetail?.IsFavorite){
+                                    AddMylist(animeId)
+                                }
+                            }}>
+                            <Ionicons name={animeDetail?.IsFavorite ? "checkmark" : "add"} size={20} color={animeDetail?.IsFavorite ? Color.PrimaryColor : "#ffffff"}></Ionicons>
+                            <Text style={[styles.btnText,
+                            { color: animeDetail?.IsFavorite ? Color.PrimaryColor : "#ffffff" }
+                            ]}>My List</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.container_genre_describe}>
@@ -169,7 +205,7 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
                             return (
                                 <TouchableOpacity onPress={() => {
                                     navigation.navigate(AuthRoutes.VideoPlayScreen, {
-                                        animeId:animeId,
+                                        animeId: animeId,
                                         url: item.Url,
                                         name: `${animeDetail?.Title}(Tập ${item.Title})`
                                     })
@@ -254,13 +290,14 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
                                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
                                     { useNativeDriver: false }
                                 )}
-                                data={allComment}
+                                data={rootComments}
                                 keyExtractor={(item) => item.Id.toString()}
                                 renderItem={({ item }: { item: CommentResponseView, index: number }) => {
                                     return (
                                         <Comments
                                             key={item.Id}
                                             comment={item}
+                                            replies={getReplies(item.Id)}
                                         />
                                     )
                                 }}
@@ -343,7 +380,7 @@ const styles = StyleSheet.create({
         top: "45%",
     },
     textEpisode: {
-        backgroundColor:Color.PrimaryColor,
+        backgroundColor: Color.PrimaryColor,
         position: "absolute",
         left: 10,
         bottom: 10,
@@ -351,8 +388,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '500',
         color: Color.SecondaryColor,
-        padding:5,
-        borderRadius:10
+        padding: 5,
+        borderRadius: 10
     },
     nameAnime: {
         fontFamily: fontFamily.PrimaryFont,
@@ -568,5 +605,21 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         letterSpacing: 0.2,
         color: Color.Black
+    },
+    btnAddMylist: {
+        marginTop: 10,
+        width: width * 0.25,
+        height: height * 0.04,
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        flexDirection: 'row',
+        borderRadius: 20,
+        borderColor: Color.PrimaryColor,
+        borderWidth: 2
+    },
+    btnText: {
+        fontWeight: '600',
+        fontSize: 16,
+        fontFamily: fontFamily.PrimaryFont
     }
 })
