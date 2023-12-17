@@ -15,6 +15,7 @@ import { logo } from "../../common/Images";
 import axios from "axios";
 import { AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel } from "../../ModelView";
 import { animeApi } from "../../apiService/AnimeService";
+import LoadScreen from "../loadScreens/loadScreens";
 
 
 const Tab = createBottomTabNavigator();
@@ -26,11 +27,11 @@ const { width, height } = Dimensions.get('window')
 type ListAnimeProps<T> = {
     item: T;
     index: number;
-  };
-  const ListAnime = <T extends { Id:number,Poster: string; Rating: string }>(
+};
+const ListAnime = <T extends { Id: number, Poster: string; Rating: string }>(
     props: ListAnimeProps<T>
-  ) => {
-    const {item,index}=props
+) => {
+    const { item, index } = props
     const navigation = useNavigation<AuthScreenNavigationProps>();
     return (
         <TouchableOpacity style={styles.containerAnime}
@@ -38,7 +39,7 @@ type ListAnimeProps<T> = {
                 navigation.navigate(AuthRoutes.AnimeDetails, { animeId: item.Id })
             }}
         >
-            <Image source={{ uri:  item.Poster }}
+            <Image source={{ uri: item.Poster }}
                 style={styles.imageAnime}
             />
 
@@ -50,12 +51,14 @@ type ListAnimeProps<T> = {
 }
 
 const HomeScreen = () => {
+    const [loading, setLoading] = useState<boolean>();
     const [hotAnime, setHotAnime] = useState<AnimeHitViewModel[]>([]);
     const [newEpisodeReleases, setNewEpisodeReleases] = useState<AnimeNewEpisodeReleasesViewModel[]>([]);
 
     const navigation = useNavigation<AuthScreenNavigationProps>();
-    useEffect(() =>  {
-        const fetchData = async() =>{
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true)
             const resultAnimehot: AnimeHitViewModel[] | undefined = await animeApi.getAnimeHot();
             if (resultAnimehot !== undefined) {
                 setHotAnime(_ => resultAnimehot)
@@ -63,26 +66,32 @@ const HomeScreen = () => {
                 console.log('Không tìm thấy danh sách anime hot hoặc giá trị không hợp lệ.');
                 return;
             }
-             const resultAnimeNewEpisodeReleases = await animeApi.getAnimNewEpisodeRelease(1,6)
-             if(resultAnimeNewEpisodeReleases!==undefined){
+            const resultAnimeNewEpisodeReleases = await animeApi.getAnimNewEpisodeRelease(1, 6)
+
+            if (resultAnimeNewEpisodeReleases !== undefined) {
                 setNewEpisodeReleases(_ => resultAnimeNewEpisodeReleases)
-             }
-            else{
+            }
+            else {
                 console.log('Không tìm thấy danh sách anime hot hoặc giá trị không hợp lệ.');
                 return;
             }
+            setLoading(false)
         }
         fetchData()
 
     }, [])
     return (
         <SafeAreaView style={styles.container}>
+            <LoadScreen
+                visible={loading ?? true}
+                title="Đang tải"
+            />
             <ImageBackground source={require('../../assets/images/demon_slayder.png')} style={styles.top} >
                 <View style={styles.topheader}>
                     <Image source={logo} style={styles.topLogo} resizeMode="contain"></Image>
                     <View style={styles.topTools}>
                         <Ionicons name="search" color={Color.SecondaryColor} size={25}
-                            onPress={() => navigation.navigate(AuthRoutes.SearchAnime,null)}
+                            onPress={() => navigation.navigate(AuthRoutes.SearchAnime, null)}
                         ></Ionicons>
                         <FontAwesomeIcons name="bell" color={Color.SecondaryColor} size={25}
                             onPress={() => navigation.navigate(AuthRoutes.Notification)}
@@ -114,8 +123,8 @@ const HomeScreen = () => {
                     <View style={styles.toplist}>
                         <Text style={styles.titlelist}>Top Hits Anime</Text>
                         <Text style={styles.buttonlist}
-                            onPress={() => { 
-                                navigation.navigate(AuthRoutes.HitAnime) 
+                            onPress={() => {
+                                navigation.navigate(AuthRoutes.HitAnime)
                             }}
                         >See all</Text>
                     </View>

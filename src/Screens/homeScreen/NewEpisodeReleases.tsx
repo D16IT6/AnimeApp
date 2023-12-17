@@ -6,46 +6,53 @@ import { useNavigation } from '@react-navigation/native'
 import { Color } from "../../common/Colors";
 import { Loader } from "../../common/component";
 import { NavagitonTop } from "../../common/component";
-import { listNewEpisodeReleases } from "../../utils/data";
 import fontFamily from "../../common/FontFamily";
 import { AnimeNewEpisodeReleasesViewModel } from "../../ModelView";
-import { getAnimNewEpisodeRelease } from "../../apiService/AnimeService";
+import { animeApi } from "../../apiService/AnimeService";
 
 
 const { height, width } = Dimensions.get("window");
 
-const getItem = (item:any)=>{
+const getItem = (item: any) => {
     Alert.alert(`Ban dang xem ${item.id} va${item.name}`)
 }
-const ListNewEpisodeReleases = ({ item,index }: { item: AnimeNewEpisodeReleasesViewModel,index:number }) => {
-    var check = index%2==0;
+const ListNewEpisodeReleases = ({ item, index }: { item: AnimeNewEpisodeReleasesViewModel, index: number }) => {
+    var check = index % 2 == 0;
+    const navigation = useNavigation<AuthScreenNavigationProps>();
+
     return (
         <TouchableOpacity style={[styles.contentAnime,
-        {marginLeft:check?10:0,
-        marginRight:check?0:10}
+        {
+            marginLeft: check ? 10 : 0,
+            marginRight: check ? 0 : 10
+        }
         ]}
-        onPress={()=>getItem(item)}
+            onPress={() => {
+                navigation.navigate(AuthRoutes.AnimeDetails, {
+                    animeId: item.Id
+                })
+            }}
         >
             <Image source={{ uri: item.Poster }}
-            style ={styles.imageAnime}
+                style={styles.imageAnime}
             ></Image>
             <Text style={styles.ratingAnime}>{item.Rating}</Text>
             <Text style={styles.episodeAnime}>episode {item.CurrentEpisode.toString()}</Text>
-            
+
         </TouchableOpacity>
     )
 }
 const NewEpisodeReleases = () => {
-
-    const [listAnimeNewEpisodeReleases,setListAnimeNewEpisodeReleases] = useState<AnimeNewEpisodeReleasesViewModel[]>();
     const navigation = useNavigation<AuthScreenNavigationProps>();
-    useEffect (()=>{
-        const fetchData = async ()=>{
-          const resultAnimeNewEpisodeReleases = await getAnimNewEpisodeRelease(1,6)
-          setListAnimeNewEpisodeReleases(resultAnimeNewEpisodeReleases)
+
+    const [listAnimeNewEpisodeReleases, setListAnimeNewEpisodeReleases] = useState<AnimeNewEpisodeReleasesViewModel[]>();
+    useEffect(() => {
+        const fetchData = async () => {
+            const resultAnimeNewEpisodeReleases = await animeApi.getAnimNewEpisodeRelease(1, 6)
+            setListAnimeNewEpisodeReleases(resultAnimeNewEpisodeReleases)
         }
         fetchData()
-      },[])
+    }, [])
     return (
         <SafeAreaView style={styles.container}>
             <NavagitonTop
@@ -55,7 +62,7 @@ const NewEpisodeReleases = () => {
                 }}
                 OnPressSearch={() => { Alert.alert("search") }}
                 search={true}
-               
+
             />
             <FlatList
                 columnWrapperStyle={styles.columnWrapper}
@@ -63,7 +70,7 @@ const NewEpisodeReleases = () => {
                 numColumns={2}
                 data={listAnimeNewEpisodeReleases}
                 keyExtractor={(item: AnimeNewEpisodeReleasesViewModel) => item.Id.toString()}
-                renderItem={({ item,index}: { item: AnimeNewEpisodeReleasesViewModel,index:number }) => {
+                renderItem={({ item, index }: { item: AnimeNewEpisodeReleasesViewModel, index: number }) => {
                     return (
                         <ListNewEpisodeReleases
                             item={item}
@@ -81,44 +88,44 @@ export default NewEpisodeReleases
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:Color.SecondaryColor
+        backgroundColor: Color.SecondaryColor
     },
-    columnWrapper:{
+    columnWrapper: {
         justifyContent: 'space-evenly',
-        marginTop:10
+        marginTop: 10
     },
     contentAnime: {
-        position:"relative",
-         width:width*0.4,
-         height:height*0.25,  
+        position: "relative",
+        width: width * 0.4,
+        height: height * 0.25,
     },
-    imageAnime:{
-        width:"100%",
-        height:"100%",
-        borderRadius:15
+    imageAnime: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 15
     },
-    ratingAnime:{
-        position:"absolute",
-        backgroundColor:Color.PrimaryColor,
-        left:10,
-        top:10,
-        width:30,
-        borderRadius:5,
-        color:Color.SecondaryColor,
-        textAlign:"center",
-        fontFamily:fontFamily.PrimaryFont,
-        fontSize:15
+    ratingAnime: {
+        position: "absolute",
+        backgroundColor: Color.PrimaryColor,
+        left: 10,
+        top: 10,
+        width: 30,
+        borderRadius: 5,
+        color: Color.SecondaryColor,
+        textAlign: "center",
+        fontFamily: fontFamily.PrimaryFont,
+        fontSize: 15
     },
-    episodeAnime:{
-        position:"absolute",
-        bottom:10,
-        left:10,
-        color:Color.SecondaryColor,
-        backgroundColor:Color.PrimaryColor,
-        textAlign:"center",
-        fontFamily:fontFamily.PrimaryFont,
-        borderRadius:5,
-        textAlignVertical:'center',
-        width:90
+    episodeAnime: {
+        position: "absolute",
+        bottom: 10,
+        left: 10,
+        color: Color.SecondaryColor,
+        backgroundColor: Color.PrimaryColor,
+        textAlign: "center",
+        fontFamily: fontFamily.PrimaryFont,
+        borderRadius: 5,
+        textAlignVertical: 'center',
+        width: 90
     }
 })

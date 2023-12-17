@@ -20,7 +20,7 @@ interface DotComponentProps {
 const WelcomeScreen = () => {
     const navigation = useNavigation<AuthScreenNavigationProps>();
     const handDone = () =>{
-        navigation.navigate(AuthRoutes.ResetWelcome)
+        navigation.navigate(AuthRoutes.Login)
         setItem('welcomed','1');
     }
     const dotComponentUI :React.FC<DotComponentProps> = ({ isLight, selected }) => {

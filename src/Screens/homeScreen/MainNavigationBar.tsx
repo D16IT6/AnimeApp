@@ -9,8 +9,8 @@ import ProfileScreen from "./ProfileScreen";
 import { Color } from "../../common/Colors";
 const Tab = createBottomTabNavigator();
 const MainNavigationBar = ()=>{
-
-    const tabOffsetValue = useRef(new Animated.Value(0)).current
+    
+   const tabOffsetValue = useRef(new Animated.Value(0)).current
     return(
        <View style={{flex:1}}>
     <Tab.Navigator 

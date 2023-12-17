@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LoginRequestViewModel, LoginResponseViewModel } from "../ModelView";
+import { LoginRequestViewModel, LoginResponseViewModel, SignupRequestViewModel } from "../ModelView";
 import { API_URL } from "@env";
 
 //push{user}
@@ -20,7 +20,23 @@ const apiAuth = {
             console.log(error);
             return null;
         }
-    }
+    },
+    sigup: async (model: SignupRequestViewModel) => {
+        try {
+            const res = await axios.put(`${API_URL}/Auth`, model)
+            
+            if (res.status === 200)
+            {
+                return true;
+            }
+            return null;
+        
+        }
+        catch (error) {
+            console.log(error);
+            return null;
+        }
+    },
 }
 
 export{apiAuth}

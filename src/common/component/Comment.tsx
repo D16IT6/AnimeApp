@@ -12,24 +12,11 @@ import InputAuthScreen from "./InputAuthScreen";
 import Feather from "react-native-vector-icons/Feather"
 import EmojiPicker, {emojiFromUtf16} from "rn-emoji-picker"
 import {emojis} from "rn-emoji-picker/dist/data"
-import { getCommets } from "../../utils/data";
+import  getUserIdFromToken  from "../../utils/getUserId";
+import { CommentRequestViewModel, CommentsProps } from "../../ModelView";
+import { CommentApi } from "../../apiService/CommentService";
 const {height,width}= Dimensions.get('window')
 
-
-type CommentProps ={
-     id: string,
-        body: string,
-        username: string,
-        userId: string,
-        parentId?: null|string,
-        createdAt: string,
-    
-}
-type CommentsProps ={
-    comment:CommentProps,
-    replies:CommentProps[],
-   
-}
 const Comments = (props:CommentsProps)=>{
     const{
         comment,
@@ -39,10 +26,10 @@ const Comments = (props:CommentsProps)=>{
         <View>
             <View style={styles.containerComent}>
                         <View style={styles.headerComments}>
-                            <Image source={{ uri: "https://scontent.fhan15-2.fna.fbcdn.net/v/t39.30808-6/395546595_3670378293283977_6052018411163155572_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=RPZyqgAIlaEAX_WJVnT&_nc_ht=scontent.fhan15-2.fna&oh=00_AfA5-R4-nZ9Gs5cz_3wTVK0t58OzC_p2Oh3LnIO9AzozAw&oe=65433474" }}
+                            <Image source={{ uri: comment.AvatarUrl }}
                                 style={styles.avatarAuthor}
                             />
-                            <Text style={styles.nameAuthor}>{comment.username}</Text>
+                            <Text style={styles.nameAuthor}>{comment.FullName}</Text>
                             {/* <Text style={styles.textComments}>phim nhu cc</Text> */}
                             <MaterialCommunityIcons               
                                 name='dots-horizontal-circle-outline'
@@ -52,20 +39,20 @@ const Comments = (props:CommentsProps)=>{
                                 </MaterialCommunityIcons>  
                         </View> 
                        <Text style ={styles.contentComments}>
-                           {comment.body}
+                           {comment.Content}
                         </Text>
             
                         <View style ={styles.footter}>
-                        <Text style={styles.timeComment}>{comment.createdAt}</Text>
+                        <Text style={styles.timeComment}>{comment.CreatedDate}</Text>
                         <Text style={styles.reply}
                         onPress={()=>{
-                            Alert.alert(`Dang coment ${comment.id}`)
+                            Alert.alert(`Dang coment ${comment.Id}`)
                         }}
-                        >Reply</Text>  
+                        > </Text>  
                         </View>
                        
                 </View> 
-                {replies.length>0&&(
+                {/* {replies.length>0&&(
                             <View>
                                 {replies.map((x)=>{
                                     return(
@@ -78,7 +65,7 @@ const Comments = (props:CommentsProps)=>{
                                     
                                 })}
                             </View>
-                        )}        
+                        )}         */}
         </View>
         
     )
@@ -92,10 +79,10 @@ const Reply=(props:CommentsProps)=>{
     }=props
     return<View style={styles.replyContainer}>
         <View style={styles.headerComments}>
-                            <Image source={{ uri: "https://scontent.fhan15-2.fna.fbcdn.net/v/t39.30808-6/395546595_3670378293283977_6052018411163155572_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=RPZyqgAIlaEAX_WJVnT&_nc_ht=scontent.fhan15-2.fna&oh=00_AfA5-R4-nZ9Gs5cz_3wTVK0t58OzC_p2Oh3LnIO9AzozAw&oe=65433474" }}
+                            {/* <Image source={{ uri: comment.AvatarUrl }}
                                 style={styles.avatarAuthor}
-                            />
-                            <Text style={styles.nameAuthor}>{comment.username}</Text>
+                            /> */}
+                            <Text style={styles.nameAuthor}>{comment.FullName}</Text>
                             {/* <Text style={styles.textComments}>phim nhu cc</Text> */}
                             <MaterialCommunityIcons
                      
@@ -108,17 +95,34 @@ const Reply=(props:CommentsProps)=>{
                                 </MaterialCommunityIcons> 
                         </View> 
                        <Text style ={styles.contentComments}>
-                           {comment.body}
+                           {comment.Content}
                         </Text>
-                        <Text style={styles.timeComment}>{comment.createdAt}</Text>
+                        <Text style={styles.timeComment}>{comment.CreatedDate}</Text>
             
     </View>
 }
-const InputComment=()=>{
+const InputComment=({animeId}:{animeId:number})=>{
     const [comment,setComment]=useState('')
     const [isDisabledBtn, setIsDisabledBtn] = useState(true);
     const lengthComment=comment.trim().length
-
+    
+    const putComment = async ()=>{
+        const model:CommentRequestViewModel ={
+            AnimeId:animeId,
+            UserId: await getUserIdFromToken(),
+            Content:comment.trim()
+        }
+         console.log(model)
+        const putData = await CommentApi.putComment( model);
+        if(putData!==undefined)
+        {
+            Alert.alert("Thêm comment thành công")
+            setComment('')
+        }
+        else{
+            Alert.alert("Thêm comment thất bại")
+        }
+    }
     useEffect(()=>{
         handleToggleDisabled()
     },[comment])
@@ -148,8 +152,8 @@ const InputComment=()=>{
        style={[styles.sendInput,{backgroundColor:isDisabledBtn?'#e0e0e0':Color.PrimaryColor}]}
        disabled={isDisabledBtn}
        onPress={()=>{
-        Alert.alert(comment.trim())
-        // setComment('')
+        // Alert.alert(comment.trim())
+        putComment()
         }}
        >
         <Feather name="send" size={40} color={isDisabledBtn?Color.Gray:Color.SecondaryColor}></Feather>

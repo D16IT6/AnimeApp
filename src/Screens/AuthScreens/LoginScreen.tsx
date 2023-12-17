@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import fontFamily from '../../common/FontFamily';
 import { apiAuth } from '../../apiService/AuthService';
 import { LoginRequestViewModel } from '../../ModelView';
+import { notDev } from '../../utils/extensionMethod';
 
 
 const { width, height } = Dimensions.get('window')
@@ -18,6 +19,8 @@ export default function LoginMethodScreen() {
     username: '',
     password: ''
   })
+
+
   interface Errors {
     username?: string;
     password?: string;
@@ -57,38 +60,12 @@ export default function LoginMethodScreen() {
 
       AsyncStorage.setItem("AccessToken", data.AccessToken)
       AsyncStorage.setItem("RefreshToken", data.RefreshToken)
-      
+
       navigation.navigate(AuthRoutes.MainNavigationBar)
     }
     else {
       Alert.alert("Đăng nhập thất bại")
     }
-
-    // setLoading(true),
-    //   setTimeout(async () => {
-    //     setLoading(false);
-    //     let userData = await AsyncStorage`.getItem('userData');
-    //     console.log(userData)
-    //     if (userData) {
-    //       const parsedUserData: UserData1 = JSON.parse(userData);
-    //       console.log(parsedUserData)
-    //       if (
-    //         inputs.username === parsedUserData.username &&
-    //         inputs.password === parsedUserData.password
-    //       ) {
-    //         navigation.navigate(AuthRoutes.MainNavigationBar);
-    //         // AsyncStorage.setItem(
-    //         //   'userData',
-    //         //   JSON.stringify({...userData, loggedIn: true}),
-    //         // );
-    //       } else {
-    //         Alert.alert('Lỗi', 'Bạn đã nhập sai thông tin');
-    //       }
-    //     } else {
-    //       Alert.alert('Error', 'User does not exist');
-    //     }
-    //   }, 3000);
-
   }
 
   const handleOnChange = (text: any, input: string) => {
@@ -140,9 +117,7 @@ export default function LoginMethodScreen() {
           }
           }
         />
-        <Text style={styles.forgotPassword} onPress={() => {
-          navigation.navigate(AuthRoutes.ResetWelcome)
-        }}>
+        <Text style={styles.forgotPassword} onPress={notDev}>
           Bạn đã quên mật khẩu ?
         </Text>
         <LineAuthScreen title="or continue with" />
@@ -150,13 +125,13 @@ export default function LoginMethodScreen() {
       </View>
       <View style={styles.footer}>
         <View style={styles.containerMethodLogin}>
-          <TouchableOpacity style={styles.methodlogin}>
+          <TouchableOpacity style={styles.methodlogin} onPress={notDev}>
             <Image source={require("../../assets/icons/facebook.png")} style={styles.iconMethodLogin}></Image>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.methodlogin}>
+          <TouchableOpacity style={styles.methodlogin} onPress={notDev}>
             <Image source={require("../../assets/icons/google.png")} style={styles.iconMethodLogin}></Image>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.methodlogin}>
+          <TouchableOpacity style={styles.methodlogin} onPress={notDev}>
             <Image source={require("../../assets/icons/apple.png")} style={styles.iconMethodLogin}></Image>
           </TouchableOpacity>
         </View>

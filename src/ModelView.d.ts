@@ -13,6 +13,11 @@ type AnimeNewEpisodeReleasesViewModel ={
         Rating: string,
         CurrentEpisode: number
 }
+type AnimeRandomViewModel ={
+    Id: number,
+    Poster: string,
+    Rating: string,
+}
 type EpisodesViewModel ={
     Id:number,
     Title:string,
@@ -81,12 +86,23 @@ type AnimeSearchParams= {
     selectedStatus: AttributeProps[],
     selectedType: AttributeProps[]
 }
+type AnimeDetailParams= {
+    animeId :number
+}
+type CommentParams={
+    animeId :number
+}
 type AnimeSearchResponseViewModel ={
     Id: number,
     Title: string,
     Poster: string
 }
-
+type MyListResponseViewModel ={
+    Id: number,
+    Title: string,
+    Poster: string,
+    Rating: string,
+}
 type LoginRequestViewModel = {
     UserName: string,
     Password: string,
@@ -96,18 +112,49 @@ type LoginResponseViewModel = {
     AccessToken: string;
     RefreshToken: string;
 }
+type SignupRequestViewModel = {
+    UserName: string,
+    Password: string,
+    Email:string
+}
+type UserReponseViewModel={
+    Id: number,
+    FullName:string,
+    Email: string,
+    AvatarUrl: string,
+    PhoneNumber: string,
+    BirthDay: string
+}
 type AsyncStorage ={
     getItem(key: string): Promise<string | null>;
     setItem(key: string,value:string): Promise<string | null>;
     removeItem(key: string): Promise<string | null>;
 }
 
+type CommentResponseView ={
+    Id: number,
+    Content: string,
+    FullName: string,
+    AvatarUrl: string,
+    CreatedDate: string
+}
+type CommentsProps ={
+    comment:CommentResponseView,
+    replies?:CommentResponseView[],
+}
+type CommentRequestViewModel ={
+    AnimeId:number,
+    UserId:number,
+    Content:string
+}
 export {
     LoginRequestViewModel,
     LoginResponseViewModel,
+    CommentRequestViewModel,
     AsyncStorage,
+    CommentsProps,
     AnimeHitViewModel,
-    
+    CommentResponseView,
     AnimeSearchResponseViewModel,
     AnimeSearchParams,
     AnimeSearchRequestViewModel,
@@ -121,6 +168,11 @@ export {
     AnimeAgeRaitingModelView,
     AnimeCategoryModelView,
     AnimeTypeModelView,
-    AnimeStatusModelView
-    
+    AnimeStatusModelView ,
+    AnimeRandomViewModel ,
+    AnimeDetailParams,
+    CommentParams,
+    SignupRequestViewModel,
+    MyListResponseViewModel,
+    UserReponseViewModel,
 }

@@ -18,81 +18,80 @@ import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 const { height, width } = Dimensions.get("window");
 
 
-const ListSearchAnime =({item}:{item:AnimeSearchResponseViewModel})=>{
-return(
-    <TouchableOpacity 
-    onPress={()=>{`Ban dang xem ${item.Title}`}}
-    style={styles.containerAnime}
-    >
-        <Image 
-        source={{uri:item.Poster}}
-        style={styles.imageAnime}
-        />
-        <Text style={styles.nameAnime}>{item.Title}</Text>
+const ListSearchAnime = ({ item }: { item: AnimeSearchResponseViewModel }) => {
+    return (
+        <TouchableOpacity
+            onPress={() => { `Ban dang xem ${item.Title}` }}
+            style={styles.containerAnime}
+        >
+            <Image
+                source={{ uri: item.Poster }}
+                style={styles.imageAnime}
+            />
+            <Text style={styles.nameAnime}>{item.Title}</Text>
 
-</TouchableOpacity>)
+        </TouchableOpacity>)
 }
-const ItemSelected = ({item}:{item:AttributeProps}) =>{
-     return(
-       <View style={styles.BtnAttribute}>
+const ItemSelected = ({ item }: { item: AttributeProps }) => {
+    return (
+        <View style={styles.BtnAttribute}>
             <Text style={styles.nameAttribute}>{item.Name}</Text>
-       </View>)
-} 
+        </View>)
+}
 const SearchAnime = ({ route }: { route: SearchAnimeRouteProps }) => {
-    const dataSelected : AnimeSearchParams = route.params;
-    const [search,setSearch] = useState<AnimeSearchResponseViewModel[]>();
-    const [dataArray1,setdataArray1]=useState<AttributeProps[]>();
+    const dataSelected: AnimeSearchParams = route.params;
+    const [search, setSearch] = useState<AnimeSearchResponseViewModel[]>();
+    const [dataArray1, setdataArray1] = useState<AttributeProps[]>();
     const [inputSearch, setInputSearch] = useState("");
     console.log(inputSearch)
-    const jsonApi :AnimeSearchRequestViewModel = {
-        SearchTitle:inputSearch,
+    const jsonApi: AnimeSearchRequestViewModel = {
+        SearchTitle: inputSearch,
         CountryId: dataSelected?.selectedCountry.find(x => x.Selected)?.Id ?? 0,
         AgeRaitingId: dataSelected?.selectedAgeRaiting.find(x => x.Selected)?.Id ?? 0,
         TypeId: dataSelected?.selectedType.find(x => x.Selected)?.Id ?? 0,
         StatusId: dataSelected?.selectedStatus.find(x => x.Selected)?.Id ?? 0,
-        CategoryIds: dataSelected?.selectedCategories?.filter(x =>
-            {
-                if(x.Selected)
+        CategoryIds: dataSelected?.selectedCategories?.filter(x => {
+            if (x.Selected)
                 return x.Id;
-            }).map(x => x.Id)?? []
-    }  
-    
-    const searchTitle =()=>{
-        const jsonApiTile = (inputSearch:string,jsonApi:AnimeSearchRequestViewModel)=>{
-            return {...jsonApi,SearchTitle:inputSearch}
+        }).map(x => x.Id) ?? []
+    }
+
+    const searchTitle = () => {
+        const jsonApiTile = (inputSearch: string, jsonApi: AnimeSearchRequestViewModel) => {
+            return { ...jsonApi, SearchTitle: inputSearch }
         }
         console.log(inputSearch)
-        const fetchData = async () =>{
-            const result = await apiSearch.getSearch(jsonApiTile(inputSearch,jsonApi))
-            setSearch(x=>result);
+        const fetchData = async () => {
+            const result = await apiSearch.getSearch(jsonApiTile(inputSearch, jsonApi))
+            setSearch(x => result);
         }
         fetchData();
     }
-    useEffect(()=>{
-        const fetchData = async () =>{
+    useEffect(() => {
+        const fetchData = async () => {
             const result = await apiSearch.getSearch(jsonApi)
-            setSearch(x=>result);
+            setSearch(x => result);
         }
         fetchData();
-    },[dataSelected])
-    
+    }, [dataSelected])
+
     useEffect(() => {
         if (dataSelected !== undefined) {
-          if (dataSelected === null) {
-            return;
-            // console.log("loi", dataSelected);
-          } else {
-            const dataArray= [...dataSelected.selectedAgeRaiting,
+            if (dataSelected === null) {
+                return;
+                // console.log("loi", dataSelected);
+            } else {
+                const dataArray = [...dataSelected.selectedAgeRaiting,
                 ...dataSelected.selectedCountry,
                 ...dataSelected.selectedStatus,
                 ...dataSelected.selectedType,
                 ...dataSelected.selectedCategories
-            ];
-            setdataArray1(dataArray)
+                ];
+                setdataArray1(dataArray)
 
-          }
+            }
         }
-      }, [dataSelected]);    
+    }, [dataSelected]);
     const navigation = useNavigation<AuthScreenNavigationProps>()
     return (
         <SafeAreaView style={styles.container}>
@@ -106,39 +105,39 @@ const SearchAnime = ({ route }: { route: SearchAnimeRouteProps }) => {
                 ></InputAuthScreen>
                 <TouchableOpacity style={styles.filter}
                     onPress={() => {
-                      searchTitle();
+                        searchTitle();
                     }}
                 >
-                    <FontAwesomeIcons name={"search"} size={20} color={ Color.PrimaryColor} />
+                    <FontAwesomeIcons name={"search"} size={20} color={Color.PrimaryColor} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.filter}
                     onPress={() => {
-                       navigation.navigate(AuthRoutes.Filter)
+                        navigation.navigate(AuthRoutes.Filter)
                     }}
                 >
                     <Image source={groupIcon}></Image>
                 </TouchableOpacity>
             </View>
             {dataSelected !== undefined && (
-            <View style={styles.selected}>
-            <FlatList 
-                horizontal={true}
-                data={dataArray1}
-                keyExtractor={(item) => item.Name}
-                renderItem={({item}) => {
-                return <ItemSelected item={item} />;
-                }}
-            />
-            </View>
-            ) }
+                <View style={styles.selected}>
+                    <FlatList
+                        horizontal={true}
+                        data={dataArray1}
+                        keyExtractor={(item) => item.Name}
+                        renderItem={({ item }) => {
+                            return <ItemSelected item={item} />;
+                        }}
+                    />
+                </View>
+            )}
             {search && search.length != 0 ? (
-                     <FlatList
+                <FlatList
                     data={search}
-                    renderItem={({ item }) => <ListSearchAnime 
-                    item={item}
+                    renderItem={({ item }) => <ListSearchAnime
+                        item={item}
                     ></ListSearchAnime>}
                     keyExtractor={(item) => item.Id.toString()}
-                ></FlatList>             
+                ></FlatList>
             ) : (
                 <View style={styles.containerNotFound}>
                     <LottieView source={require('../../assets/animation/animation_error.json')}
@@ -182,68 +181,68 @@ const styles = StyleSheet.create({
         height: "80%"
     },
     containerNotFound: {
-        height:height*0.7,
-        justifyContent:"center",
-        alignItems:"center",
+        height: height * 0.7,
+        justifyContent: "center",
+        alignItems: "center",
     },
     AnimationNotFound: {
         width: width * 0.8,
         height: height * 0.4,
     },
-    titleNotFound:{
-        fontSize:35,
-        fontFamily:fontFamily.PrimaryFont,
-        fontWeight:'700',
-        color:Color.PrimaryColor,
-        marginVertical:20
+    titleNotFound: {
+        fontSize: 35,
+        fontFamily: fontFamily.PrimaryFont,
+        fontWeight: '700',
+        color: Color.PrimaryColor,
+        marginVertical: 20
     },
-    subTitleNotFound:{
-        textAlign:"center",
-        fontSize:fontSizes.h4,
-        color:"#424242",
-        fontWeight:'500',
+    subTitleNotFound: {
+        textAlign: "center",
+        fontSize: fontSizes.h4,
+        color: "#424242",
+        fontWeight: '500',
     },
-    containerAnime:{
-        flexDirection:'row',
-        marginVertical:10,
+    containerAnime: {
+        flexDirection: 'row',
+        marginVertical: 10,
     },
-    imageAnime:{
-        width:width*0.3,
-        height:height*0.2,
-        borderRadius:10
+    imageAnime: {
+        width: width * 0.3,
+        height: height * 0.2,
+        borderRadius: 10
     },
-    nameAnime:{
-        flex:1,
-        paddingLeft:30,
-        textAlignVertical:'center',
+    nameAnime: {
+        flex: 1,
+        paddingLeft: 30,
+        textAlignVertical: 'center',
         fontFamily: fontFamily.PrimaryFont,
         fontSize: 18,
-        fontWeight:'700',
-        color:Color.Black
+        fontWeight: '700',
+        color: Color.Black
     },
-    BtnAttribute:{
-        borderRadius:20,
-       borderWidth:2,
-       borderColor:Color.PrimaryColor,
-       alignItems:'center',
-       justifyContent:'center',
-       maxWidth:Dimensions.get("window").width,
-       marginRight:5,
-       backgroundColor:Color.PrimaryColor
-       
-   },
-   nameAttribute:{
-    fontFamily:fontFamily.PrimaryFont,
-    fontSize:16,
-    fontWeight:'600',
-    fontStyle:'normal',
-    marginHorizontal:20,
-     
-     textAlignVertical:'center',
-     color:Color.SecondaryColor
+    BtnAttribute: {
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: Color.PrimaryColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        maxWidth: Dimensions.get("window").width,
+        marginRight: 5,
+        backgroundColor: Color.PrimaryColor
+
     },
-    selected:{
-        marginVertical:10,
-        height:height*0.05,
+    nameAttribute: {
+        fontFamily: fontFamily.PrimaryFont,
+        fontSize: 16,
+        fontWeight: '600',
+        fontStyle: 'normal',
+        marginHorizontal: 20,
+
+        textAlignVertical: 'center',
+        color: Color.SecondaryColor
+    },
+    selected: {
+        marginVertical: 10,
+        height: height * 0.05,
     }
 })
