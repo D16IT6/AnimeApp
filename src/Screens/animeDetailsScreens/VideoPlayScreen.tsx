@@ -13,7 +13,7 @@ import { AuthNavigator, AuthRoutes, AuthScreenNavigationProps } from "../../navi
 
 //"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 const VideoPlayScreen = ({route}:any) => {
-    const{url,name}=route.params
+    const{animeId,url,name}=route.params
     
 
     const navigation = useNavigation<AuthScreenNavigationProps>()
@@ -95,7 +95,7 @@ const VideoPlayScreen = ({route}:any) => {
             // onPress={e.onPressVideo}
             >
                 <NavagitonTop OnPressArrowBack={() => { 
-                    // navigation.navigate(AuthRoutes.AnimeDetails,{animeInfo:animeInfo})
+                     navigation.navigate(AuthRoutes.AnimeDetails,{animeId:animeId})
                 }
                 }
                     backgrourdColor={"rgba(0,0,0,0.3)"}

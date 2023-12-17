@@ -10,6 +10,7 @@ import { NavagitonTop } from "../../common/component/index";
 import fontFamily from "../../common/FontFamily";
 import { AnimeHitViewModel } from "../../ModelView";
 import { animeApi } from "../../apiService/AnimeService";
+import LoadScreen from "../loadScreens/loadScreens";
 const { height, width } = Dimensions.get("window");
 
 
@@ -52,17 +53,22 @@ const ListAnimeHot = ({ item }: { item: AnimeHitViewModel }) => {
 const HitAnime = () => {
   const navigation = useNavigation<AuthScreenNavigationProps>();
   const [listHitAnime, setListHitAnime] = useState<AnimeHitViewModel[]>();
-
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     const fetchData = async () => {
       const resultAnimeHot = await animeApi.getAnimeHot()
       setListHitAnime(resultAnimeHot)
+      setLoading(false)
     }
     fetchData()
   }, [])
 
   return (
     <SafeAreaView style={styles.container}>
+      <LoadScreen
+                visible={loading}
+                title="Đang tải Anime Hot nhất"
+            />
       <NavagitonTop
         title="Top Hits Anime"
         OnPressArrowBack={

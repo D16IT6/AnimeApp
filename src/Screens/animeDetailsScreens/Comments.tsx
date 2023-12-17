@@ -7,36 +7,44 @@ import { Color } from "../../common/Colors";
 import { CommentApi } from "../../apiService/CommentService";
 import { CommentResponseView } from "../../ModelView";
 import { CommentsRouteProps } from "../../navigations/AuthNavigator/Type";
+import LoadScreen from "../loadScreens/loadScreens";
 
 const { width, height } = Dimensions.get("window")
 const CommentsScreens = ({ route }: CommentsRouteProps) => {
     const { animeId } = route.params;
+    const [loading, setLoading] = useState<boolean>(true);
     const navigation = useNavigation<AuthScreenNavigationProps>()
     const [backEndComments, setBackEndComments] = useState<CommentResponseView[]>();
 
-    // const rootComments = backEndComments.filter((Comments)=>{
-    //     return Comments.parentId===null
-    // })
-    // const getReplies = (commentId:string)=>{
-    //     return backEndComments
-    //     .filter((backEndComments)=> backEndComments.parentId===commentId)
-    //     .sort((a,b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
-    // }
+    const rootComments = backEndComments?.filter((comment) => {
+                return comment.ParentId === null;
+              }) || [];
+              
+    const getReplies = (commentId: number) => {
+                return (
+                  backEndComments?.filter((comment) => comment.ParentId === commentId) || []
+                ).sort((a, b) => new Date(a.CreatedDate).getTime() - new Date(b.CreatedDate).getTime());
+              };
     useEffect(() => {
         const fetchData = async () => {
 
             const resultAllComment = await CommentApi.getAllComment(animeId)
             setBackEndComments(x => resultAllComment)
+          
+            setLoading(false)
         }
         fetchData()
     }, [])
     return (
-
         <SafeAreaView style={{ flex: 1, backgroundColor: Color.SecondaryColor }}>
+            <LoadScreen
+                visible={loading}
+                title="Đang tải Bình luận"
+            />
             <NavagitonTop
-                title={` Comments`}
+                title={`Comments`}
                 OnPressArrowBack={() => {
-                    navigation.navigate(AuthRoutes.AnimeDetails, { animeId: animeId })
+                    navigation.replace(AuthRoutes.AnimeDetails, { animeId: animeId })
                 }}
                 group={true}
             ></NavagitonTop>
@@ -48,6 +56,7 @@ const CommentsScreens = ({ route }: CommentsRouteProps) => {
                         <Comments
                             key={item.Id}
                             comment={item}
+                            // replies={}
                         />
                     )
                 }}

@@ -14,17 +14,20 @@ import { imageError } from "../../utils/httpReponse";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
+import LoadScreen from "../loadScreens/loadScreens";
 
 const { width, height } = Dimensions.get("window");
 
 const ProfileScreen = () => {
     const navigation = useNavigation<AuthScreenNavigationProps>();
+    const [loading, setLoading] = useState<boolean>(true);
     const [user, setUser] = useState<UserReponseViewModel>();
     useEffect(() => {
         const fetData = async () => {
             try {
                 const resultUser = await apiUser.getUserProfile(await getUserIdFromToken())
                 setUser(resultUser)
+                setLoading(false)
             } catch (error) {
                 console.log(error)
             }
@@ -34,6 +37,10 @@ const ProfileScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+             <LoadScreen
+                visible={loading}
+                title="Đang tải thông tin cá nhân"
+                 />
             <View style={styles.header}>
                 <Image source={logo} style={styles.logoHeader}></Image>
                 <Text style={styles.contentHeader}>Profile</Text>

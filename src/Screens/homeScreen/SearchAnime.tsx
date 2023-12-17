@@ -15,6 +15,7 @@ import { AnimeSearchParams, AnimeSearchRequestViewModel, AnimeSearchResponseView
 import { SearchAnimeRouteProps } from "../../navigations/AuthNavigator/Type";
 import { apiSearch } from "../../apiService/SearchService";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
+import LoadScreen from "../loadScreens/loadScreens";
 const { height, width } = Dimensions.get("window");
 
 
@@ -40,6 +41,7 @@ const ItemSelected = ({ item }: { item: AttributeProps }) => {
 }
 const SearchAnime = ({ route }: { route: SearchAnimeRouteProps }) => {
     const dataSelected: AnimeSearchParams = route.params;
+    const [loading, setLoading] = useState<boolean>(true);
     const [search, setSearch] = useState<AnimeSearchResponseViewModel[]>();
     const [dataArray1, setdataArray1] = useState<AttributeProps[]>();
     const [inputSearch, setInputSearch] = useState("");
@@ -71,6 +73,7 @@ const SearchAnime = ({ route }: { route: SearchAnimeRouteProps }) => {
         const fetchData = async () => {
             const result = await apiSearch.getSearch(jsonApi)
             setSearch(x => result);
+            setLoading(false)
         }
         fetchData();
     }, [dataSelected])
@@ -88,13 +91,16 @@ const SearchAnime = ({ route }: { route: SearchAnimeRouteProps }) => {
                 ...dataSelected.selectedCategories
                 ];
                 setdataArray1(dataArray)
-
             }
         }
     }, [dataSelected]);
     const navigation = useNavigation<AuthScreenNavigationProps>()
     return (
         <SafeAreaView style={styles.container}>
+             <LoadScreen
+                visible={loading}
+                title="Đang tải"
+            />
             <View style={styles.headerContainer}>
                 <InputAuthScreen
                     iconName="search"

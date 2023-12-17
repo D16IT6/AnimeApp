@@ -17,6 +17,7 @@ import LottieView from "lottie-react-native";
 import { CommentApi } from "../../apiService/CommentService";
 import { AnimeDetailRouteProps } from "../../navigations/AuthNavigator/Type";
 import { imageError } from "../../utils/httpReponse";
+import LoadScreen from "../loadScreens/loadScreens";
 const { width, height } = Dimensions.get("window")
 
 
@@ -49,7 +50,7 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
     const {
         animeId
     } = route.params;
-
+    const [loading, setLoading] = useState<boolean>(true);
     const [animeDetail, setAnimeDetail] = useState<AnimeDetailsViewModel>();
     const [allComment, setAllComment] = useState<CommentResponseView[]>();
     const [listAnimeMoreLikeThis, setListAnimeMoreLikeThis] = useState<AnimeRandomViewModel[]>();
@@ -69,6 +70,7 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
             setAllComment(x => resultAllComment)
             const resultListAnimeRandom = await animeApi.getAnimeRandom();
             setListAnimeMoreLikeThis(x => resultListAnimeRandom)
+            setLoading(false)
         }
         fetchData()
     }, [])
@@ -87,6 +89,10 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
 
     const navigation = useNavigation<AuthScreenNavigationProps>();
     return <SafeAreaView style={styles.container}>
+        <LoadScreen
+        visible={loading}
+        title="Đang tải thông tin anime"
+        />
         <Ionicons name='arrow-back'
             onPress={() => {
                 navigation.navigate(AuthRoutes.MainNavigationBar)
@@ -110,7 +116,13 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
                     </View>
                     <View style={styles.buttons}>
                         <TouchableOpacity style={styles.btnPlay} onPress={() => {
-                            Alert.alert('Chức năng chưa phát triển', 'Bấm vào tập bên dưới để xem')
+                            animeDetail?.Episodes?.length || 0 > 0
+                            ? navigation.navigate(AuthRoutes.VideoPlayScreen, {
+                                animeId:animeId,
+                                url: animeDetail?.Episodes[0].Url,
+                                name: `${animeDetail?.Title}(Tập ${animeDetail?.Episodes[0].Title})`
+                                })
+                            : Alert.alert(`Phim ${animeDetail?.Title} chưa có tập nào`);
                         }}>
                             <AntDesign name="play" color={Color.SecondaryColor} size={20}></AntDesign>
                             <Text style={styles.txtPlay}>Play</Text>
@@ -157,6 +169,7 @@ const AnimeDetails = ({ route }: AnimeDetailRouteProps) => {
                             return (
                                 <TouchableOpacity onPress={() => {
                                     navigation.navigate(AuthRoutes.VideoPlayScreen, {
+                                        animeId:animeId,
                                         url: item.Url,
                                         name: `${animeDetail?.Title}(Tập ${item.Title})`
                                     })
@@ -330,6 +343,7 @@ const styles = StyleSheet.create({
         top: "45%",
     },
     textEpisode: {
+        backgroundColor:Color.PrimaryColor,
         position: "absolute",
         left: 10,
         bottom: 10,
@@ -337,6 +351,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '500',
         color: Color.SecondaryColor,
+        padding:5,
+        borderRadius:10
     },
     nameAnime: {
         fontFamily: fontFamily.PrimaryFont,

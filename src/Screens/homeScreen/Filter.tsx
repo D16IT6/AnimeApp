@@ -7,6 +7,7 @@ import { Color } from "../../common/Colors";
 
 import { AnimeAgeRaitingModelView, AnimeCategoryModelView, AnimeSearchParams, AnimeSearchRequestViewModel, AnimeStatusModelView, AnimeTypeModelView, AttributeProps, CountryModelView } from "../../ModelView";
 import { apiFilter } from "../../apiService/FilterService";
+import LoadScreen from "../loadScreens/loadScreens";
 
 const { width, height } = Dimensions.get("window")
 
@@ -21,7 +22,7 @@ const handleReset = (select: AttributeProps[], setSelect: any) => {
 const Filter = () => {
 
     const navigation = useNavigation<AuthScreenNavigationProps>()
-
+    const [loading, setLoading] = useState<boolean>(true);
     const [listCountry, setListCountry] = useState<AttributeProps[]>([]);
     const [listAnimeAgeRaiting, setListAnimeAgeRaiting] = useState<AttributeProps[]>([]);
     const [listAnimeCategory, setListAnimeCategory] = useState<AttributeProps[]>([]);
@@ -61,6 +62,7 @@ const Filter = () => {
                         ({ ...value, "Selected": false }));
                     setListAnimeStatus(updateAnimeStatus);
                 }
+                setLoading(false)
             } catch (error) {
                 console.error("Lỗi khi lấy dữ liệu:", error);
             }
@@ -108,6 +110,10 @@ const Filter = () => {
 
     return (
         <SafeAreaView style={styles.container} >
+             <LoadScreen
+                visible={loading}
+                title="Đang tải tìm kiếm nâng cao"
+            />
             <NavagitonTop
                 title="Sort & Filter"
                 OnPressArrowBack={() => {
