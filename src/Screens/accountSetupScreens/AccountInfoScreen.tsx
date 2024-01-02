@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Image, StyleSheet, View, TouchableOpacity, Alert } from 'react-native';
 import { FooterNavigation, InputAuthScreen, NavigationBar } from "../../common/components";
 import { ChooseImage } from "../../common/Images";
@@ -9,16 +9,14 @@ import getUserIdFromToken from "../../utils/getUserId";
 import { UserPostViewModel, UserReponseViewModel } from "../../ModelView";
 import { AuthRoutes } from "../../navigations/AuthNavigator";
 import { imageError } from "../../utils/httpReponse";
+import { InputAuthScreenRef } from "../../common/components/InputAuthScreen";
 
 
 const AccountInfo = () => {
-
-
-
     const [avatar, setAvatar] = useState<string | undefined>(imageError)
-    const [fullName, setFullname] = useState<string | undefined>();
-    const [email, setEmail] = useState<string | undefined>();
-    const [phoneNumber, setPhoneNumber] = useState<string | undefined>();
+    const fullNameRef = useRef<InputAuthScreenRef>(null)
+    const emailRef = useRef<InputAuthScreenRef>(null)
+    const phoneNumberRef = useRef<InputAuthScreenRef>(null)
     const [newImage, setNewImage] = useState<DocumentPickerResponse>();
     const navigation = useNavigation();
 
@@ -28,9 +26,9 @@ const AccountInfo = () => {
                 const resultUser: UserReponseViewModel | undefined = await apiUser.getUserProfile(await getUserIdFromToken())
                 console.log(resultUser);
                 setAvatar(_ => resultUser?.AvatarUrl)
-                setFullname(_ => resultUser?.FullName)
-                setEmail(_ => resultUser?.Email)
-                setPhoneNumber(_ => resultUser?.PhoneNumber)
+                fullNameRef.current?.setValue(resultUser?.FullName||"")
+                emailRef.current?.setValue(resultUser?.Email||"")
+                phoneNumberRef.current?.setValue(resultUser?.PhoneNumber||"")
             } catch (error) {
                 console.log(error)
             }
@@ -81,42 +79,30 @@ const AccountInfo = () => {
 
                 <View style={style.contentInfo}>
                     <InputAuthScreen
-                        placeholder=""
-                        iconName="user"
-                        password={false}
-                        value={fullName}
-                        onFocus={() => {
-                        }} onChangeText={function (text: string): void {
-                            console.log(text);
-                            setFullname(_ => text)
-                        }} />
+                        placeholder="Họ và tên"
+                        ref={fullNameRef}
+                        iconName="user"         
+                        onSubmit = {()=>phoneNumberRef.current?.onFocus()}
+                    />
+                    <InputAuthScreen
+                        ref ={phoneNumberRef}
+                        placeholder="Số điện thoại"
+                        iconName="phone"           
+                        onSubmit ={()=>{emailRef.current?.onFocus()}}
+                    />
 
                     <InputAuthScreen
-                        placeholder=""
-                        iconName="phone"
-                        password={false}
-                        value={phoneNumber}
-                        onFocus={() => {
-                        }} onChangeText={function (text: string): void {
-                            setPhoneNumber(_ => text)
-                        }} />
-
-                    <InputAuthScreen
-                        placeholder=""
-                        iconName="phone"
-                        password={false}
-                        value={email}
-                        onFocus={() => {
-                        }} onChangeText={function (text: string): void {
-                            setEmail(_ => text)
-                        }} />
+                        ref ={emailRef}
+                        placeholder="Email"
+                        iconName="phone"       
+                    />
                 </View>
                 <FooterNavigation flex={1} leftTitle="Bỏ qua" rightTitle="Cập nhật"
                     rightEvent={async () => {
                         const model: UserPostViewModel = {
-                            FullName: fullName,
-                            Email: email,
-                            PhoneNumber: phoneNumber
+                            FullName: fullNameRef.current?.getValue()||"",
+                            Email: emailRef.current?.getValue()||"",
+                            PhoneNumber: phoneNumberRef.current?.getValue()||""
                         }
                         console.log('model');
                         console.log(model);
@@ -156,15 +142,12 @@ const style = StyleSheet.create({
     },
     contentAvatar: {
         flex: 3,
-        //  backgroundColor: 'red',
         alignItems: 'center',
         justifyContent: 'center',
     },
     contentAvatarImage: {
-        //  backgroundColor: 'blue',
         width: 180,
         height: 180,
-        // borderWidth:10,
         borderRadius: 100
 
     },
@@ -177,8 +160,6 @@ const style = StyleSheet.create({
     },
     contentInfo: {
         flex: 7,
-        // backgroundColor: 'green'
-
     }
 })
 export { AccountInfo }

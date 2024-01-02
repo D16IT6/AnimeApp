@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, Animated, StyleSheet, SafeAreaView, FlatList, Dimensions } from 'react-native';
 import { Color } from '../../common/Colors';
 import { MyListAnime } from '../../common/components/RenderFlastList';
-import { MyListResponseViewModel } from '../../ModelView';
+import { MyListResponseViewModel, MyListUpdateViewModel } from '../../ModelView';
 import { apiMyList } from '../../apiService/MylistService';
 import getUserIdFromToken from '../../utils/getUserId';
 import { Image, Text } from 'react-native-elements';
 import { logo, mylistEmpty } from '../../common/Images';
 import fontFamily from '../../common/FontFamily';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import LoadScreen from '../loadScreens/loadScreens';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const { width, height } = Dimensions.get("window")
 
@@ -17,9 +17,8 @@ const { width, height } = Dimensions.get("window")
 
 const MyListScreen = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [myList, setMyList] = useState<MyListResponseViewModel[]>();
-  console.log(myList)
-  const ResetData= () =>{
+  const [myList, setMyList] = useState<MyListUpdateViewModel[]>();
+  const ResetData = () => {
     const fetData = async () => {
       try {
         const resultMyList = await apiMyList.getMyList()
@@ -43,37 +42,48 @@ const MyListScreen = () => {
     }
     fetData()
   }, [])
+  //xu ly open Xoa
+  const openComponent=(id:number)=>{
+      const tempMylist = myList?.map((item:MyListUpdateViewModel)=>{    
+          return {...item,Opened:item.Id===id}   
+      })
+      setMyList(()=>tempMylist)
+  }
   return (
     <SafeAreaView style={styles.container}>
-      <LoadScreen
-        visible={loading}
-        title="Đang tải danh sách yêu thích"
-      />
-      <View style={styles.header}>
-        <Image source={logo} style={styles.logoImage}></Image>
-        <Text style={styles.title}>My List</Text>
-      </View>
-      {myList && myList?.length <= 0 ? (<View style={styles.containerEmpty}>
-        <Image source={mylistEmpty} style={styles.mylistEmptyImage}></Image>
-        <Text style={styles.titleMyListEmpty}>Danh sách của bạn trống</Text>
-        <Text style={styles.contentMyListEmpty}>Có vẻ như bạn chưa thêm bất kỳ anime nào vào danh sách</Text>
-      </View>)
-        : (
-        <View style={{height:height*0.8}}>
-          <FlatList
-          data={myList}
-          keyExtractor={(item) => item.Id.toString()}
-          renderItem={({ item }) => {
-            return <MyListAnime 
-            item={item}
-            ResetData={ResetData}
-            ></MyListAnime>
-          }}
-        >
-        </FlatList>
-          </View>)
-      }
+      <GestureHandlerRootView style={styles.container}>
+        <LoadScreen
+          visible={loading}
+          title="Đang tải danh sách yêu thích"
+        />
+        <View style={styles.header}>
+          <Image source={logo} style={styles.logoImage}></Image>
+          <Text style={styles.title}>My List</Text>
+        </View>
+        {myList && myList?.length <= 0 ? (<View style={styles.containerEmpty}>
+          <Image source={mylistEmpty} style={styles.mylistEmptyImage}></Image>
+          <Text style={styles.titleMyListEmpty}>Danh sách của bạn trống</Text>
+          <Text style={styles.contentMyListEmpty}>Có vẻ như bạn chưa thêm bất kỳ anime nào vào danh sách</Text>
+        </View>)
+          : (
+            <View style={{ height: height * 0.8 }}>
+              <FlatList
+                data={myList}
+                keyExtractor={(item) => item.Id.toString()}
+                renderItem={({ item }) => {
+                  return <MyListAnime
+                    item={item}
+                    ResetData={ResetData}
+                    onOpentComponent={openComponent}
+                  ></MyListAnime>
+                }}
+              >
+              </FlatList>
+            </View>)
+        }
 
+
+      </GestureHandlerRootView>
     </SafeAreaView>
   )
 };

@@ -1,3 +1,5 @@
+import { AuthScreenNavigationProps } from "./navigations/AuthNavigator"
+
 type AnimeHitViewModel = {
     Id: number,
     Title: string,
@@ -24,18 +26,31 @@ type EpisodesViewModel = {
     Title: string,
     Url: string
 }
-type AnimeDetailsViewModel={
-        Id: number,
-        Title: string,
-        Poster:string,
-        Rating: string,
-        Year: number,
-        Country: string,
-        AgeRating: string,
-        Categories: string[],
-        Synopsis: string,
-        Episodes: EpisodesViewModel[] ,
-        IsFavorite: boolean
+type AnimeDetailsViewModel = {
+    Id: number,
+    Title: string,
+    Poster: string,
+    Rating: number,
+    Year: number,
+    Country: string,
+    AgeRating: string,
+    Categories: string[],
+    Synopsis: string,
+    Episodes: EpisodesViewModel[],
+    IsFavorite: boolean
+}
+type AnimeDetailsReponseViewModel = {
+    Id: number,
+    Title: string,
+    Poster: string,
+    Rating: string,
+    Year: number,
+    Country: string,
+    AgeRating: string,
+    Categories: string[],
+    Synopsis: string,
+    Episodes: EpisodesViewModel[],
+    IsFavorite: boolean
 }
 type CountryModelView = {
     Id: number,
@@ -99,6 +114,10 @@ type AnimeSearchResponseViewModel = {
     Title: string,
     Poster: string
 }
+type ListSearchAnimeProps = {
+    navigation:AuthScreenNavigationProps,
+    item: AnimeSearchResponseViewModel 
+}
 type MyListResponseViewModel = {
     Id: number,
     AnimeId: number,
@@ -106,10 +125,21 @@ type MyListResponseViewModel = {
     Poster: string,
     Rating: string,
 }
+type MyListUpdateViewModel = {
+    Id: number,
+    AnimeId: number,
+    Title: string,
+    Poster: string,
+    Rating: string,
+    Opened: boolean,
+}
 type LoginRequestViewModel = {
     UserName: string,
     Password: string,
     RememberMe: boolean
+}
+type ForgotPasswordRequestViewModel = {
+    Email: string,
 }
 type LoginResponseViewModel = {
     AccessToken: string;
@@ -140,7 +170,7 @@ type CommentResponseView = {
     FullName: string,
     AvatarUrl: string,
     CreatedDate: string,
-    ParentId:number|null 
+    ParentId: number | null
 }
 type CommentsProps = {
     comment: CommentResponseView,
@@ -156,10 +186,26 @@ type UserPostViewModel = {
     Email: string | undefined,
     PhoneNumber: string | undefined
 }
-
+type Errors = {
+    username?: string;
+    email?: string;
+    password?: string;
+    confilmPassword?: string;
+}
+type InputsRef = {
+    username: string,
+    password: string,
+    confilmPassword: string,
+    email: string
+}
 
 export {
+    Errors,
+    ListSearchAnimeProps,
+    ForgotPasswordRequestViewModel,
+    InputsRef,
     UserPostViewModel,
+    AnimeDetailsReponseViewModel,
     LoginRequestViewModel,
     LoginResponseViewModel,
     CommentRequestViewModel,
@@ -186,5 +232,6 @@ export {
     CommentParams,
     SignupRequestViewModel,
     MyListResponseViewModel,
+    MyListUpdateViewModel,
     UserReponseViewModel,
 }

@@ -8,8 +8,8 @@ import { CommentApi } from "../../apiService/CommentService";
 import { CommentResponseView } from "../../ModelView";
 import { CommentsRouteProps } from "../../navigations/AuthNavigator/Type";
 import LoadScreen from "../loadScreens/loadScreens";
+import Screen from "../../utils/screenInformation";
 
-const { width, height } = Dimensions.get("window")
 const CommentsScreens = ({ route }: {route:CommentsRouteProps}) => {
     const { animeId } = route.params;
     const [loading, setLoading] = useState<boolean>(true);
@@ -86,7 +86,7 @@ export default CommentsScreens
 
 const styles = StyleSheet.create({
     scrollViewContainer: {
-        marginBottom: height * 0.1,
+        marginBottom: Screen.height * 0.1,
     },
     bottomInput: {
         position: 'absolute',

@@ -1,27 +1,86 @@
-import React from "react"
+import React, { createRef, useEffect, useRef } from "react"
 import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native"
 import fontFamily from "../FontFamily"
 import { Color } from "../Colors"
-import { Dimensions } from "react-native"
 import { Text } from "react-native-elements"
-import {  MyListResponseViewModel } from "../../ModelView"
+import {   MyListUpdateViewModel } from "../../ModelView"
 import { apiMyList } from "../../apiService/MylistService"
-const {width,height} = Dimensions.get('window')
+import { Swipeable } from 'react-native-gesture-handler';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import Screen from "../../utils/screenInformation"
 
 const DeleteMylist = async (mylistId:number)=>{
     const result = await apiMyList.deleteMyList(mylistId)
     return result
 }
 type myListAnimeProps ={
-    item:MyListResponseViewModel,
-    ResetData:Function
+    item:MyListUpdateViewModel,
+    ResetData:Function,
+    onOpentComponent: (index:number)=>void
 }
-const MyListAnime =(props:myListAnimeProps)=>{
-    const{item,
-    ResetData
+
+type RightDeleteItemProps = {
+    item:MyListUpdateViewModel,
+    ResetData:Function,
+}
+
+const RightDeleteItem = (props:RightDeleteItemProps)=>{
+    const{
+        ResetData,
+        item
     }=props
+    // console.log(item)
+    return (
+        <TouchableOpacity style={styles.actionDelete} onPress={()=>{
+            Alert.alert(
+               'Xác nhận xoá',
+               `Bạn có chắc chắn muốn xoá ${item.Title} khỏi danh sách yêu thích?`,
+               [
+                 {
+                   text: 'Hủy',
+                   style: 'cancel',
+                 },
+                 {
+                   text: 'Xoá',
+                   onPress:async () => {
+                     // Gọi hàm để xoá mục khi người dùng xác nhận
+                     await DeleteMylist(item.Id);
+                     await ResetData();
+                   },
+                 },
+               ],
+               { cancelable: false }
+             );
+       }}>
+        
+           <Icon name ="delete" color={Color.SecondaryColor} size={40} />
+       </TouchableOpacity>
+    )
+}
+
+const MyListAnime =(props:myListAnimeProps)=>{
+    const{
+        item,
+        ResetData,
+        onOpentComponent
+    }=props
+    const swipeableRef = createRef<Swipeable>();
+    useEffect(()=>{
+        if(item.Opened===false)
+        swipeableRef.current?.close()
+    })
     return(
-        <TouchableOpacity 
+        <Swipeable renderRightActions={
+        ()=>RightDeleteItem({ResetData,item})}
+        
+        onSwipeableOpen={()=>{
+            // console.log("open "+item.Id)
+            onOpentComponent(item.Id)
+        
+        }}
+        ref={swipeableRef}
+        >
+             <TouchableOpacity 
         onPress={()=>{`Ban dang xem ${item.Title}`}}
         style={styles.containerAnime}
         >
@@ -29,45 +88,24 @@ const MyListAnime =(props:myListAnimeProps)=>{
             source={{uri:item.Poster}}
             style={styles.imageAnime}
             />
+            <Text style={styles.RaitingAnime}>{item.Rating}/5</Text>
             <View style={styles.contentMylist}>
                 <Text style={styles.nameAnime}>{item.Title}</Text>
-                <TouchableOpacity style={styles.actionDelete} onPress={()=>{
-                     Alert.alert(
-                        'Xác nhận xoá',
-                        'Bạn có chắc chắn muốn xoá mục này khỏi danh sách?',
-                        [
-                          {
-                            text: 'Hủy',
-                            style: 'cancel',
-                          },
-                          {
-                            text: 'Xoá',
-                            onPress:async () => {
-                              // Gọi hàm để xoá mục khi người dùng xác nhận
-                              await DeleteMylist(item.Id);
-                              await ResetData();
-                            },
-                          },
-                        ],
-                        { cancelable: false }
-                      );
-                }}>
-                    <Text style={styles.titleActionDelete}>Xoá</Text>
-                </TouchableOpacity>
-            </View>
-            
-    
-    </TouchableOpacity>)
+            </View>   
+    </TouchableOpacity>
+        </Swipeable>
+       )
     }
 export {MyListAnime}
 const styles = StyleSheet.create({
     containerAnime:{
     flexDirection:'row',
+    backgroundColor:Color.SecondaryColor,
     marginVertical:10,
 },
 imageAnime:{
-    width:width*0.3,
-    height:height*0.2,
+    width:Screen.width*0.3,
+    height:Screen.height*0.2,
     borderRadius:10
 },
 contentMylist:{
@@ -90,13 +128,19 @@ actionDelete:{
     alignItems:"center",
     paddingHorizontal:10,
     paddingVertical:5,
-    borderRadius:10,
+    borderTopRightRadius:10,
+    borderBottomRightRadius:10,
+    // width:'30%',
+    marginVertical:10,
 },
-titleActionDelete:{
-    textAlignVertical:'center',
-    fontFamily: fontFamily.PrimaryFont,
-    fontSize: 14,
-    fontWeight:'700',
-    color:Color.SecondaryColor
+RaitingAnime:{
+    position:'absolute',
+    top:10,
+    left:10,
+    backgroundColor:Color.PrimaryColor,
+    paddingHorizontal:7,
+    borderRadius:5
+
 }
+
 })

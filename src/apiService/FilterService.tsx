@@ -1,6 +1,4 @@
-import axios from "axios"
 import axiosClient from "./axiosClient"
-import { API_URL } from "@env"
 import { AnimeAgeRaitingModelView, AnimeCategoryModelView, AnimeStatusModelView, AnimeTypeModelView, CountryModelView } from "../ModelView"
 
 

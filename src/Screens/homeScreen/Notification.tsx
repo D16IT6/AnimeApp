@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native'
 import { Color } from "../../common/Colors";
 import { Loader } from "../../common/components";
 import { NavagitonTop } from "../../common/components";
-import { listNotification } from "../../utils/getUserId";
 import fontFamily from "../../common/FontFamily";
 
 const { height, width } = Dimensions.get("window");
@@ -22,6 +21,107 @@ interface listAnimeProps {
   episode: Number,
   notification_period:string
 }
+const listNotification = [
+  {
+    id: '1',
+    name: 'Attack on Titan Final Season Part 2',
+    year: 2022,
+    contry: 'Japan',
+    genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
+    url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/nZu9ClH.jpg',
+    rating: 9.7,
+    episode: 10,
+    notification_period:"22/10/2023"
+  },
+  {
+    id: '2',
+    name: 'Attack on Titan Final Season Part 2',
+    year: 2022,
+    contry: 'Japan',
+    genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
+    url: 'https://imgur-com.cdn.ampproject.org/i/imgur.com/4sutpRK.jpg',
+    rating: 9.6,
+    episode: 10,
+    notification_period:"22/10/2023"
+  },
+  {
+    id: '3',
+    name: 'Attack on Titan Final Season Part 2',
+    year: 2022,
+    contry: 'Japan',
+    genre: 'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
+    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    rating: 9.1,
+    episode: 10,
+    notification_period:"22/10/2023"
+  },
+  {
+    id: '4',
+    name: 'Attack on Titan Final Season Part 2',
+    year: 2022,
+    contry: 'Japan',
+    genre: 'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
+    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    rating: 9.0,
+    episode: 10,
+    notification_period:"22/10/2023"
+  },
+  {
+    id: '5',
+    name: 'Attack on Titan Final Season Part 2',
+    year: 2022,
+    contry: 'Japan',
+    genre: 'Genre: Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
+    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    rating: 9.8,
+    episode: 10,
+    notification_period:"22/10/2023"
+  },
+  {
+    id: '6',
+    year: 2022,
+    name: 'Attack on Titan Final Season Part 1',
+    contry: 'Japan',
+    genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
+    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    rating: 9.8,
+    episode:10,
+    notification_period:"22/10/2023"
+  },
+  {
+    id: '7',
+    year: 2022,
+    name: 'Attack on Titan Final Season Part 1',
+    contry: 'Japan',
+    genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
+    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    rating: 9.8,
+    episode:10,
+    notification_period:"22/10/2023"
+  },
+  {
+    id: '8',
+    year: 2022,
+    name: 'Attack on Titan Final Season Part 1',
+    contry: 'Japan',
+    genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
+    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    rating: 9.8,
+    episode:10,
+    notification_period:"22/10/2023"
+  },
+  {
+    id: '9',
+    year: 2022,
+    name: 'Attack on Titan Final Season Part 1',
+    contry: 'Japan',
+    genre: 'Action fiction, Dark fantasy, Apocalyptic, Drama, Shōnen, ...',
+    url: 'http://172.234.73.7/Uploads/Images/ao1.jpg',
+    rating: 9.8,
+    episode:10,
+    notification_period:"22/10/2023"
+  },
+];
 const getItem = (item: any) => {
   Alert.alert(`Ban dang xem ${item.id} va${item.name}`)
 }

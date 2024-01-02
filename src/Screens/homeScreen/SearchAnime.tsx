@@ -11,18 +11,29 @@ import { groupIcon } from "../../common/Icons";
 import LottieView from "lottie-react-native";
 import fontSizes from "../../common/FontSizes";
 import fontFamily from "../../common/FontFamily";
-import { AnimeSearchParams, AnimeSearchRequestViewModel, AnimeSearchResponseViewModel, AttributeProps } from "../../ModelView";
+import { AnimeSearchParams, AnimeSearchRequestViewModel, AnimeSearchResponseViewModel, AttributeProps, ListSearchAnimeProps } from "../../ModelView";
 import { SearchAnimeRouteProps } from "../../navigations/AuthNavigator/Type";
 import { apiSearch } from "../../apiService/SearchService";
 import FontAwesomeIcons from "react-native-vector-icons/FontAwesome"
 import LoadScreen from "../loadScreens/loadScreens";
+import { InputAuthScreenRef } from "../../common/components/InputAuthScreen";
 const { height, width } = Dimensions.get("window");
 
+const handlePressItem =(id:number,navigation:AuthScreenNavigationProps)=>{
+     navigation.navigate(AuthRoutes.AnimeDetails,{animeId:id})
+}
 
-const ListSearchAnime = ({ item }: { item: AnimeSearchResponseViewModel }) => {
+const ListSearchAnime = (props:ListSearchAnimeProps) => {
+    const {
+        item,
+        navigation
+    }=props
     return (
         <TouchableOpacity
-            onPress={() => { `Ban dang xem ${item.Title}` }}
+            onPress={() => {
+                // navigation.navigate(AuthRoutes.AnimeDetails,{animeId:item.Id})
+                  handlePressItem(item.Id,navigation)
+            }}
             style={styles.containerAnime}
         >
             <Image
@@ -33,7 +44,7 @@ const ListSearchAnime = ({ item }: { item: AnimeSearchResponseViewModel }) => {
 
         </TouchableOpacity>)
 }
-const ItemSelected = ({ item }: { item: AttributeProps }) => {
+const ItemSelected = ( { item }: { item: AttributeProps }) => {
     return (
         <View style={styles.BtnAttribute}>
             <Text style={styles.nameAttribute}>{item.Name}</Text>
@@ -41,13 +52,14 @@ const ItemSelected = ({ item }: { item: AttributeProps }) => {
 }
 const SearchAnime = ({ route }: { route: SearchAnimeRouteProps }) => {
     const dataSelected: AnimeSearchParams = route.params;
+
+    console.log(dataSelected)
     const [loading, setLoading] = useState<boolean>(true);
     const [search, setSearch] = useState<AnimeSearchResponseViewModel[]>();
     const [dataArray1, setdataArray1] = useState<AttributeProps[]>();
-    const [inputSearch, setInputSearch] = useState("");
-    console.log(inputSearch)
+    const valueSearchRef = useRef<InputAuthScreenRef>(null)
     const jsonApi: AnimeSearchRequestViewModel = {
-        SearchTitle: inputSearch,
+        SearchTitle: valueSearchRef.current?.getValue(),
         CountryId: dataSelected?.selectedCountry.find(x => x.Selected)?.Id ?? 0,
         AgeRaitingId: dataSelected?.selectedAgeRaiting.find(x => x.Selected)?.Id ?? 0,
         TypeId: dataSelected?.selectedType.find(x => x.Selected)?.Id ?? 0,
@@ -62,9 +74,8 @@ const SearchAnime = ({ route }: { route: SearchAnimeRouteProps }) => {
         const jsonApiTile = (inputSearch: string, jsonApi: AnimeSearchRequestViewModel) => {
             return { ...jsonApi, SearchTitle: inputSearch }
         }
-        console.log(inputSearch)
         const fetchData = async () => {
-            const result = await apiSearch.getSearch(jsonApiTile(inputSearch, jsonApi))
+            const result = await apiSearch.getSearch(jsonApiTile(valueSearchRef.current?.getValue()||"", jsonApi))
             setSearch(x => result);
         }
         fetchData();
@@ -103,10 +114,9 @@ const SearchAnime = ({ route }: { route: SearchAnimeRouteProps }) => {
             />
             <View style={styles.headerContainer}>
                 <InputAuthScreen
+                    ref={valueSearchRef}
                     iconName="search"
                     placeholder="Tìm kiếm"
-                    onChangeText={(text) => { setInputSearch(text) }}
-                    onFocus={() => { }}
                     style={styles.inputSearch}
                 ></InputAuthScreen>
                 <TouchableOpacity style={styles.filter}
@@ -124,14 +134,15 @@ const SearchAnime = ({ route }: { route: SearchAnimeRouteProps }) => {
                     <Image source={groupIcon}></Image>
                 </TouchableOpacity>
             </View>
-            {dataSelected !== undefined && (
+            {dataSelected!==null && (
                 <View style={styles.selected}>
                     <FlatList
                         horizontal={true}
                         data={dataArray1}
                         keyExtractor={(item) => item.Name}
-                        renderItem={({ item }) => {
-                            return <ItemSelected item={item} />;
+                        renderItem={({ item}) => {
+                            return <ItemSelected item={item} 
+                           />;
                         }}
                     />
                 </View>
@@ -141,6 +152,7 @@ const SearchAnime = ({ route }: { route: SearchAnimeRouteProps }) => {
                     data={search}
                     renderItem={({ item }) => <ListSearchAnime
                         item={item}
+                        navigation={navigation}
                     ></ListSearchAnime>}
                     keyExtractor={(item) => item.Id.toString()}
                 ></FlatList>

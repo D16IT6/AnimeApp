@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { Alert, Dimensions, Keyboard, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import fontFamily from "../FontFamily";
@@ -8,7 +8,7 @@ import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNav
 import { Image } from "react-native-elements";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import fontSizes from "../FontSizes";
-import InputAuthScreen from "./InputAuthScreen";
+import InputAuthScreen, { InputAuthScreenRef } from "./InputAuthScreen";
 import Feather from "react-native-vector-icons/Feather"
 import EmojiPicker, { emojiFromUtf16 } from "rn-emoji-picker"
 import { emojis } from "rn-emoji-picker/dist/data"
@@ -53,7 +53,7 @@ const Comments = (props: CommentsProps) => {
                 </View>
 
             </View>
-            {replies.length > 0 && (
+            {replies&&replies.length > 0 && (
                 <View>
                     {replies.map((x) => {
                         return (
@@ -112,15 +112,22 @@ const InputComment = (props:InputCommentProps) => {
         animeId,
         resetData
     }=props
-    const [comment, setComment] = useState('')
+    const valueCommentRef = useRef<InputAuthScreenRef>(null)
     const [isDisabledBtn, setIsDisabledBtn] = useState(true);
-    const lengthComment = comment.trim().length
-
+    const [lengthComment, setLengthComment] = useState(0);
+    const handleChangeText =()=>{
+        const value = valueCommentRef.current?.getValue().trim();
+          setLengthComment(value.length);
+          console.log("leng"+lengthComment)
+    }
+    useEffect(()=>{
+        handleToggleDisabled()
+    },[lengthComment])  
     const putComment = async () => {
         const model: CommentRequestViewModel = {
             AnimeId: animeId,
             UserId: await getUserIdFromToken(),
-            Content: comment.trim()
+            Content: valueCommentRef.current?.getValue().trim()||""
         }
         console.log(model)
         const putData = await CommentApi.putComment(model);
@@ -131,37 +138,26 @@ const InputComment = (props:InputCommentProps) => {
             Alert.alert("Thêm comment thất bại")
         }
     }
-    useEffect(() => {
-        handleToggleDisabled()
-    }, [comment])
     const handleToggleDisabled = () => {
-        if (lengthComment > 0) {
-            setIsDisabledBtn(false);
-        }
-        else {
-            setIsDisabledBtn(true)
-        }
+        console.log("vao togo")
+        setIsDisabledBtn(lengthComment <= 0); 
+        console.log(isDisabledBtn)//ab
     };
-
-    const handleChildInputChange = (value: string) => {
-        setComment(value);
-    };
-
     return (
         <View style={styles.containerInput}>
             <InputAuthScreen
+                ref={valueCommentRef}
                 placeholder="Add Comments"
-                onChangeText={handleChildInputChange}
-                value={comment}
                 style={styles.inputComment}
+                onChangeText={handleChangeText}
             ></InputAuthScreen>
             <TouchableOpacity
                 style={[styles.sendInput, { backgroundColor: isDisabledBtn ? '#e0e0e0' : Color.PrimaryColor }]}
                 disabled={isDisabledBtn}
                 onPress={ async () => {
-                    // Alert.alert(comment.trim())
                     await putComment()
                     await resetData()
+                    valueCommentRef.current?.setValue("")
                 }}
             >
                 <Feather name="send" size={40} color={isDisabledBtn ? Color.Gray : Color.SecondaryColor}></Feather>

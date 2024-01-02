@@ -1,6 +1,6 @@
 import { imageError } from "../utils/httpReponse";
 import { API_URL, BASE_URL } from '@env';
-import { AnimeDetailsViewModel, AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel, AnimeRandomViewModel } from "../ModelView";
+import { AnimeDetailsReponseViewModel, AnimeDetailsViewModel, AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel, AnimeRandomViewModel } from "../ModelView";
 
 import axiosClient from "./axiosClient";
 
@@ -74,13 +74,12 @@ const animeApi = {
   },
   getAnimeById : async (animeId: number) => {
     try {
-      const res:AnimeDetailsViewModel = await axiosClient.get(`/Anime/${animeId}`)
+      const res:AnimeDetailsReponseViewModel = await axiosClient.get(`/Anime/${animeId}`)
       const updatedData:AnimeDetailsViewModel= {
         ...res,
         Poster: res && res.Poster !== null ? (!res.Poster.startsWith('http') ? `${BASE_URL}${res.Poster}` : res.Poster) : imageError,
-        Rating: res.Rating === "NaN" ? "0" : res.Rating,
+        Rating: parseFloat(res.Rating === "NaN" ? "0" : res.Rating),
       };
-      // console.log(updatedData)
       return updatedData
     } catch (error) {
       console.log(error)

@@ -20,7 +20,8 @@ export type AuthStackParamList = {
     AnimeDetails: AnimeDetailParams,
     CommentsScreens: CommentParams,
     VideoPlayScreen: undefined,
-    AccountInfoScreen: undefined
+    AccountInfoScreen: undefined,
+    ForgotPasswordScreen:undefined
 };
 
 type SearchAnimeRouteProps = RouteProp<AuthStackParamList, AuthRoutes.SearchAnime>
@@ -48,7 +49,8 @@ type AuthScreenNavigationProps = NativeStackScreenProps<
     Filter,
     AnimeDetails,
     CommentsScreens,
-    VideoPlayScreen
+    VideoPlayScreen,
+    ForgotPasswordScreen
 >
 export {
     AuthScreenNavigationProps,

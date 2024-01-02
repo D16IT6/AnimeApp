@@ -9,6 +9,8 @@ import KeyboardAvoidingContainer from "./KeyBoardAvoidingContainer"
 import SelectorAttribtute from "./SelectorAttribtute"
 import DropdownComponent from "./DropDown"
 import {Comments,InputComment,Reply} from "./Comment"
+import BottomSheet from "./BottomSheet"
+import  Raiting from "./Raiting"
 export{InputAuthScreen,
     ButtonAuthScreen,
     CheckedAuthScreen,
@@ -19,7 +21,9 @@ export{InputAuthScreen,
     KeyboardAvoidingContainer,
     SelectorAttribtute,
     DropdownComponent,
-    Comments,InputComment,Reply
+    Comments,InputComment,Reply,
+    BottomSheet,
+    Raiting
 }
 
 import { CategoryViewItem } from "./InterestCategory";

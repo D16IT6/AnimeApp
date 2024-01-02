@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, Alert, Keyboard, StatusBar } from 'react-native'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { logo } from '../../common/Images'
 
 import { Color } from '../../common/Colors';
@@ -9,61 +9,53 @@ import { ButtonAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthS
 import fontSizes from '../../common/FontSizes';
 import { apiAuth } from '../../apiService/AuthService';
 import { notDev } from '../../utils/extensionMethod';
-const { width, height } = Dimensions.get('window')
+import { Errors } from '../../ModelView';
+import Screen from '../../utils/screenInformation';
+import { InputAuthScreenRef } from '../../common/components/InputAuthScreen';
 export default function SignUpScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
 
-  const [inputs, setInputs] = useState({
-    username: '',
-    password: '',
-    confilmPassword: '',
-    email: ''
-  })
-  interface Errors {
-    username?: string;
-    email?: string;
-    password?: string;
-    confilmPassword?: string;
-  }
+  const userNameRef = useRef<InputAuthScreenRef>(null)
+  const passwordRef = useRef<InputAuthScreenRef>(null)
+  const emailRef = useRef<InputAuthScreenRef>(null)
+  const confilmPasswordRef = useRef<InputAuthScreenRef>(null)
   const [errors, setErrors] = useState<Errors>({})
   const [loading, setLoading] = useState(false)
-
-
-  const validateEmail = (email: string) => {
-    const regex = (/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/);
-
-    return regex.test(email);
-  };
+  
+  const handleError = (errorMessage: string | null, input: string) => {
+    setErrors(prevState => ({ ...prevState, [input]: errorMessage }))
+  }
 
   const validate = () => {
     Keyboard.dismiss();
     let isValid = true;
-    if (!inputs.username) {
+    if (!userNameRef.current?.getValue()) {
       handleError("Vui lòng nhập tài khoản !", "username")
       isValid = false;
     }
-    if (!inputs.password) {
+    if (!passwordRef.current?.getValue()) {
       handleError("Vui lòng nhập mật khẩu !", "password")
       isValid = false;
     }
-    else if (inputs.password.length < 5) {
+    else if (passwordRef.current.getValue().length < 5) {
       handleError("Mật khẩu phải trên 5 kí tự !", "password")
       isValid = false;
     }
-    if (inputs.password !== inputs.confilmPassword) {
+    if ( passwordRef.current &&
+      confilmPasswordRef.current &&passwordRef.current.getValue() !== confilmPasswordRef.current.getValue()) {
       handleError("Xác nhận mật khẩu không đúng !", "confilmPassword")
       isValid = false;
     }
-    if (!inputs.email) {
+    if (!emailRef.current?.getValue()) {
       handleError("Chưa nhập email !", "email")
       isValid = false;
     }
-    else if (!validateEmail(inputs.email)) {
+    else if (!validateEmail(emailRef.current.getValue())) {
       handleError("Nhập email chưa đúng định dạng !", "email")
       isValid = false;
     }
     if (isValid) {
-      regisiter()
+       regisiter()
     }
   }
   const regisiter = async () => {
@@ -71,9 +63,9 @@ export default function SignUpScreen() {
       setLoading(true)
       const checkSiup = await apiAuth.sigup(
         {
-          UserName: inputs.username,
-          Password: inputs.password,
-          Email: inputs.email
+          UserName: userNameRef.current?.getValue().toString()||"",
+          Password: passwordRef.current?.getValue().toString()||"",
+          Email: emailRef.current?.getValue().toString()||"",
         })
       setLoading(false)
       if (checkSiup) {
@@ -118,23 +110,11 @@ export default function SignUpScreen() {
     } catch (error) {
       console.log(error)
     }
-    // setLoading(true),
-    // setTimeout(() => {
-    //   setLoading(false)
-    //   try {
-    //     AsyncStorage.setItem("userData",JSON.stringify(inputs))    
-    //     navigation.navigate(AuthRoutes.Login)
-    //   } catch (error) {
-    //     Alert.alert("Error","Có lỗi rồi!!!")
-    //   }
-    // }, 3000);
   }
-  const handleOnChange = (text: any, input: string) => {
-    setInputs(prevState => ({ ...prevState, [input]: text }))
-  }
-  const handleError = (errorMessage: string | null, input: string) => {
-    setErrors(prevState => ({ ...prevState, [input]: errorMessage }))
-  }
+  // const handleOnChange = (text: any, input: string) => {
+  //   setInputs(prevState => ({ ...prevState, [input]: text }))
+  // }
+ 
   return (
     <KeyboardAvoidingContainer style={styles.container}>
       <Loader visible={loading} />
@@ -150,34 +130,38 @@ export default function SignUpScreen() {
       </View>
       <View style={styles.contentSignUp}>
         <InputAuthScreen
+          ref={userNameRef}
           placeholder="Tài Khoản"
           iconName="user"
           error={errors.username}
+          onSubmit={()=> emailRef.current?.onFocus()}
           onFocus={() => {
             handleError(null, "username")
           }}
-          onChangeText={(text: string) => handleOnChange(text, 'username')}
         />
         <InputAuthScreen
+          ref={emailRef}
           placeholder="Email"
           iconName="envelope-o"
           error={errors.email}
+          onSubmit={()=> passwordRef.current?.onFocus()}
           onFocus={() => {
             handleError(null, "email")
           }}
-          onChangeText={(text: string) => handleOnChange(text, 'email')}
         />
         <InputAuthScreen
+          ref={passwordRef}
           placeholder="Mật Khẩu"
           iconName="lock"
           error={errors.password}
           password={true}
+          onSubmit={()=> confilmPasswordRef.current?.onFocus()}
           onFocus={() => {
             handleError(null, "password")
           }}
-          onChangeText={(text: string) => handleOnChange(text, 'password')}//(text: string) => handleOnChange(text, 'password')
         />
         <InputAuthScreen
+          ref={confilmPasswordRef}
           placeholder="Xác nhận mật khẩu"
           iconName="lock"
           error={errors.confilmPassword}
@@ -185,8 +169,6 @@ export default function SignUpScreen() {
           onFocus={() => {
             handleError(null, "confilmPassword")
           }}
-          onChangeText={(text: string) => handleOnChange(text, 'confilmPassword')}//(text: string) => handleOnChange(text, 'password')
-
         />
         {/* <CheckedAuthScreen/> */}
         <ButtonAuthScreen
@@ -227,7 +209,7 @@ const styles = StyleSheet.create({
   container: {
     //  flex: 1
     // do dai man hinh - thanh trang thai
-    height: height - (StatusBar.currentHeight ? StatusBar.currentHeight : 0)
+    height: Screen.height - (StatusBar.currentHeight ? StatusBar.currentHeight : 0)
   },
   header: {
     flex: 2,
@@ -266,7 +248,7 @@ const styles = StyleSheet.create({
   },
   methodlogin: {
     width: "20%",
-    height: height * 0.07,
+    height: Screen.height * 0.07,
     backgroundColor: Color.SecondaryColor,
     borderRadius: 16,
     justifyContent: 'center',

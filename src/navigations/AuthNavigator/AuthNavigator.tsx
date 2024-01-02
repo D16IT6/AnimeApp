@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { WelcomeScreen, LoginScreen, SignUpScreen, LoginMethodScreen, ResetWelcome } from '../../Screens/AuthScreens'
+import { WelcomeScreen, LoginScreen, SignUpScreen, LoginMethodScreen, ResetWelcome, ForgotPasswordScreen } from '../../Screens/AuthScreens'
 import { MainNavigationBar, HitAnime, Notification, Filter, SearchAnime, NewEpisodeReleases } from '../../Screens/homeScreen'
 import { AuthScreenNavigationProps } from "./Type"
 import { AuthRoutes } from './Routes'
@@ -60,6 +60,7 @@ const AuthNavigator = () => {
 
       <Stack.Screen name={AuthRoutes.LoginMethod} component={LoginMethodScreen} options={{ headerShown: false }}></Stack.Screen>
       <Stack.Screen name={AuthRoutes.Login} component={LoginScreen} options={{ headerShown: false }} key={AuthRoutes.Login}></Stack.Screen>
+      <Stack.Screen name={AuthRoutes.ForgotPasswordScreen} component={ForgotPasswordScreen} options={{ headerShown: false }} ></Stack.Screen>
       <Stack.Screen name={AuthRoutes.SignUp} component={SignUpScreen} options={{ headerShown: false }}></Stack.Screen>
       <Stack.Screen name={AuthRoutes.MainNavigationBar} component={MainNavigationBar} options={{ headerShown: false }} key={AuthRoutes.MainNavigationBar}></Stack.Screen>
       <Stack.Screen name={AuthRoutes.HitAnime} component={HitAnime} options={{ headerShown: false }}></Stack.Screen>

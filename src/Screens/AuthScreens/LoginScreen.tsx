@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView, TextInputProps, Keyboard, ScrollView, Platform, StatusBar } from 'react-native'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { logo } from '../../common/Images'
 import { Color } from '../../common/Colors';
 import { useNavigation } from '@react-navigation/native'
@@ -8,37 +8,30 @@ import { ButtonAuthScreen, CheckedAuthScreen, InputAuthScreen, KeyboardAvoidingC
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fontFamily from '../../common/FontFamily';
 import { apiAuth } from '../../apiService/AuthService';
-import { LoginRequestViewModel } from '../../ModelView';
+import { Errors, LoginRequestViewModel } from '../../ModelView';
 import { notDev } from '../../utils/extensionMethod';
+import { InputAuthScreenRef } from '../../common/components/InputAuthScreen';
+import Screen from '../../utils/screenInformation';
 
-
-const { width, height } = Dimensions.get('window')
 export default function LoginMethodScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
-  const [inputs, setInputs] = useState({
-    username: '',
-    password: ''
-  })
+  const userNameRef = useRef<InputAuthScreenRef>(null)
+  const passwordRef = useRef<InputAuthScreenRef>(null)
 
-
-  interface Errors {
-    username?: string;
-    password?: string;
-  }
   const [errors, setErrors] = useState<Errors>({})
   const [loading, setLoading] = useState(false)
   const validate = () => {
     Keyboard.dismiss();
     let isValid = true;
-    if (!inputs.username) {
+    if (!userNameRef.current?.getValue()) {
       handleError("Vui lòng nhập tài khoản !", "username")
       isValid = false;
     }
-    if (!inputs.password) {
+    if (!passwordRef.current?.getValue()) {
       handleError("Vui lòng nhập mật khẩu !", "password")
       isValid = false;
     }
-    else if (inputs.password.length < 5) {
+    else if (passwordRef.current.getValue().length< 5) {
       handleError("Mật khẩu phải trên 5 kí tự !", "password")
       isValid = false;
     }
@@ -49,8 +42,8 @@ export default function LoginMethodScreen() {
   const regisiter = async () => {
     setLoading(true)
     const model: LoginRequestViewModel = {
-      UserName: inputs.username,
-      Password: inputs.password,
+      UserName: userNameRef.current?.getValue().toString()||"",
+      Password: passwordRef.current?.getValue().toString()||"",
       RememberMe: true
     }
     const data = await apiAuth.login(model)
@@ -66,10 +59,6 @@ export default function LoginMethodScreen() {
     else {
       Alert.alert("Đăng nhập thất bại")
     }
-  }
-
-  const handleOnChange = (text: any, input: string) => {
-    setInputs(prevState => ({ ...prevState, [input]: text }))
   }
   const handleError = (errorMessage: string | null, input: string) => {
     setErrors(prevState => ({ ...prevState, [input]: errorMessage }))
@@ -90,6 +79,7 @@ export default function LoginMethodScreen() {
       <View
         style={styles.contentSignUp}>
         <InputAuthScreen
+          ref = {userNameRef}
           placeholder="Tài Khoản"
           iconName="user"
           error={errors.username}
@@ -97,9 +87,10 @@ export default function LoginMethodScreen() {
           onFocus={() => {
             handleError(null, "username")
           }}
-          onChangeText={(text: string) => handleOnChange(text, 'username')}
+          onSubmit={()=>passwordRef.current?.onFocus()}
         />
         <InputAuthScreen
+          ref ={passwordRef}
           placeholder="Mật Khẩu"
           iconName="lock"
           error={errors.password}
@@ -107,7 +98,6 @@ export default function LoginMethodScreen() {
           onFocus={() => {
             handleError(null, "password")
           }}
-          onChangeText={(text: string) => handleOnChange(text, 'password')}//(text: string) => handleOnChange(text, 'password')
         />
         <CheckedAuthScreen onCheckedChange={handleCheckedChange} />
         <ButtonAuthScreen
@@ -117,7 +107,11 @@ export default function LoginMethodScreen() {
           }
           }
         />
-        <Text style={styles.forgotPassword} onPress={notDev}>
+        <Text style={styles.forgotPassword} onPress={
+          ()=>{
+            navigation.navigate("ForgotPasswordScreen")
+          }
+        }>
           Bạn đã quên mật khẩu ?
         </Text>
         <LineAuthScreen title="or continue with" />
@@ -159,7 +153,7 @@ const styles = StyleSheet.create({
   container: {
     //flex: 1
     // do dai man hinh - thanh trang thai
-    height: height - (StatusBar.currentHeight ? StatusBar.currentHeight : 0)
+    height: Screen.height - (StatusBar.currentHeight ? StatusBar.currentHeight : 0)
   },
   scrollViewContainer: {
     flexGrow: 1,
@@ -212,7 +206,7 @@ const styles = StyleSheet.create({
   },
   methodlogin: {
     width: "20%",
-    height: height * 0.07,
+    height: Screen.height * 0.07,
     backgroundColor: Color.SecondaryColor,
     borderRadius: 16,
     justifyContent: 'center',

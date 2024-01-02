@@ -17,6 +17,7 @@ enum AuthRoutes {
     CommentsScreens = "CommentsScreens",
     VideoPlayScreen = "VideoPlayScreen",
     ChooseInsterestScreen = "ChooseInsterestScreen",
-    AccountInfoScreen = "AccountInfoScreen"
+    AccountInfoScreen = "AccountInfoScreen",
+    ForgotPasswordScreen="ForgotPasswordScreen"
 };
 export { AuthRoutes }
