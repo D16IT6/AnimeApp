@@ -11,7 +11,7 @@ import AntDesign from "react-native-vector-icons/AntDesign"
 
 import { DowloadIcon } from "../../common/Icons";
 import { animeApi } from "../../apiService/AnimeService";
-import { AnimeDetailsViewModel, AnimeRandomViewModel, CommentResponseView } from "../../ModelView";
+import { AnimeDetailsViewModel, AnimeRandomViewModel, CommentResponseView } from "../../ViewModel";
 import HTMLView from 'react-native-htmlview';
 import LottieView from "lottie-react-native";
 import { CommentApi } from "../../apiService/CommentService";
@@ -23,10 +23,11 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetRefProps } from "../../common/components/BottomSheet";
 import Screen from "../../utils/screenInformation";
 import Animated, { Extrapolation, interpolate, useAnimatedStyle, useSharedValue, withClamp, withSpring } from "react-native-reanimated";
+import useCustomNavigation from "../../common/components/useCustomNavigation";
 
 const ListAnimeMoreLikeThis = ({ item, index }: { item: AnimeRandomViewModel, index: number }) => {
     var check = index % 2 == 0;
-    const navigation = useNavigation<AuthScreenNavigationProps>();
+    const navigation = useCustomNavigation();
 
     return (
         <TouchableOpacity style={[styles.contentAnimeMore,
@@ -35,8 +36,8 @@ const ListAnimeMoreLikeThis = ({ item, index }: { item: AnimeRandomViewModel, in
             marginRight: check ? 0 : 10
         }
         ]}
-            onPress={() => {
-                navigation.push(AuthRoutes.AnimeDetails, {
+            onPress={async () => {
+                await navigation.push(AuthRoutes.AnimeDetails, {
                     animeId: item.Id
                 })
             }}
@@ -146,8 +147,8 @@ const AnimeDetails = ({ route }: { route: AnimeDetailRouteProps }) => {
                 title="Đang tải thông tin anime"
             />
             <Ionicons name='arrow-back'
-                onPress={() => {
-                    navigation.navigate(AuthRoutes.MainNavigationBar)
+                onPress={async () => {
+                    await navigation.navigate(AuthRoutes.MainNavigationBar)
                 }}
                 size={35} color={Color.Black}
                 style={{ position: 'absolute', zIndex: 10 }}
@@ -167,9 +168,9 @@ const AnimeDetails = ({ route }: { route: AnimeDetailRouteProps }) => {
                     <Text style={styles.region}>{animeDetail?.Country}</Text>
                 </View>
                 <View style={styles.buttons}>
-                    <TouchableOpacity style={styles.btnPlay} onPress={() => {
+                    <TouchableOpacity style={styles.btnPlay} onPress={async () => {
                         animeDetail?.Episodes?.length || 0 > 0
-                            ? navigation.navigate(AuthRoutes.VideoPlayScreen, {
+                            ? await navigation.navigate(AuthRoutes.VideoPlayScreen, {
                                 animeId: animeId,
                                 url: animeDetail?.Episodes[0].Url,
                                 name: `${animeDetail?.Title}(Tập ${animeDetail?.Episodes[0].Title})`
@@ -229,8 +230,8 @@ const AnimeDetails = ({ route }: { route: AnimeDetailRouteProps }) => {
                     data={animeDetail?.Episodes}
                     renderItem={({ item }) => {
                         return (
-                            <TouchableOpacity onPress={() => {
-                                navigation.navigate(AuthRoutes.VideoPlayScreen, {
+                            <TouchableOpacity onPress={async () => {
+                                await navigation.navigate(AuthRoutes.VideoPlayScreen, {
                                     animeId: animeId,
                                     url: item.Url,
                                     name: `${animeDetail?.Title}(Tập ${item.Title})`
@@ -303,8 +304,8 @@ const AnimeDetails = ({ route }: { route: AnimeDetailRouteProps }) => {
                                 <View style={styles.headerComments}>
                                     <Text style={styles.quantityComment}>{allComment?.length} bình luận</Text>
                                     <Text style={styles.seeAll}
-                                        onPress={() => {
-                                            navigation.navigate(AuthRoutes.CommentsScreens, { animeId: animeId })
+                                        onPress={async () => {
+                                            await navigation.navigate(AuthRoutes.CommentsScreens, { animeId: animeId })
                                         }}
                                     >Xem tất cả</Text>
                                 </View>

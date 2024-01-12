@@ -7,15 +7,16 @@ import { Color } from "../../common/Colors";
 import { Loader } from "../../common/components";
 import { NavagitonTop } from "../../common/components";
 import fontFamily from "../../common/FontFamily";
-import { AnimeNewEpisodeReleasesViewModel } from "../../ModelView";
+import { AnimeNewEpisodeReleasesViewModel } from "../../ViewModel";
 import { animeApi } from "../../apiService/AnimeService";
 import LoadScreen from "../loadScreens/loadScreens";
 
+import useCustomNavigation from '../../common/components/useCustomNavigation';
 
 const { height, width } = Dimensions.get("window");
 const ListNewEpisodeReleases = ({ item, index }: { item: AnimeNewEpisodeReleasesViewModel, index: number }) => {
     var check = index % 2 == 0;
-    const navigation = useNavigation<AuthScreenNavigationProps>();
+    const navigation = useCustomNavigation();
 
     return (
         <TouchableOpacity style={[styles.contentAnime,

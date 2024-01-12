@@ -4,7 +4,7 @@ import { Text } from "react-native-elements"
 import fontFamily from "../FontFamily"
 import fontSizes from "../FontSizes"
 import { Color } from "../Colors"
-import { ItemSeletorProps, SeletorAttribute } from "../../ModelView"
+import { ItemSeletorProps, SeletorAttribute } from "../../ViewModel"
 
 
 const handleOnpress =(props:ItemSeletorProps)=>{

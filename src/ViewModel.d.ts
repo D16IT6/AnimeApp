@@ -158,6 +158,10 @@ type UserReponseViewModel = {
     PhoneNumber: string,
     BirthDay: string
 }
+type ForgotPasswordResponseViewModel = {
+    Message: string;
+    StatusCode: Number;
+}
 type AsyncStorage = {
     getItem(key: string): Promise<string | null>;
     setItem(key: string, value: string): Promise<string | null>;
@@ -200,6 +204,7 @@ type InputsRef = {
 }
 
 export {
+    ForgotPasswordResponseViewModel,
     Errors,
     ListSearchAnimeProps,
     ForgotPasswordRequestViewModel,

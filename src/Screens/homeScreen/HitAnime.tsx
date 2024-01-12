@@ -8,13 +8,14 @@ import { Color } from "../../common/Colors";
 import { Loader } from "../../common/components";
 import { NavagitonTop } from "../../common/components/index";
 import fontFamily from "../../common/FontFamily";
-import { AnimeHitViewModel } from "../../ModelView";
+import { AnimeHitViewModel } from "../../ViewModel";
 import { animeApi } from "../../apiService/AnimeService";
 import LoadScreen from "../loadScreens/loadScreens";
 import { apiMyList } from "../../apiService/MylistService";
 import { AnimeDetails } from "../animeDetailsScreens";
 const { height, width } = Dimensions.get("window");
 
+import useCustomNavigation from '../../common/components/useCustomNavigation';
 
 type ListAnimeHotProps ={
   item:AnimeHitViewModel,
@@ -27,7 +28,7 @@ const ListAnimeHot = (props:ListAnimeHotProps) => {
     resetData
   }=props
   // const [addMyList, setAddMyList] = useState(false);
-  const navigation = useNavigation<AuthScreenNavigationProps>();
+  const navigation = useCustomNavigation();
   const AddMylist = async (animeId: number) => {
     try {
         const result = await apiMyList.createMyList(animeId)

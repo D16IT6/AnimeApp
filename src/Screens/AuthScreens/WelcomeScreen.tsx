@@ -11,6 +11,7 @@ import fontFamily from "../../common/FontFamily";
 import fontSizes from "../../common/FontSizes";
 import { setItem } from "../../utils/asyncStorage";
 const{width,height} =Dimensions.get('window')
+import useCustomNavigation from '../../common/components/useCustomNavigation';
 
 interface DotComponentProps {
     selected: boolean;

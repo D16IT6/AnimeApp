@@ -1,17 +1,17 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, StatusBar, Keyboard } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Image, StatusBar, Keyboard, Alert } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { logo } from '../../common/Images'
 import { Color } from '../../common/Colors';
 import { useNavigation } from '@react-navigation/native'
 import { AuthScreenNavigationProps, AuthRoutes } from '../../navigations/AuthNavigator';
 import { ButtonAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthScreen, LinkAuthScreen, Loader, NavagitonTop } from '../../common/components';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import fontFamily from '../../common/FontFamily';
-import { apiAuth } from '../../apiService/AuthService';
-import { Errors, ForgotPasswordRequestViewModel } from '../../ModelView';
+import { Errors, ForgotPasswordRequestViewModel } from '../../ViewModel';
 import { InputAuthScreenRef } from '../../common/components/InputAuthScreen';
 import Screen from '../../utils/screenInformation';
 import validateEmail from '../../utils/validateEmail';
+import { apiAuth } from '../../apiService/AuthService';
+import useCustomNavigation from '../../common/components/useCustomNavigation';
 const ForgotPasswordScreen = () => {
     const navigation = useNavigation<AuthScreenNavigationProps>();
     const emailRef = useRef<InputAuthScreenRef>(null)
@@ -19,7 +19,7 @@ const ForgotPasswordScreen = () => {
     const [errors, setErrors] = useState<Errors>({})
     const [loading, setLoading] = useState(false)
 
-    const validate = () => {
+    const validate = async () => {
         console.log()
         Keyboard.dismiss();
         let isValid = true;
@@ -32,15 +32,18 @@ const ForgotPasswordScreen = () => {
             isValid = false;
         }
         if (isValid) {
-            regisiter()
+            await sendRequest()
         }
     }
-    const regisiter = async () => {
+    const sendRequest = async () => {
         setLoading(true)
         const model: ForgotPasswordRequestViewModel = {
             Email: emailRef.current?.getValue().toString() || "",
         }
-        console.log(model)
+        const result = await apiAuth.forgotPassword(model.Email);
+        if (result !== undefined) {
+            Alert.alert("Thông báo", result?.Message);
+        }
         setLoading(false)
     }
     const handleError = (errorMessage: string | null, input: string) => {
@@ -73,10 +76,11 @@ const ForgotPasswordScreen = () => {
                 />
                 <ButtonAuthScreen
                     title='Gửi thông tin'
-                    onPressBtn={() => {
-                        validate()
+                    onPressBtn={async () => {
+                        await validate()
+
                     }
-                    } 
+                    }
                     styleBtn={styles.btnSubmit}
                 />
             </View>
@@ -113,8 +117,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    btnSubmit:{
-        marginTop:Screen.height*0.1
+    btnSubmit: {
+        marginTop: Screen.height * 0.1
     }
 })
 

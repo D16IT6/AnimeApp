@@ -9,9 +9,12 @@ import { ButtonAuthScreen, InputAuthScreen, KeyboardAvoidingContainer, LineAuthS
 import fontSizes from '../../common/FontSizes';
 import { apiAuth } from '../../apiService/AuthService';
 import { notDev } from '../../utils/extensionMethod';
-import { Errors } from '../../ModelView';
+import { Errors } from '../../ViewModel';
 import Screen from '../../utils/screenInformation';
 import { InputAuthScreenRef } from '../../common/components/InputAuthScreen';
+import useCustomNavigation from '../../common/components/useCustomNavigation';
+import validateEmail from '../../utils/validateEmail';
+
 export default function SignUpScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
 
@@ -21,7 +24,7 @@ export default function SignUpScreen() {
   const confilmPasswordRef = useRef<InputAuthScreenRef>(null)
   const [errors, setErrors] = useState<Errors>({})
   const [loading, setLoading] = useState(false)
-  
+
   const handleError = (errorMessage: string | null, input: string) => {
     setErrors(prevState => ({ ...prevState, [input]: errorMessage }))
   }
@@ -41,8 +44,8 @@ export default function SignUpScreen() {
       handleError("Mật khẩu phải trên 5 kí tự !", "password")
       isValid = false;
     }
-    if ( passwordRef.current &&
-      confilmPasswordRef.current &&passwordRef.current.getValue() !== confilmPasswordRef.current.getValue()) {
+    if (passwordRef.current &&
+      confilmPasswordRef.current && passwordRef.current.getValue() !== confilmPasswordRef.current.getValue()) {
       handleError("Xác nhận mật khẩu không đúng !", "confilmPassword")
       isValid = false;
     }
@@ -55,7 +58,7 @@ export default function SignUpScreen() {
       isValid = false;
     }
     if (isValid) {
-       regisiter()
+      regisiter()
     }
   }
   const regisiter = async () => {
@@ -63,9 +66,9 @@ export default function SignUpScreen() {
       setLoading(true)
       const checkSiup = await apiAuth.sigup(
         {
-          UserName: userNameRef.current?.getValue().toString()||"",
-          Password: passwordRef.current?.getValue().toString()||"",
-          Email: emailRef.current?.getValue().toString()||"",
+          UserName: userNameRef.current?.getValue().toString() || "",
+          Password: passwordRef.current?.getValue().toString() || "",
+          Email: emailRef.current?.getValue().toString() || "",
         })
       setLoading(false)
       if (checkSiup) {
@@ -114,7 +117,7 @@ export default function SignUpScreen() {
   // const handleOnChange = (text: any, input: string) => {
   //   setInputs(prevState => ({ ...prevState, [input]: text }))
   // }
- 
+
   return (
     <KeyboardAvoidingContainer style={styles.container}>
       <Loader visible={loading} />
@@ -134,7 +137,7 @@ export default function SignUpScreen() {
           placeholder="Tài Khoản"
           iconName="user"
           error={errors.username}
-          onSubmit={()=> emailRef.current?.onFocus()}
+          onSubmit={() => emailRef.current?.onFocus()}
           onFocus={() => {
             handleError(null, "username")
           }}
@@ -144,7 +147,7 @@ export default function SignUpScreen() {
           placeholder="Email"
           iconName="envelope-o"
           error={errors.email}
-          onSubmit={()=> passwordRef.current?.onFocus()}
+          onSubmit={() => passwordRef.current?.onFocus()}
           onFocus={() => {
             handleError(null, "email")
           }}
@@ -155,7 +158,7 @@ export default function SignUpScreen() {
           iconName="lock"
           error={errors.password}
           password={true}
-          onSubmit={()=> confilmPasswordRef.current?.onFocus()}
+          onSubmit={() => confilmPasswordRef.current?.onFocus()}
           onFocus={() => {
             handleError(null, "password")
           }}

@@ -6,7 +6,7 @@ import { imageError } from "../utils/httpReponse";
 import { API_URL, BASE_URL } from '@env';
 
 import axiosClient from "./axiosClient";
-import { CommentRequestViewModel, CommentResponseView } from "../ModelView";
+import { CommentRequestViewModel, CommentResponseView } from "../ViewModel";
 
 const CommentApi = {
   getAllComment: async (animeId: number) => {

@@ -4,8 +4,9 @@ import { ButtonAuthScreen, NavagitonTop, SelectorAttribtute } from "../../common
 import { useNavigation } from '@react-navigation/native'
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { Color } from "../../common/Colors";
+import useCustomNavigation from '../../common/components/useCustomNavigation';
 
-import { AnimeAgeRaitingModelView, AnimeCategoryModelView, AnimeSearchParams, AnimeSearchRequestViewModel, AnimeStatusModelView, AnimeTypeModelView, AttributeProps, CountryModelView } from "../../ModelView";
+import { AnimeAgeRaitingModelView, AnimeCategoryModelView, AnimeSearchParams, AnimeSearchRequestViewModel, AnimeStatusModelView, AnimeTypeModelView, AttributeProps, CountryModelView } from "../../ViewModel";
 import { apiFilter } from "../../apiService/FilterService";
 import LoadScreen from "../loadScreens/loadScreens";
 
@@ -21,7 +22,7 @@ const handleReset = (select: AttributeProps[], setSelect: any) => {
 
 const Filter = () => {
 
-    const navigation = useNavigation<AuthScreenNavigationProps>()
+    const navigation = useCustomNavigation()
     const [loading, setLoading] = useState<boolean>(true);
     const [listCountry, setListCountry] = useState<AttributeProps[]>([]);
     const [listAnimeAgeRaiting, setListAnimeAgeRaiting] = useState<AttributeProps[]>([]);

@@ -3,7 +3,7 @@ import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native"
 import fontFamily from "../FontFamily"
 import { Color } from "../Colors"
 import { Text } from "react-native-elements"
-import {   MyListUpdateViewModel } from "../../ModelView"
+import {   MyListUpdateViewModel } from "../../ViewModel"
 import { apiMyList } from "../../apiService/MylistService"
 import { Swipeable } from 'react-native-gesture-handler';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"

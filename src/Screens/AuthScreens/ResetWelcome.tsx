@@ -4,6 +4,8 @@ import { removeItem, setItem } from '../../utils/asyncStorage'
 import { useNavigation } from '@react-navigation/native'
 import { AuthScreenNavigationProps } from "../../navigations/AuthNavigator"
 import { AuthRoutes } from '../../navigations/AuthNavigator'
+import useCustomNavigation from '../../common/components/useCustomNavigation';
+
 export default function ResetWelcome() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
   const handleReset = async ()=>{

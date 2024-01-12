@@ -1,6 +1,6 @@
 import { imageError } from "../utils/httpReponse";
 import { API_URL, BASE_URL } from '@env';
-import { AnimeDetailsReponseViewModel, AnimeDetailsViewModel, AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel, AnimeRandomViewModel } from "../ModelView";
+import { AnimeDetailsReponseViewModel, AnimeDetailsViewModel, AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel, AnimeRandomViewModel } from "../ViewModel";
 
 import axiosClient from "./axiosClient";
 

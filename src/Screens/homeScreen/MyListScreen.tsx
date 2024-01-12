@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, Animated, StyleSheet, SafeAreaView, FlatList, Dimensions } from 'react-native';
 import { Color } from '../../common/Colors';
 import { MyListAnime } from '../../common/components/RenderFlastList';
-import { MyListResponseViewModel, MyListUpdateViewModel } from '../../ModelView';
+import { MyListResponseViewModel, MyListUpdateViewModel } from '../../ViewModel';
 import { apiMyList } from '../../apiService/MylistService';
 import getUserIdFromToken from '../../utils/getUserId';
 import { Image, Text } from 'react-native-elements';

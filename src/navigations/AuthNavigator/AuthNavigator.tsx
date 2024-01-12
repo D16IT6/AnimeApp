@@ -7,6 +7,9 @@ import { AuthRoutes } from './Routes'
 import { getItem, setItem } from '../../utils/asyncStorage'
 import { AnimeDetails, CommentsScreens, VideoPlayScreen } from '../../Screens/animeDetailsScreens'
 import { AccountInfo, ChooseInterestScreen } from '../../Screens/accountSetupScreens'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import shouldRefreshToken from '../../utils/shoudRefreshToken'
+import refreshAccessToken from '../../utils/RefreshToken'
 
 const Stack = createNativeStackNavigator<AuthScreenNavigationProps>();
 
@@ -26,7 +29,10 @@ const AuthNavigator = () => {
       console.log(token)
       if (welcomed === '1') {
         setWelcome(false);
-        if (token === null || token === undefined) {
+
+        // await refreshAccessToken();
+
+        if (token === null || token === undefined || (await AsyncStorage.getItem("NeedLogin")) === "true") {
           console.log("vào login")
           setFirstRoute(AuthRoutes.Login);
         }
@@ -38,6 +44,7 @@ const AuthNavigator = () => {
         setWelcome(true);
         setFirstRoute(AuthRoutes.Welcome);
       }
+
 
       setLoading(false); // Đánh dấu tác vụ đã hoàn thành
     };

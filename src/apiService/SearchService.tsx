@@ -1,6 +1,6 @@
 
 import { imageError } from "../utils/httpReponse";
-import { AnimeSearchRequestViewModel, AnimeSearchResponseViewModel } from "../ModelView";
+import { AnimeSearchRequestViewModel, AnimeSearchResponseViewModel } from "../ViewModel";
 import {  BASE_URL } from "@env";
 import axiosClient from "./axiosClient";
 

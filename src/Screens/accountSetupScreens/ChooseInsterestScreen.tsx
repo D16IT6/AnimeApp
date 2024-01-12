@@ -5,10 +5,11 @@ import { CategoryViewModel } from "../../common/ViewModels"
 import { NavigationBar } from "../../common/components/NavigationBar"
 import { CategoryViewItem, FooterNavigation } from "../../common/components"
 import { arrowLeftIcon } from "../../common/Icons"
+import useCustomNavigation from "../../common/components/useCustomNavigation"
 const ChooseInterestScreen = () => {
 
 
-    const navigation = useNavigation();
+    const navigation = useCustomNavigation();
 
 
     const categoryItems = ["Action",

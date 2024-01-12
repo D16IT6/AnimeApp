@@ -2,7 +2,7 @@
 import { imageError } from "../utils/httpReponse";
 import { BASE_URL } from "@env";
 import axiosClient from "./axiosClient";
-import { UserPostViewModel, UserReponseViewModel } from "../ModelView";
+import { UserPostViewModel, UserReponseViewModel } from "../ViewModel";
 import { DocumentPickerResponse } from "react-native-document-picker";
 
 const apiUser = {

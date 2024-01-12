@@ -10,13 +10,14 @@ import { NavagitonTop } from "../../common/components";
 import fontFamily from "../../common/FontFamily";
 import fontSizes from "../../common/FontSizes";
 import { AuthNavigator, AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
+import useCustomNavigation from "../../common/components/useCustomNavigation";
 
 //"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 const VideoPlayScreen = ({route}:any) => {
     const{animeId,url,name}=route.params
     
 
-    const navigation = useNavigation<AuthScreenNavigationProps>()
+    const navigation = useCustomNavigation()
 
     const [clicked, setClicked] = useState(false)
     const [pause, setPause] = useState(false)

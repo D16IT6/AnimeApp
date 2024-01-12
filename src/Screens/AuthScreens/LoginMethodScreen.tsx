@@ -8,6 +8,7 @@ import { Color } from '../../common/Colors';
 import { LineAuthScreen ,ButtonAuthScreen,LinkAuthScreen } from '../../common/components';
 import fontFamily from '../../common/FontFamily';
 import fontSizes from '../../common/FontSizes';
+import useCustomNavigation from '../../common/components/useCustomNavigation';
 const { width, height } = Dimensions.get('window')
 export default function LoginMethodScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();

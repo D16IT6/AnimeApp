@@ -6,19 +6,19 @@ import fontSizes from "../../common/FontSizes";
 import fontFamily from "../../common/FontFamily";
 import { Color } from "../../common/Colors";
 import NavigationProfile from "../../common/components/NavigationProfile";
-import { UserReponseViewModel } from "../../ModelView";
+import { UserReponseViewModel } from "../../ViewModel";
 import { apiUser } from "../../apiService/UserService";
 import getUserIdFromToken from "../../utils/getUserId";
 import { imageError } from "../../utils/httpReponse";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
+import { AuthRoutes } from "../../navigations/AuthNavigator";
 import LoadScreen from "../loadScreens/loadScreens";
+import useCustomNavigation from "../../common/components/useCustomNavigation";
 
 const { width, height } = Dimensions.get("window");
 
 const ProfileScreen = () => {
-    const navigation = useNavigation<AuthScreenNavigationProps>();
+    const navigation = useCustomNavigation();
     const [loading, setLoading] = useState<boolean>(true);
     const [user, setUser] = useState<UserReponseViewModel>();
     useEffect(() => {
@@ -56,8 +56,9 @@ const ProfileScreen = () => {
                 title="Thông tin cá nhân"
                 iconName="user"
                 press={
-                    () => {
-                        navigation.navigate(AuthRoutes.AccountInfoScreen)
+                    async () => {
+                        // navigation.navigate(AuthRoutes.AccountInfoScreen)
+                        await navigation.navigate(AuthRoutes.AccountInfoScreen)
                     }
                 }
             />
@@ -73,10 +74,10 @@ const ProfileScreen = () => {
                 title="Đăng xuất"
                 iconName="log-out"//Entypo
                 isLogout={true}
-                press={() => {
+                press={async () => {
                     AsyncStorage.removeItem("AccessToken")
                     AsyncStorage.removeItem("RefreshToken")
-                    navigation.navigate(AuthRoutes.Login)
+                    await navigation.navigate(AuthRoutes.Login)
                 }}
 
             />

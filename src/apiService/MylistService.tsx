@@ -1,5 +1,5 @@
 import { imageError } from "../utils/httpReponse";
-import { MyListResponseViewModel, MyListUpdateViewModel } from "../ModelView";
+import { MyListResponseViewModel, MyListUpdateViewModel } from "../ViewModel";
 import {  BASE_URL } from "@env";
 import axiosClient from "./axiosClient";
 

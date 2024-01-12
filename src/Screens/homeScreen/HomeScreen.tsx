@@ -13,12 +13,13 @@ import { Double } from "react-native/Libraries/Types/CodegenTypes";
 import fontFamily from "../../common/FontFamily";
 import { logo } from "../../common/Images";
 import axios from "axios";
-import { AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel } from "../../ModelView";
+import { AnimeHitViewModel, AnimeNewEpisodeReleasesViewModel } from "../../ViewModel";
 import { animeApi } from "../../apiService/AnimeService";
 import LoadScreen from "../loadScreens/loadScreens";
 import HitAnime from "./HitAnime";
 import { imageError } from "../../utils/httpReponse";
 
+import useCustomNavigation from '../../common/components/useCustomNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,11 +32,11 @@ const ListAnime = <T extends { Id: number, Poster: string; Rating: string }>(
     props: ListAnimeProps<T>
 ) => {
     const { item, index } = props
-    const navigation = useNavigation<AuthScreenNavigationProps>();
+    const navigation = useCustomNavigation();
     return (
         <TouchableOpacity style={styles.containerAnime}
-            onPress={() => {
-                navigation.navigate(AuthRoutes.AnimeDetails, { animeId: item.Id })
+            onPress={async () => {
+                await navigation.navigate(AuthRoutes.AnimeDetails, { animeId: item.Id })
             }}
         >
             <Image source={{ uri: item.Poster }}
@@ -89,10 +90,10 @@ const HomeScreen = () => {
                     <Image source={logo} style={styles.topLogo} resizeMode="contain"></Image>
                     <View style={styles.topTools}>
                         <Ionicons name="search" color={Color.SecondaryColor} size={25}
-                            onPress={() => navigation.navigate(AuthRoutes.SearchAnime, null)}
+                            onPress={async () =>await  navigation.navigate(AuthRoutes.SearchAnime, null)}
                         ></Ionicons>
                         <FontAwesomeIcons name="bell" color={Color.SecondaryColor} size={25}
-                            onPress={() => navigation.navigate(AuthRoutes.Notification)}
+                            onPress={async () => await navigation.navigate(AuthRoutes.Notification)}
                         ></FontAwesomeIcons>
                     </View>
                 </View>
@@ -121,7 +122,8 @@ const HomeScreen = () => {
                     <View style={styles.toplist}>
                         <Text style={styles.titlelist}>Top Hits Anime</Text>
                         <Text style={styles.buttonlist}
-                            onPress={() => {
+                            onPress={async () => {
+                                await 
                                 navigation.navigate(AuthRoutes.HitAnime)
                             }}
                         >See all</Text>
@@ -137,7 +139,7 @@ const HomeScreen = () => {
                     <View style={styles.toplist}>
                         <Text style={styles.titlelist}>New Episode Releases</Text>
                         <Text style={styles.buttonlist}
-                            onPress={() => { navigation.navigate(AuthRoutes.NewEpisodeReleases) }}
+                            onPress={async () => {await  navigation.navigate(AuthRoutes.NewEpisodeReleases) }}
                         >See all</Text>
                     </View>
                     <FlatList

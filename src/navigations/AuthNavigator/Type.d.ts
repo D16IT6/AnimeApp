@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AuthRoutes } from "./Routes";
-import { AnimeDetailParams, AnimeSearchParams, CommentParams, AccountInfoRouteProps } from "../../ModelView";
+import { AnimeDetailParams, AnimeSearchParams, CommentParams, AccountInfoRouteProps } from "../../ViewModel";
 import { RouteProp } from "@react-navigation/native";
 export type AuthStackParamList = {
     Welcome: undefined;

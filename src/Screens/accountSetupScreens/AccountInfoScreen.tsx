@@ -6,10 +6,13 @@ import { ChooseImage } from "../../common/Images";
 import DocumentPicker, { DocumentPickerResponse } from 'react-native-document-picker'
 import { apiUser } from "../../apiService/UserService";
 import getUserIdFromToken from "../../utils/getUserId";
-import { UserPostViewModel, UserReponseViewModel } from "../../ModelView";
+import { UserPostViewModel, UserReponseViewModel } from "../../ViewModel";
 import { AuthRoutes } from "../../navigations/AuthNavigator";
 import { imageError } from "../../utils/httpReponse";
 import { InputAuthScreenRef } from "../../common/components/InputAuthScreen";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthScreenNavigationProps } from '../../navigations/AuthNavigator/Type';
+import useCustomNavigation from "../../common/components/useCustomNavigation";
 
 
 const AccountInfo = () => {
@@ -18,21 +21,24 @@ const AccountInfo = () => {
     const emailRef = useRef<InputAuthScreenRef>(null)
     const phoneNumberRef = useRef<InputAuthScreenRef>(null)
     const [newImage, setNewImage] = useState<DocumentPickerResponse>();
-    const navigation = useNavigation();
+    const navigation = useCustomNavigation();
+
 
     useEffect(() => {
+
         const fetchData = async () => {
             try {
                 const resultUser: UserReponseViewModel | undefined = await apiUser.getUserProfile(await getUserIdFromToken())
                 console.log(resultUser);
                 setAvatar(_ => resultUser?.AvatarUrl)
-                fullNameRef.current?.setValue(resultUser?.FullName||"")
-                emailRef.current?.setValue(resultUser?.Email||"")
-                phoneNumberRef.current?.setValue(resultUser?.PhoneNumber||"")
+                fullNameRef.current?.setValue(resultUser?.FullName || "")
+                emailRef.current?.setValue(resultUser?.Email || "")
+                phoneNumberRef.current?.setValue(resultUser?.PhoneNumber || "")
             } catch (error) {
                 console.log(error)
             }
         }
+        
         fetchData();
     }, [])
 
@@ -81,28 +87,28 @@ const AccountInfo = () => {
                     <InputAuthScreen
                         placeholder="Họ và tên"
                         ref={fullNameRef}
-                        iconName="user"         
-                        onSubmit = {()=>phoneNumberRef.current?.onFocus()}
+                        iconName="user"
+                        onSubmit={() => phoneNumberRef.current?.onFocus()}
                     />
                     <InputAuthScreen
-                        ref ={phoneNumberRef}
+                        ref={phoneNumberRef}
                         placeholder="Số điện thoại"
-                        iconName="phone"           
-                        onSubmit ={()=>{emailRef.current?.onFocus()}}
+                        iconName="phone"
+                        onSubmit={() => { emailRef.current?.onFocus() }}
                     />
 
                     <InputAuthScreen
-                        ref ={emailRef}
+                        ref={emailRef}
                         placeholder="Email"
-                        iconName="phone"       
+                        iconName="phone"
                     />
                 </View>
                 <FooterNavigation flex={1} leftTitle="Bỏ qua" rightTitle="Cập nhật"
                     rightEvent={async () => {
                         const model: UserPostViewModel = {
-                            FullName: fullNameRef.current?.getValue()||"",
-                            Email: emailRef.current?.getValue()||"",
-                            PhoneNumber: phoneNumberRef.current?.getValue()||""
+                            FullName: fullNameRef.current?.getValue() || "",
+                            Email: emailRef.current?.getValue() || "",
+                            PhoneNumber: phoneNumberRef.current?.getValue() || ""
                         }
                         console.log('model');
                         console.log(model);

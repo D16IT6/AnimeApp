@@ -5,15 +5,16 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthRoutes, AuthScreenNavigationProps } from "../../navigations/AuthNavigator";
 import { Color } from "../../common/Colors";
 import { CommentApi } from "../../apiService/CommentService";
-import { CommentResponseView } from "../../ModelView";
+import { CommentResponseView } from "../../ViewModel";
 import { CommentsRouteProps } from "../../navigations/AuthNavigator/Type";
 import LoadScreen from "../loadScreens/loadScreens";
 import Screen from "../../utils/screenInformation";
+import useCustomNavigation from "../../common/components/useCustomNavigation";
 
 const CommentsScreens = ({ route }: {route:CommentsRouteProps}) => {
     const { animeId } = route.params;
     const [loading, setLoading] = useState<boolean>(true);
-    const navigation = useNavigation<AuthScreenNavigationProps>()
+    const navigation = useCustomNavigation()
     const [backEndComments, setBackEndComments] = useState<CommentResponseView[]>();
 
    

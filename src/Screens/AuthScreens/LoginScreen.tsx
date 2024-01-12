@@ -8,10 +8,11 @@ import { ButtonAuthScreen, CheckedAuthScreen, InputAuthScreen, KeyboardAvoidingC
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fontFamily from '../../common/FontFamily';
 import { apiAuth } from '../../apiService/AuthService';
-import { Errors, LoginRequestViewModel } from '../../ModelView';
+import { Errors, LoginRequestViewModel } from '../../ViewModel';
 import { notDev } from '../../utils/extensionMethod';
 import { InputAuthScreenRef } from '../../common/components/InputAuthScreen';
 import Screen from '../../utils/screenInformation';
+import useCustomNavigation from '../../common/components/useCustomNavigation';
 
 export default function LoginMethodScreen() {
   const navigation = useNavigation<AuthScreenNavigationProps>();
@@ -31,7 +32,7 @@ export default function LoginMethodScreen() {
       handleError("Vui lòng nhập mật khẩu !", "password")
       isValid = false;
     }
-    else if (passwordRef.current.getValue().length< 5) {
+    else if (passwordRef.current.getValue().length < 5) {
       handleError("Mật khẩu phải trên 5 kí tự !", "password")
       isValid = false;
     }
@@ -42,8 +43,8 @@ export default function LoginMethodScreen() {
   const regisiter = async () => {
     setLoading(true)
     const model: LoginRequestViewModel = {
-      UserName: userNameRef.current?.getValue().toString()||"",
-      Password: passwordRef.current?.getValue().toString()||"",
+      UserName: userNameRef.current?.getValue().toString() || "",
+      Password: passwordRef.current?.getValue().toString() || "",
       RememberMe: true
     }
     const data = await apiAuth.login(model)
@@ -79,7 +80,7 @@ export default function LoginMethodScreen() {
       <View
         style={styles.contentSignUp}>
         <InputAuthScreen
-          ref = {userNameRef}
+          ref={userNameRef}
           placeholder="Tài Khoản"
           iconName="user"
           error={errors.username}
@@ -87,10 +88,10 @@ export default function LoginMethodScreen() {
           onFocus={() => {
             handleError(null, "username")
           }}
-          onSubmit={()=>passwordRef.current?.onFocus()}
+          onSubmit={() => passwordRef.current?.onFocus()}
         />
         <InputAuthScreen
-          ref ={passwordRef}
+          ref={passwordRef}
           placeholder="Mật Khẩu"
           iconName="lock"
           error={errors.password}
@@ -108,7 +109,7 @@ export default function LoginMethodScreen() {
           }
         />
         <Text style={styles.forgotPassword} onPress={
-          ()=>{
+          () => {
             navigation.navigate("ForgotPasswordScreen")
           }
         }>
