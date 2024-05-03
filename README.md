@@ -1,5 +1,4 @@
 # Yêu cầu sử dụng yarn để cài package, run
-# Nhánh của Ezio :grin:
  yarn install
  yarn add react-native-onboarding-swiper(js)
  yarn add @react-navigation/native
